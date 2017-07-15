@@ -1,0 +1,34 @@
+﻿<UserControl x:Class="Peplex_PFC.UI.Panels.MainWindowControl"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:Peplex_PFC.UI.Panels"
+      mc:Ignorable="d" 
+      d:DesignHeight="285" d:DesignWidth="640"
+      Loaded="MainWindowControlLoaded">
+
+    <Grid Name="GridMain">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+            <ColumnDefinition Width="2*"/>
+        </Grid.ColumnDefinitions>
+        
+        <local:CoverControl x:Name="CoverControl01" Grid.Column="0"/>
+        <local:CoverControl x:Name="CoverControl02" Grid.Column="1"/>
+        <local:CoverControl x:Name="CoverControl03" Grid.Column="2"/>
+        <local:CoverControl x:Name="CoverControl04" Grid.Column="3"/>
+        <local:CoverControl x:Name="CoverControl05" Grid.Column="4"/>
+        <local:CoverControl x:Name="CoverControl06" Grid.Column="5"/>
+        
+        <StackPanel Grid.Column="6" Orientation="Vertical" VerticalAlignment="Center">
+            <Label Name="Lbl01" VerticalContentAlignment="Center" VerticalAlignment="Center" Foreground="White" FontSize="12" FontFamily="Tahoma"/>
+            <Label Name="Lbl02" VerticalContentAlignment="Center" VerticalAlignment="Center" Foreground="White" FontSize="12" FontFamily="Tahoma"/>
+        </StackPanel>
+    </Grid>
+</UserControl>

@@ -1,0 +1,60 @@
+﻿<Window x:Class="Peplex_PFC.UI.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Peplex_PFC.UI"
+        xmlns:panels="clr-namespace:Peplex_PFC.UI.Panels"
+        mc:Ignorable="d"
+        Title="MainWindow"
+        WindowStyle="None" 
+        ShowInTaskbar="false"
+        WindowState="Maximized"
+        SizeToContent="WidthAndHeight"
+        PreviewKeyDown="MainWindowPreviewKeyDown"
+        Loaded="MainWindowLoad">
+    
+    <Viewbox Stretch="Fill">
+        <Grid Name="MainGrid"  Width="1200" Height="640" Background="{StaticResource LightGrayBrush}" MouseMove="GMainMouseMove">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="60"/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition Width="0.02*"/>
+            </Grid.ColumnDefinitions>
+            
+            <Grid Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Background="{StaticResource DarkGrayBrush}">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition/>
+                        <ColumnDefinition Width="0.3*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <Label Grid.Column="0" Margin="10 2 0 2" Foreground="White" FontSize="20" FontFamily="Tahoma" VerticalAlignment="Center" Content="PEPLEX"/>
+
+                    <Image Grid.Column="1" Margin="0 2 10 2" Width="50" Height="50" Stretch="Fill" HorizontalAlignment="Right" Source="Resources/logoPePlex.png" />
+
+                </Grid>
+            </Grid>
+
+            <Grid Name="GMain" Grid.Row="1" Grid.Column="0" Margin="20">
+                <Grid.RowDefinitions>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+
+                <panels:MainWindowControl x:Name="Control01" Grid.Row="0"/>
+                <panels:MainWindowControl x:Name="Control02" Grid.Row="1"/>
+                <panels:MainWindowControl x:Name="Control03" Grid.Row="2"/>
+                <panels:MainWindowControl x:Name="Control04" Grid.Row="3"/>
+            </Grid>
+
+            <TextBlock Grid.Column="1" Grid.Row="1" Background="{StaticResource LightGrayBrush}"/>
+        </Grid>
+    </Viewbox>
+</Window>

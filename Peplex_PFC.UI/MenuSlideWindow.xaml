@@ -1,0 +1,85 @@
+﻿<Window x:Class="Peplex_PFC.UI.MenuSlideWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Peplex_PFC.UI"
+        xmlns:panels="clr-namespace:Peplex_PFC.UI.Panels"
+        mc:Ignorable="d"
+        Title="MainWindow"
+        WindowState="Maximized"
+        SizeToContent="WidthAndHeight"
+        Background="#80000000" 
+        AllowsTransparency="True"
+        WindowStyle="None" 
+        Name="PadWindow" 
+        ShowInTaskbar="False" 
+        MouseDown="PadWindowMouseDown" 
+        PreviewKeyUp="PadWindowPreviewKeyUp"
+        WindowStartupLocation="CenterScreen"
+        Loaded="PadWindowLoaded">
+
+    <Window.Resources>
+        <Storyboard x:Key="PadShow" DesiredFrameRate="30">
+            <DoubleAnimation Duration="0:0:0.5" DecelerationRatio="1" From="0" To="1" Storyboard.TargetName="PadWindow" Storyboard.TargetProperty="Opacity" />
+            <DoubleAnimation Duration="0:0:0.5" DecelerationRatio="1" From="0" To="1" Storyboard.TargetName="PadGrid" Storyboard.TargetProperty="Opacity" />
+            <DoubleAnimation Duration="0:0:0.3" DecelerationRatio="1" From="400" To="0" Storyboard.TargetName="PadGrid" Storyboard.TargetProperty="(UIElement.RenderTransform).(TranslateTransform.X)" />
+        </Storyboard>
+        <Storyboard x:Key="PadHide" DesiredFrameRate="30">
+            <DoubleAnimation Duration="0:0:0.5" AccelerationRatio="1" From="1" To="0" Storyboard.TargetName="PadWindow" Storyboard.TargetProperty="Opacity" />
+            <DoubleAnimation Duration="0:0:0.5" AccelerationRatio="1" From="1" To="0" Storyboard.TargetName="PadGrid" Storyboard.TargetProperty="Opacity" />
+            <DoubleAnimation Duration="0:0:0.3" AccelerationRatio="1" From="0" To="400" Storyboard.TargetName="PadGrid" Storyboard.TargetProperty="(UIElement.RenderTransform).(TranslateTransform.X)" />
+        </Storyboard>
+    </Window.Resources>
+
+    <Window.Triggers>
+        <EventTrigger RoutedEvent="Window.Loaded">
+            <EventTrigger.Actions>
+                <BeginStoryboard Storyboard="{StaticResource PadShow}" />
+            </EventTrigger.Actions>
+        </EventTrigger>
+    </Window.Triggers>
+
+    <Viewbox Stretch="Fill">
+        <Grid Name="PadGrid" Width="1200" Height="640">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="65"/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+
+            <Grid Width="150" Grid.Row="0" Background="{StaticResource DarkGrayBrush}" HorizontalAlignment="Right">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition/>
+                        <ColumnDefinition Width="0.75*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <Label Grid.Column="0" Margin="5 7 5 2" Foreground="White" FontSize="20" FontFamily="Tahoma" VerticalAlignment="Center" Content="PEPLEX"/>
+
+                    <Image Grid.Column="1" Margin="0 7 15 2" Width="50" Height="50" Stretch="Fill" HorizontalAlignment="Right" Source="Resources/logoPePlex.png" />
+
+                </Grid>
+            </Grid>
+
+            <Grid Grid.Row="1" Background="{StaticResource DarkGrayBrush}" Width="150" HorizontalAlignment="Right" >
+                <Grid.RenderTransform>
+                    <TranslateTransform x:Name="translate1" X="0" />
+                </Grid.RenderTransform>
+
+                <Grid.RowDefinitions>
+                    <RowDefinition />
+                    <RowDefinition />
+                    <RowDefinition />
+                    <RowDefinition />
+                    <RowDefinition />
+                </Grid.RowDefinitions>
+
+                <panels:MenuProfileControl Grid.Row="0" Margin="20 10" x:Name="ProfileControl" Tag="Perfil"/>
+                <panels:MenuFilmControl Grid.Row="1" Margin="20 10" Tag="Film" MouseLeftButtonDown="MenuMouseLeftDown"/>
+                <panels:MenuSerieControl Grid.Row="2" Margin="20 10" Tag="Serie" MouseLeftButtonDown="MenuMouseLeftDown"/>
+                <panels:MenuSearchControl Grid.Row="3" Margin="20 10" Tag="Search" MouseLeftButtonDown="MenuMouseLeftDown"/>
+                <panels:MenuConfigControl Grid.Row="4" Margin="20 10" Tag="Config" MouseLeftButtonDown="MenuMouseLeftDown"/>
+            </Grid>
+        </Grid>
+    </Viewbox>
+</Window>

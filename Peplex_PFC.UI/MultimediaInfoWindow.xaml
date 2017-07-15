@@ -1,0 +1,109 @@
+﻿<Window x:Class="Peplex_PFC.UI.MultimediaInfoWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Peplex_PFC.UI"
+        xmlns:panels="clr-namespace:Peplex_PFC.UI.Panels"
+        xmlns:utils="clr-namespace:Utils;assembly=Utils"
+        mc:Ignorable="d"
+        Title="MainWindow"
+        WindowStyle="None" 
+        ShowInTaskbar="false"
+        WindowState="Maximized"
+        SizeToContent="WidthAndHeight"
+        PreviewKeyDown="MultimediaInfoWindowPreviewKeyDown"
+        Activated="MultimediainfoActivated">
+
+    <Viewbox Stretch="Fill">
+        <Grid Name="MainGrid"  Width="1200" Height="640" Background="{StaticResource LightGrayBrush}">
+            <Grid.Resources>
+                <utils:ByteToImageConverter x:Key="BinImageConverter"/>
+                <utils:SeenToFillDarkColorConvert x:Key="SeenToFillDarkColorConvert"/>
+                <utils:SeenToFillLightColorConvert x:Key="SeenToFillLightColorConvert"/>
+            </Grid.Resources>
+            
+            <Grid.RowDefinitions>
+                <RowDefinition Height="60"/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+
+            <Grid Grid.Row="0" Grid.Column="0" Background="{StaticResource DarkGrayBrush}">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition/>
+                        <ColumnDefinition Width="0.3*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <Label Grid.Column="0" Margin="10 2 0 2" Foreground="White" FontSize="20" FontFamily="Tahoma" VerticalAlignment="Center" Content="PEPLEX"/>
+
+                    <Image Grid.Column="1" Margin="0 2 10 2" Width="50" Height="50" Stretch="Fill" HorizontalAlignment="Right" Source="Resources/logoPePlex.png" />
+
+                </Grid>
+            </Grid>
+
+            <Grid Name="GMain" Grid.Row="1" Margin="20">
+
+                <DataGrid x:Name="dgMultimedia" Margin="20,20" AutoGenerateColumns="False" Background="Transparent" Opacity="0.5" Foreground="Black" FontFamily="Tahoma" FontSize="15" RowHeight="100" IsReadOnly="True" AllowDrop="False">
+                    <DataGrid.Columns>
+                        <DataGridTemplateColumn Header="" Width="SizeToCells" IsReadOnly="True">
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate>
+                                    <Image Source="{Binding Cover, Converter={StaticResource BinImageConverter}, IsAsync=True}" />
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>
+                        <DataGridTextColumn Binding="{Binding Title}" Header="Title" Width="*" MinWidth="30"/>
+                        <DataGridTextColumn Binding="{Binding Note}" Header="Note" Width="50" MinWidth="50" />
+                        <DataGridTemplateColumn Header="" Width="40" MinWidth="40" MaxWidth="40">
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate>
+                                    <Button Click="BtnPlayClick">
+                                        <Button.Content>
+                                            <StackPanel VerticalAlignment="Top" HorizontalAlignment="Left">
+                                                <panels:PlayControl Margin="0 0 20 20"/>
+                                            </StackPanel>
+                                        </Button.Content>
+                                    </Button>
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>
+                        <DataGridTemplateColumn Header="" Width="40" MinWidth="40" MaxWidth="40">
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate>
+                                    <Button Click="BtnSeenClick">
+                                        <Button.Content>
+                                            <StackPanel VerticalAlignment="Top" HorizontalAlignment="Left">
+                                                <Path Data="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zM12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z"  Stretch="Uniform" Height="20" Width="20">
+                                                    <Path.Fill>
+                                                        <LinearGradientBrush StartPoint="0, 0.5" EndPoint="1, 0.5">
+                                                            <GradientStop Offset="0.0" >
+                                                                <GradientStop.Color>
+                                                                    <MultiBinding Converter="{StaticResource SeenToFillDarkColorConvert}">
+                                                                        <Binding Path="Seen"/>
+                                                                    </MultiBinding>
+                                                                </GradientStop.Color>
+                                                            </GradientStop>
+                                                            <GradientStop Offset="1.0">
+                                                                <GradientStop.Color>
+                                                                    <MultiBinding Converter="{StaticResource SeenToFillLightColorConvert}">
+                                                                        <Binding Path="Seen"/>
+                                                                    </MultiBinding>
+                                                                </GradientStop.Color>
+                                                            </GradientStop>
+                                                        </LinearGradientBrush>
+                                                    </Path.Fill>
+                                                </Path>
+                                            </StackPanel>
+                                        </Button.Content>
+                                    </Button>
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>
+                    </DataGrid.Columns>
+                </DataGrid>
+
+            </Grid>
+        </Grid>
+    </Viewbox>
+</Window>

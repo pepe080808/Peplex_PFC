@@ -1,0 +1,348 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{92C6883A-58E8-49D5-BFDA-FBF72921B9EA}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Peplex_PFC.UI</RootNamespace>
+    <AssemblyName>Peplex_PFC.UI</AssemblyName>
+    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <WarningLevel>4</WarningLevel>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+    <PublishUrl>publish\</PublishUrl>
+    <Install>true</Install>
+    <InstallFrom>Disk</InstallFrom>
+    <UpdateEnabled>false</UpdateEnabled>
+    <UpdateMode>Foreground</UpdateMode>
+    <UpdateInterval>7</UpdateInterval>
+    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
+    <UpdatePeriodically>false</UpdatePeriodically>
+    <UpdateRequired>false</UpdateRequired>
+    <MapFileExtensions>true</MapFileExtensions>
+    <ApplicationRevision>0</ApplicationRevision>
+    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
+    <UseApplicationTrust>false</UseApplicationTrust>
+    <BootstrapperEnabled>true</BootstrapperEnabled>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject>
+    </StartupObject>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>logoPePlex.ico</ApplicationIcon>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="EmitMapper">
+      <HintPath>..\DLLs\EmitMapper.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Practices.Unity">
+      <HintPath>..\DLLs\Microsoft.Practices.Unity.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.ServiceModel" />
+    <Reference Include="System.ServiceModel.Channels" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Xml" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xaml">
+      <RequiredTargetFramework>4.0</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="WindowsBase" />
+    <Reference Include="PresentationCore" />
+    <Reference Include="PresentationFramework" />
+  </ItemGroup>
+  <ItemGroup>
+    <ApplicationDefinition Include="App.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </ApplicationDefinition>
+    <Compile Include="ConfigWindow.xaml.cs">
+      <DependentUpon>ConfigWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Config\PeplexConfig.cs" />
+    <Compile Include="FilmWindow.xaml.cs">
+      <DependentUpon>FilmWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Interfaces\IEpisodeServiceProxy.cs" />
+    <Compile Include="Interfaces\IFilmServiceProxy.cs" />
+    <Compile Include="Interfaces\IFormatServiceProxy.cs" />
+    <Compile Include="Interfaces\IGenreServiceProxy.cs" />
+    <Compile Include="Interfaces\ISerieServiceProxy.cs" />
+    <Compile Include="Interfaces\IUserServiceProxy.cs" />
+    <Compile Include="LoggingWindow.xaml.cs">
+      <DependentUpon>LoggingWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="MainWindow.xaml.cs">
+      <DependentUpon>MainWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="MenuSlideWindow.xaml.cs">
+      <DependentUpon>MenuSlideWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="MultimediaInfoWindow.xaml.cs">
+      <DependentUpon>MultimediaInfoWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="MultimediaWindow.xaml.cs">
+      <DependentUpon>MultimediaWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Panels\ConfigUserControl.xaml.cs">
+      <DependentUpon>ConfigUserControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Panels\CoverControl.xaml.cs">
+      <DependentUpon>CoverControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Panels\EyeControl.xaml.cs">
+      <DependentUpon>EyeControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Panels\MainWindowControl.xaml.cs">
+      <DependentUpon>MainWindowControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Panels\MenuConfigControl.xaml.cs">
+      <DependentUpon>MenuConfigControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Panels\MenuFilmControl.xaml.cs">
+      <DependentUpon>MenuFilmControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Panels\MenuProfileControl.xaml.cs">
+      <DependentUpon>MenuProfileControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Panels\MenuSearchControl.xaml.cs">
+      <DependentUpon>MenuSearchControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Panels\MenuSerieControl.xaml.cs">
+      <DependentUpon>MenuSerieControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Panels\NoteControl.xaml.cs">
+      <DependentUpon>NoteControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Panels\PlayControl.xaml.cs">
+      <DependentUpon>PlayControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Panels\SoundControl.xaml.cs">
+      <DependentUpon>SoundControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Proxies\ChannelFactoryFactory.cs" />
+    <Compile Include="Proxies\EpisodeServiceProxy.cs" />
+    <Compile Include="Proxies\FilmServiceProxy.cs" />
+    <Compile Include="Proxies\FormatServiceProxy.cs" />
+    <Compile Include="Proxies\GenreServiceProxy.cs" />
+    <Compile Include="Proxies\PrerequisitesCheckServiceProxy.cs" />
+    <Compile Include="Proxies\ProxyLogging.cs" />
+    <Compile Include="Proxies\SerieServiceProxy.cs" />
+    <Compile Include="Proxies\ServiceProxy.cs" />
+    <Compile Include="Proxies\UserServiceProxy.cs" />
+    <Compile Include="SerieWindow.xaml.cs">
+      <DependentUpon>SerieWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Shared\WebBrowserExtensions.cs" />
+    <Compile Include="Shared\WindowExtensions.cs" />
+    <Compile Include="SplashWindow.xaml.cs">
+      <DependentUpon>SplashWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UIO\EpisodeUIO.cs" />
+    <Compile Include="UIO\FilmUIO.cs" />
+    <Compile Include="UIO\FormatUIO.cs" />
+    <Compile Include="UIO\Generic.cs" />
+    <Compile Include="UIO\GenreUIO.cs" />
+    <Compile Include="UIO\MediaPlayerWindow.xaml.cs">
+      <DependentUpon>MediaPlayerWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UIO\SerieUIO.cs" />
+    <Compile Include="UIO\UserInterfaceObject.cs" />
+    <Compile Include="UIO\UserUIO.cs" />
+    <Compile Include="App.xaml.cs">
+      <DependentUpon>App.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="CompositionRoot.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Properties\AssemblyInfo.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <AppDesigner Include="Properties\" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Peplex_PFC.SL.InterfacesClasses\Peplex_PFC.SL.InterfacesClasses.csproj">
+      <Project>{85b4ffe7-5801-4b77-b257-2440a5f31ce5}</Project>
+      <Name>Peplex_PFC.SL.InterfacesClasses</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Utils\Utils.csproj">
+      <Project>{7B9F9F11-0467-4EC6-8EE9-5D71A7D6B4E1}</Project>
+      <Name>Utils</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <BootstrapperPackage Include=".NETFramework,Version=v4.5.2">
+      <Visible>False</Visible>
+      <ProductName>Microsoft .NET Framework 4.5.2 %28x86 and x64%29</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <Page Include="ConfigWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="FilmWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="LoggingWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="MainWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="MenuSlideWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="MultimediaInfoWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="MultimediaWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Panels\ConfigUserControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Panels\CoverControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Panels\EyeControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Panels\MainWindowControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Panels\MenuConfigControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Panels\MenuFilmControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Panels\MenuProfileControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Panels\MenuSearchControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Panels\MenuSerieControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Panels\NoteControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Panels\PlayControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Panels\SoundControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="SerieWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="SplashWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UIO\MediaPlayerWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\logoPePlex.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\SpinnerMask.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="logoPePlex.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\DefaultProfile.png" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

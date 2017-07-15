@@ -1,0 +1,115 @@
+﻿<Window x:Class="Peplex_PFC.UI.FilmWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Peplex_PFC.UI"
+        xmlns:panels="clr-namespace:Peplex_PFC.UI.Panels"
+        mc:Ignorable="d"
+        Title="FilmWindow"
+        WindowStyle="None" 
+        AllowsTransparency="False"
+        ShowInTaskbar="False"
+        WindowState="Maximized"
+        SizeToContent="WidthAndHeight"
+        PreviewKeyDown="FilmWindowPreviewKeyDown"
+        Loaded="FilmWindowLoad"
+        Closed="FilmWindowClosed"
+        Closing="FilmWindowClosing">
+
+    <Viewbox Stretch="Fill">
+        <Grid Name="MainGrid"  Width="1200" Height="640">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="60"/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+
+            <Grid Grid.Row="0" Background="{StaticResource DarkGrayBrush}">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition/>
+                        <ColumnDefinition Width="0.3*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <Label Grid.Column="0" Margin="10 2 0 2" Foreground="White" FontSize="20" FontFamily="Tahoma" VerticalAlignment="Center" Content="PEPLEX"/>
+
+                    <Image Grid.Column="1" Margin="0 2 10 2" Width="50" Height="50" Stretch="Fill" HorizontalAlignment="Right" Source="Resources/logoPePlex.png" />
+
+                </Grid>
+            </Grid>
+
+            <Grid Name="GMain" Grid.Row="1" Margin="0" Visibility="Visible" Background="{StaticResource BlackTransparentBrush}">
+                <Grid.RowDefinitions>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition Height="2*"/>
+                </Grid.RowDefinitions>
+
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition Width="3*"/>
+                </Grid.ColumnDefinitions>
+
+                <Grid Name="GCover" Grid.Row="0" RowSpan="3" Grid.Column="0" Margin="0 10 0 0">
+                    <Grid.RowDefinitions>
+                        <RowDefinition/>
+                        <RowDefinition Height="0.2*"/>
+                    </Grid.RowDefinitions>
+
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition/>
+                        <ColumnDefinition Width="0.3*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <Image Name="ImgCover" Grid.Row="0" Grid.Column="0" Stretch="Uniform" Margin="2 5 2 5" HorizontalAlignment="Center" VerticalAlignment="Center" MouseDown="ImgCoverMouseDown" ToolTip="Haga doble click para reproducir"/>
+
+                    <Grid Grid.Row="1" Grid.Column="0" Margin="10 0 0 0">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition/>
+                            <ColumnDefinition/>
+                            <ColumnDefinition/>
+                            <ColumnDefinition/>
+                            <ColumnDefinition/>
+                        </Grid.ColumnDefinitions>
+
+                        <panels:NoteControl x:Name="NoteStar1" Grid.Column="0"/>
+                        <panels:NoteControl x:Name="NoteStar2" Grid.Column="1"/>
+                        <panels:NoteControl x:Name="NoteStar3" Grid.Column="2"/>
+                        <panels:NoteControl x:Name="NoteStar4" Grid.Column="3"/>
+                        <panels:NoteControl x:Name="NoteStar5" Grid.Column="4"/>
+                    </Grid>
+
+                    <Grid Grid.Row="0" Grid.Column="1">
+                        <Grid.RowDefinitions>
+                            <RowDefinition/>
+                            <RowDefinition/>
+                            <RowDefinition/>
+                            <RowDefinition/>
+                        </Grid.RowDefinitions>
+
+                        <panels:EyeControl x:Name="EyeControl" Grid.Row="0" PreviewMouseLeftButtonDown="EyeControlClick"/>
+                        <panels:SoundControl x:Name="SoundControl" Grid.Row="1" PreviewMouseLeftButtonDown="SoundControlClick"/>
+                        <MediaElement Name="MeMusic" Grid.Row="2" Visibility="Collapsed" LoadedBehavior="Manual"  Tag="Play"/>
+                    </Grid>
+                </Grid>
+
+                <Grid Name="GInfo" Grid.Row="0" Grid.RowSpan="2" Grid.Column="1" Margin="0 10 0 0">
+                    <Grid.RowDefinitions>
+                        <RowDefinition />
+                        <RowDefinition />
+                        <RowDefinition Height="2.5*"/>
+                    </Grid.RowDefinitions>
+
+                    <Label Name="LblTitle" Grid.Row="0" Margin="10 2 0 2" Background="Transparent" Foreground="White" FontSize="32" FontFamily="Tahoma" VerticalAlignment="Center" Content="Title"/>
+                    <Label Name="LblSubtitle" Grid.Row="1" Margin="10 2 0 2" Background="Transparent" Foreground="White" FontSize="28" FontFamily="Tahoma" VerticalAlignment="Center" Content="Subtitle"/>
+                    <TextBlock Grid.Row="2" Name="TxtSynopsis" Margin="10 2 0 2" Background="Transparent" Foreground="White" FontSize="23" FontFamily="Tahoma" VerticalAlignment="Top" Text="Synopsis" ScrollViewer.VerticalScrollBarVisibility="Auto"/>
+                </Grid>
+
+                <WebBrowser x:Name="Wbtrailer" Grid.Row="2" Grid.RowSpan="2" Grid.Column="1" Margin="0" Width="360" Height="240"/>
+
+            </Grid>
+
+        </Grid>
+    </Viewbox>
+</Window>
