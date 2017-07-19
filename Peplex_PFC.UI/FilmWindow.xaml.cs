@@ -115,7 +115,7 @@ namespace Peplex_PFC.UI
         {
             if (e.ChangedButton == MouseButton.Left && e.ClickCount == 2)
             {
-                MessageBox.Show("REPRODUCIR");
+                MessageBox.Show("REPRODUCIRRR");
                 EyeControl.Value = true;
             }
         }
