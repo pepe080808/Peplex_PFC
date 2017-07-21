@@ -7,7 +7,7 @@
       d:DesignHeight="300" d:DesignWidth="450"
              Loaded="ConfigUserControlLoaded">
 
-    <Grid>
+    <Grid Name="GMain">
         <Grid.RowDefinitions>
             <RowDefinition/>
             <RowDefinition/>

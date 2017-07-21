@@ -1,25 +1,23 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.IO;
+using System.ComponentModel;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
+using System.Windows.Threading;
 using Microsoft.Win32;
 using Peplex_PFC.UI.Config;
+using Peplex_PFC.UI.Interfaces;
+using Peplex_PFC.UI.Proxies;
+using Peplex_PFC.UIO;
+using Utils;
 
 namespace Peplex_PFC.UI.Panels
 {
     public partial class ConfigUserControl
     {
+        private WaitCursor _wc;
 
         public ConfigUserControl()
         {
@@ -43,23 +41,7 @@ namespace Peplex_PFC.UI.Panels
                 TxtName.Text = PeplexConfig.Instance.CurrentUser.Name;
                 TxtEmail.Text = PeplexConfig.Instance.CurrentUser.Email;
                 CbPermissions.SelectedIndex = PeplexConfig.Instance.CurrentUser.Permissions;
-
-                var photo = PeplexConfig.Instance.CurrentUser.Photo;
-                if (photo != null)
-                {
-                    var memStream = new MemoryStream();
-                    memStream.Write(photo, 0, photo.Length);
-                    memStream.Seek(0, SeekOrigin.Begin);
-
-                    var img = new BitmapImage();
-                    img.BeginInit();
-                    img.StreamSource = memStream;
-                    img.EndInit();
-
-                    ImgProfile.Source = img;
-                }
-                else
-                    ImgProfile.Source = null;
+                ImgProfile.Source = PeplexUtils.ConvertByteArrayToBitmapImage(PeplexConfig.Instance.CurrentUser.Photo);
             }
             
         }
@@ -74,11 +56,56 @@ namespace Peplex_PFC.UI.Panels
 
         }
 
+        #region Editar
         private void BntEditClick(object sender, RoutedEventArgs e)
         {
-
+            if (!string.IsNullOrWhiteSpace(TxtCurrentPass.Text) && !string.IsNullOrWhiteSpace(TxtNewPass.Text))
+                EditUser();
         }
 
+        private void EditUser()
+        {
+            _wc = new WaitCursor();
+            GMain.IsEnabled = false;
+
+            var bw = new BackgroundWorker();
+            bw.DoWork += EditUserOnDoWork;
+            bw.RunWorkerCompleted += EditUserRunWorkerCompleted;
+            bw.RunWorkerAsync();
+        }
+
+        private void EditUserOnDoWork(object sender, DoWorkEventArgs e)
+        {
+            var proxyContext = new ProxyContext();
+
+            var users = CompositionRoot.Instance.Resolve<IUserServiceProxy>().FindAll(proxyContext).ToList();
+
+            if (proxyContext.HasErrors)
+                e.Result = proxyContext;
+            else
+            {
+                e.Result = users;
+            }
+        }
+
+        private void EditUserRunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
+        {
+            Dispatcher.BeginInvoke(new Action(() => { _wc.Dispose(); /*_bussy.Hide();*/ GInfo.IsEnabled = true; TxtUser.Focus(); }), DispatcherPriority.ApplicationIdle);
+
+            if (e.Result is ProxyContext)
+            {
+                (e.Result as ProxyContext).ShowErrors(Window.GetWindow(Parent));
+                return;
+            }
+
+            var result = e.Result as List<UserUIO>;
+
+            if (result == null)
+                return;
+
+            Users.AddRange(result);
+        }
+        #endregion
         private void BntDeleteClick(object sender, RoutedEventArgs e)
         {
         }
@@ -92,40 +119,14 @@ namespace Peplex_PFC.UI.Panels
                     return;
 
                 string strImagen = dialog.FileName;
+                var bitmapImage = new BitmapImage(new Uri(strImagen));
 
-                var image = new BitmapImage(new Uri(strImagen));
-
-                byte[] data;
-                JpegBitmapEncoder encoder = new JpegBitmapEncoder();
-                encoder.Frames.Add(BitmapFrame.Create(image));
-                using (MemoryStream ms = new MemoryStream())
-                {
-                    encoder.Save(ms);
-                    data = ms.ToArray();
-                }
-
-                PeplexConfig .Instance.CurrentUser.Photo = data;
-
-                var photo = PeplexConfig.Instance.CurrentUser.Photo;
-                if (photo != null)
-                {
-                    var memStream = new MemoryStream();
-                    memStream.Write(photo, 0, photo.Length);
-                    memStream.Seek(0, SeekOrigin.Begin);
-
-                    var img = new BitmapImage();
-                    img.BeginInit();
-                    img.StreamSource = memStream;
-                    img.EndInit();
-
-                    ImgProfile.Source = img;
-                }
-                else
-                    ImgProfile.Source = null;
+                PeplexConfig.Instance.CurrentUser.Photo = PeplexUtils.ConvertBitmapImageToByteArray(bitmapImage);
+                ImgProfile.Source = PeplexUtils.ConvertByteArrayToBitmapImage(PeplexConfig.Instance.CurrentUser.Photo);
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message.ToString() + "\nEl archivo seleccionado no es un tipo de imagen válido");
+                MessageBox.Show(ex.Message + "\nEl archivo seleccionado no es un tipo de imagen válido");
             }
         }
     }

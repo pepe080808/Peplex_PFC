@@ -1,13 +1,24 @@
-﻿using System.Windows;
+﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Linq;
+using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using System.Windows.Threading;
 using Peplex_PFC.UI.Config;
+using Peplex_PFC.UI.Interfaces;
+using Peplex_PFC.UI.Proxies;
 using Peplex_PFC.UI.UIO;
+using Peplex_PFC.UIO;
+using Utils;
 
 namespace Peplex_PFC.UI
 {
     public partial class MultimediaInfoWindow
     {
+        private WaitCursor _wc;
+
         private string _strTag;
         public string StrTag
         {
@@ -18,6 +29,126 @@ namespace Peplex_PFC.UI
         public MultimediaInfoWindow()
         {
             InitializeComponent();
+        }
+
+        #region Load data
+        private void MultimediainfoActivated(object sender, System.EventArgs e)
+        {
+            switch (StrTag)
+            {
+                case "Film":
+                    LoadDataFilms();
+                    break;
+                case "Serie":
+                    LoadDataSeries();
+                    break;
+            }
+        }
+
+        private void CheckSeenSerie(List<SerieUIO> series)
+        {
+            foreach (var se in series)
+                se.Seen = PeplexConfig.Instance.CurrentUser.SerieSeen.Contains(se.Id);
+        }
+
+        private void LoadDataFilms()
+        {
+            _wc = new WaitCursor();
+
+            var bw = new BackgroundWorker();
+            bw.DoWork += LoadDataFilmsOnDoWork;
+            bw.RunWorkerCompleted += LoadDataFilmsRunWorkerCompleted;
+            bw.RunWorkerAsync();
+        }
+
+        private void LoadDataFilmsOnDoWork(object sender, DoWorkEventArgs e)
+        {
+            var proxyContext = new ProxyContext();
+
+            var films = CompositionRoot.Instance.Resolve<IFilmServiceProxy>().FindAll(proxyContext).ToList();
+
+            if (proxyContext.HasErrors)
+                e.Result = proxyContext;
+            else
+                e.Result = new List<FilmUIO>(films);
+        }
+
+        private void LoadDataFilmsRunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
+        {
+            Dispatcher.BeginInvoke(new Action(() => { _wc.Dispose(); /*_bussy.Hide();*/ }), DispatcherPriority.ApplicationIdle);
+
+            if (e.Result is ProxyContext)
+            {
+                (e.Result as ProxyContext).ShowErrors(Window.GetWindow(Parent));
+                return;
+            }
+
+            var result = e.Result as List<FilmUIO>;
+
+            if (result == null)
+                return;
+
+            CheckSeenFilm(result);
+            dgMultimedia.ItemsSource = result;
+        }
+
+        private void CheckSeenFilm(List<FilmUIO> films)
+        {
+            foreach (var fi in films)
+                fi.Seen = PeplexConfig.Instance.CurrentUser.FilmSeen.Contains(fi.Id);
+        }
+
+        private void LoadDataSeries()
+        {
+            _wc = new WaitCursor();
+
+            var bw = new BackgroundWorker();
+            bw.DoWork += LoadDataSeriesOnDoWork;
+            bw.RunWorkerCompleted += LoadDataSeriesRunWorkerCompleted;
+            bw.RunWorkerAsync();
+        }
+
+        private void LoadDataSeriesOnDoWork(object sender, DoWorkEventArgs e)
+        {
+            var proxyContext = new ProxyContext();
+
+            var series = CompositionRoot.Instance.Resolve<ISerieServiceProxy>().FindAll(proxyContext).ToList();
+
+            if (proxyContext.HasErrors)
+                e.Result = proxyContext;
+            else
+                e.Result = new List<SerieUIO>(series);
+        }
+
+        private void LoadDataSeriesRunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
+        {
+            Dispatcher.BeginInvoke(new Action(() => { _wc.Dispose(); /*_bussy.Hide();*/ }), DispatcherPriority.ApplicationIdle);
+
+            if (e.Result is ProxyContext)
+            {
+                (e.Result as ProxyContext).ShowErrors(Window.GetWindow(Parent));
+                return;
+            }
+
+            var result = e.Result as List<SerieUIO>;
+
+            if (result == null)
+                return;
+
+            CheckSeenSerie(result);
+            dgMultimedia.ItemsSource = result;
+        }
+        #endregion
+
+        #region Events
+        private void MultimediaInfoWindowPreviewKeyDown(object sender, KeyEventArgs e)
+        {
+            switch (e.Key)
+            {
+                case Key.Escape:
+                    Close();
+                    break;
+            }
         }
 
         private void BtnPlayClick(object sender, RoutedEventArgs e)
@@ -73,42 +204,7 @@ namespace Peplex_PFC.UI
                     break;
             }
         }
+        #endregion
 
-        private void CheckSeenSerie()
-        {
-            foreach (var se in PeplexConfig.Instance.Series)
-                se.Seen = PeplexConfig.Instance.CurrentUser.SerieSeen.Contains(se.Id);
-        }
-
-        private void CheckSeenFilm()
-        {
-            foreach (var fi in PeplexConfig.Instance.Films)
-                fi.Seen = PeplexConfig.Instance.CurrentUser.FilmSeen.Contains(fi.Id);
-        }
-
-        private void MultimediaInfoWindowPreviewKeyDown(object sender, KeyEventArgs e)
-        {
-            switch (e.Key)
-            {
-                case Key.Escape:
-                    Close();
-                    break;
-            }
-        }
-
-        private void MultimediainfoActivated(object sender, System.EventArgs e)
-        {
-            switch (StrTag)
-            {
-                case "Film":
-                    CheckSeenFilm();
-                    dgMultimedia.ItemsSource = PeplexConfig.Instance.Films;
-                    break;
-                case "Serie":
-                    CheckSeenSerie();
-                    dgMultimedia.ItemsSource = PeplexConfig.Instance.Series;
-                    break;
-            }
-        }
     }
 }

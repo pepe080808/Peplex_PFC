@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         mc:Ignorable="d"
         Title="LogginghWindow"
-        ShowInTaskbar="True" 
+        ShowInTaskbar="False" 
         WindowStartupLocation="CenterScreen"
         WindowStyle="None" 
         ResizeMode="NoResize" 

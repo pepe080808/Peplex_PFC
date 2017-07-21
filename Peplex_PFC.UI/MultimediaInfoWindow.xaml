@@ -44,7 +44,7 @@
 
             <Grid Name="GMain" Grid.Row="1" Margin="20">
 
-                <DataGrid x:Name="dgMultimedia" Margin="20,20" AutoGenerateColumns="False" Background="Transparent" Opacity="0.5" Foreground="Black" FontFamily="Tahoma" FontSize="15" RowHeight="100" IsReadOnly="True" AllowDrop="False">
+                <DataGrid x:Name="dgMultimedia" Margin="20,20" Background="{StaticResource LightGrayBrush}" AutoGenerateColumns="False" RowHeight="100" IsReadOnly="True">
                     <DataGrid.Columns>
                         <DataGridTemplateColumn Header="" Width="SizeToCells" IsReadOnly="True">
                             <DataGridTemplateColumn.CellTemplate>

@@ -1,13 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Windows;
-using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media.Animation;
-using System.Windows.Media.Imaging;
 using Peplex_PFC.UI.Config;
-using Peplex_PFC.UI.Panels;
+using Utils;
 
 namespace Peplex_PFC.UI
 {
@@ -61,21 +58,6 @@ namespace Peplex_PFC.UI
             EnteredOption = command;
             switch (command)
             {
-                //case "Profile":
-                //    MessageBox.Show("Profile");
-                //    break;
-                //case "Film":
-                //    MessageBox.Show("Film");
-                //    break;
-                //case "Serie":
-                //    MessageBox.Show("Serie");
-                //    break;
-                //case "Multimedia":
-                //    MessageBox.Show("Multimedia");
-                //    break;
-                //case "Config":
-                //    MessageBox.Show("Config");
-                //    break;
                 case "ESC":
                     {
                         if (_closing)
@@ -106,22 +88,8 @@ namespace Peplex_PFC.UI
         private void PadWindowLoaded(object sender, RoutedEventArgs e)
         {
             var photo = PeplexConfig.Instance.CurrentUser.Photo;
-            if (photo != null)
-            {
-                var memStream = new MemoryStream();
-                memStream.Write(photo, 0, photo.Length);
-                memStream.Seek(0, SeekOrigin.Begin);
 
-                var img = new BitmapImage();
-                img.BeginInit();
-                img.StreamSource = memStream;
-                img.EndInit();
-
-                ProfileControl.Img = img;
-            }
-            else
-                ProfileControl.Img = null;
-
+            ProfileControl.Img = PeplexUtils.ConvertByteArrayToBitmapImage(photo);
             ProfileControl.StrNick = PeplexConfig.Instance.CurrentUser.NickName ?? "";
         }
     }

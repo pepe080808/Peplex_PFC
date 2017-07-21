@@ -22,79 +22,22 @@ namespace Peplex_PFC.UI
     public partial class LoggingWindow
     {
         const int MAX_OPPORTUNITIES = 3;
-        private int __oportunidades = 0;
+        private int __oportunidades;
 
-        public List<FilmUIO> Films { get; private set; }
-        public List<SerieUIO> Series { get;  private set; }
-        public List<UserUIO> Users { get; private set; }
+        private List<UserUIO> _users { get; set; }
 
         //private WaitIndicatorOnThread _bussy;
         private WaitCursor _wc;
 
-        public LoggingWindow()
+        public LoggingWindow(List<UserUIO> users)
         {
-            Users = new List<UserUIO>();
-            Series = new List<SerieUIO>();
-            Films = new List<FilmUIO>();
-
+            _users = users;
             InitializeComponent();
         }
 
-        private void PasswordClick(object sender, MouseButtonEventArgs e)
-        {
-            var user = Users.FirstOrDefault(u => u.NickName.Equals(TxtUser.Text, StringComparison.CurrentCultureIgnoreCase));
-
-            //Si existe el usuario
-            if (user != null)
-            {
-                SendEmail(user);
-            }
-            else
-            {
-                MessageBox.Show("El usuario introducido no existe", "AVISO", MessageBoxButton.OK, MessageBoxImage.Warning);
-            } 
-        }
-
-        private void BtnOkClick(object sender, RoutedEventArgs e)
-        {
-            //Si las cajas de texto no están vacias y tiene información introducida por el usuario
-            //if (!String.IsNullOrEmpty(TxtUser.Text) && !String.IsNullOrEmpty(TxtPass.Password))
-            //{
-            if (String.IsNullOrEmpty(TxtUser.Text)) TxtUser.Text = "";
-            if (String.IsNullOrEmpty(TxtPass.Password)) TxtPass.Password = "";
-
-            var currentUser = Users.FirstOrDefault(u => u.NickName.Equals(TxtUser.Text, StringComparison.CurrentCultureIgnoreCase) && u.Password.Equals(TxtPass.Password, StringComparison.CurrentCultureIgnoreCase));
-            if (currentUser != null)
-            {
-                LoadData(currentUser);
-            }
-            else
-            {
-                __oportunidades++;
-                MessageBox.Show("Usuario y Contraseña no validos.\nIntentos : " + __oportunidades + "/" + MAX_OPPORTUNITIES + ".", " ", MessageBoxButton.OK, MessageBoxImage.Exclamation);
-                if (__oportunidades == MAX_OPPORTUNITIES)
-                    Application.Current.Shutdown();
-            }
-            //}
-            //else
-            //{
-            //    MessageBox.Show("Campos obligatorios vacios", " ", MessageBoxButton.OK, MessageBoxImage.Exclamation);
-            //}
-        }
-
-        private void LoggingWindowPreviewKeyDown(object sender, KeyEventArgs e)
-        {
-            switch (e.Key)
-            {
-                case Key.Escape:
-                    Application.Current.Shutdown();
-                    break;
-            }
-        }
-
+        #region Load user data
         private void LogginghWindowLoad(object sender, RoutedEventArgs e)
         {
-            Owner.Hide();
             LoadDataUsers();
             TxtUser.Focus();
         }
@@ -139,7 +82,31 @@ namespace Peplex_PFC.UI
             if (result == null)
                 return;
 
-            Users.AddRange(result);
+            _users = result;
+        }
+        #endregion
+
+        #region Enter application
+        private void BtnOkClick(object sender, RoutedEventArgs e)
+        {
+            if (String.IsNullOrEmpty(TxtUser.Text))
+                TxtUser.Text = "";
+
+            if (String.IsNullOrEmpty(TxtPass.Password))
+                TxtPass.Password = "";
+
+            var currentUser = _users.FirstOrDefault(u => u.NickName.Equals(TxtUser.Text, StringComparison.CurrentCultureIgnoreCase) && u.Password.Equals(TxtPass.Password, StringComparison.CurrentCultureIgnoreCase));
+            if (currentUser != null)
+            {
+                LoadData(currentUser);
+            }
+            else
+            {
+                __oportunidades++;
+                MessageBox.Show("Usuario y Contraseña no validos.\nIntentos : " + __oportunidades + "/" + MAX_OPPORTUNITIES + ".", " ", MessageBoxButton.OK, MessageBoxImage.Exclamation);
+                if (__oportunidades == MAX_OPPORTUNITIES)
+                    Application.Current.Shutdown();
+            }
         }
 
         private void LoadData(UserUIO user)
@@ -160,14 +127,12 @@ namespace Peplex_PFC.UI
             var o = e.Argument as dynamic;
             var proxyContext = new ProxyContext();
 
-            var films = CompositionRoot.Instance.Resolve<IFilmServiceProxy>().FindAll(proxyContext).ToList();
-            var series = CompositionRoot.Instance.Resolve<ISerieServiceProxy>().FindAll(proxyContext).ToList();
             var user = CompositionRoot.Instance.Resolve<IUserServiceProxy>().Single(proxyContext, o.UserId);
 
             if (proxyContext.HasErrors)
                 e.Result = proxyContext;
             else
-                e.Result = new Tuple<List<FilmUIO>, List<SerieUIO>, UserUIO>(films, series, user);
+                e.Result = user;
         }
 
         private void LoadDataRunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
@@ -180,33 +145,31 @@ namespace Peplex_PFC.UI
                 return;
             }
 
-            var result = e.Result as Tuple<List<FilmUIO>, List<SerieUIO>, UserUIO>;
+            var result = e.Result as UserUIO;
 
             if (result == null)
                 return;
 
-            if (result.Item3.Photo == null)
-            {
-                var image = new BitmapImage(new Uri(Path.Combine(Environment.CurrentDirectory, "..\\..", "Resources\\DefaultProfile.png")));
+            if (result.Photo == null)
+                result.Photo = PeplexUtils.ConvertBitmapImageToByteArray(new BitmapImage(new Uri(Path.Combine(Environment.CurrentDirectory, "..\\..", "Resources\\DefaultProfile.png"))));
 
-                byte[] data;
-                JpegBitmapEncoder encoder = new JpegBitmapEncoder();
-                encoder.Frames.Add(BitmapFrame.Create(image));
-                using (MemoryStream ms = new MemoryStream())
-                {
-                    encoder.Save(ms);
-                    data = ms.ToArray();
-                }
+            PeplexConfig.Instance.CurrentUser = result;
 
-                result.Item3.Photo = data;
-            }
-
-            PeplexConfig.Instance.Films = result.Item1;
-            PeplexConfig.Instance.Series = result.Item2;
-            PeplexConfig.Instance.CurrentUser = result.Item3;
-
-            var child = new MainWindow {Owner = this};
+            var child = new MainWindow { Owner = this };
             child.Show();
+        }
+        #endregion
+
+        #region Password
+        private void PasswordClick(object sender, MouseButtonEventArgs e)
+        {
+            var user = _users.FirstOrDefault(u => u.NickName.Equals(TxtUser.Text, StringComparison.CurrentCultureIgnoreCase));
+
+            //Si existe el usuario
+            if (user != null)
+                SendEmail(user);
+            else
+                MessageBox.Show("El usuario introducido no existe", "AVISO", MessageBoxButton.OK, MessageBoxImage.Warning);
         }
 
         private void SendEmail(UserUIO user)
@@ -300,6 +263,18 @@ namespace Peplex_PFC.UI
             else
                 MessageBox.Show("No se envio el correo correctamente", "ERROR", MessageBoxButton.OK, MessageBoxImage.Error);
         }
+        #endregion
+
+        #region Events
+        private void LoggingWindowPreviewKeyDown(object sender, KeyEventArgs e)
+        {
+            switch (e.Key)
+            {
+                case Key.Escape:
+                    Application.Current.Shutdown();
+                    break;
+            }
+        }
 
         private void KeyUpTextBox(object sender, KeyEventArgs e)
         {
@@ -311,5 +286,6 @@ namespace Peplex_PFC.UI
                     BtnOk.Focus();
             }
         }
+        #endregion
     }
 }
