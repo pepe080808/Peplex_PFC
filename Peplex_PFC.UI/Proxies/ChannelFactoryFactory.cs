@@ -5,6 +5,7 @@ using System.ServiceModel;
 using System.ServiceModel.Channels;
 using System.Text;
 using System.Threading.Tasks;
+using Peplex_PFC.UI.Config;
 
 namespace Peplex_PFC.UI.Proxies
 {
@@ -16,7 +17,7 @@ namespace Peplex_PFC.UI.Proxies
         public ChannelFactoryFactory(Binding binding, string serviceName)
         {
             //var endpointUri = new Uri(String.Format("net.tcp://{0}:{1}/{2}", Config.HeadofficeConfig.Instance.SelectedServiceAddress, Config.HeadofficeConfig.Instance.ServiceLayerPort, serviceName));
-            var endpointUri = new Uri(String.Format("net.tcp://{0}:{1}/{2}", "192.168.1.9", 9090, serviceName));
+            var endpointUri = new Uri(String.Format("net.tcp://{0}:{1}/{2}", PeplexConfig.Instance.ServiceAddress, PeplexConfig.Instance.ServiceLayerPort, serviceName));
             var endpointAddress = new EndpointAddress(endpointUri);
 
             _binding = binding;

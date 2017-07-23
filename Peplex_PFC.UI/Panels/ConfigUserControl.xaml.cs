@@ -12,102 +12,123 @@ using Peplex_PFC.UI.Interfaces;
 using Peplex_PFC.UI.Proxies;
 using Peplex_PFC.UIO;
 using Utils;
+using Peplex_PFC.UI.UIO;
 
 namespace Peplex_PFC.UI.Panels
 {
     public partial class ConfigUserControl
     {
-        private WaitCursor _wc;
+        private List<UserUIO> _users;
+
+        public List<UserUIO> Users
+        {
+            get { return _users; }
+            set { _users = value;
+                UpdateUI();
+            }
+        }
+
+        private BitmapImage _currentBitmapImage;
 
         public ConfigUserControl()
         {
             InitializeComponent();
         }
 
-
         private void ConfigUserControlLoaded(object sender, RoutedEventArgs e)
         {
             if (PeplexConfig.Instance.CurrentUser.Permissions != 1)
-            {
-                //Pestaña usuarios
-                CbNickName.IsEnabled= false;
-                CbPermissions.IsEnabled = false;
-                //Botones
-                BtnAdd.Visibility = Visibility.Collapsed;
-                BtnDelete.Visibility = Visibility.Collapsed;
-
-                //rellenamos los campos con del usuario del apodo actual
-                CbNickName.Items.Add(PeplexConfig.Instance.CurrentUser.NickName);
-                TxtName.Text = PeplexConfig.Instance.CurrentUser.Name;
-                TxtEmail.Text = PeplexConfig.Instance.CurrentUser.Email;
-                CbPermissions.SelectedIndex = PeplexConfig.Instance.CurrentUser.Permissions;
-                ImgProfile.Source = PeplexUtils.ConvertByteArrayToBitmapImage(PeplexConfig.Instance.CurrentUser.Photo);
-            }
-            
+                CbNickName.IsEnabled = CbPermissions.IsEnabled = BtnAdd.IsEnabled = BtnDelete.IsEnabled = false;
         }
 
-        private void BntOkClick(object sender, RoutedEventArgs e)
+        private void UpdateUI()
         {
+            if (Users != null)
+            {
+                // Rellenamos el ComboBox con los NickName de los usuarios
+                CbNickName.ItemsSource = Users;
+                CbNickName.DisplayMemberPath = "NickName";
 
+                var index = Users.FindIndex(u => u.NickName == PeplexConfig.Instance.CurrentUser.NickName);
+                CbNickName.SelectedIndex = index;
+
+                AssignData();
+            }
+        }
+ 
+
+       private void CbNickNameSelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
+        {
+            AssignData();
+        }
+
+        private void AssignData()
+        {
+            TxtName.Text = Users[CbNickName.SelectedIndex].Name;
+            TxtEmail.Text = Users[CbNickName.SelectedIndex].Email;
+            CbPermissions.SelectedIndex = Users[CbNickName.SelectedIndex].Permissions;
+            ImgProfile.Source = PeplexUtils.ConvertByteArrayToBitmapImage(Users[CbNickName.SelectedIndex].Photo);
+            _currentBitmapImage = PeplexUtils.ConvertByteArrayToBitmapImage(Users[CbNickName.SelectedIndex].Photo);
         }
 
         private void BntAddClick(object sender, RoutedEventArgs e)
         {
+            var child = new ConfigUserAddWindow {Owner = Window.GetWindow(Parent)};
+            var result = child.ShowDialog();
 
+            if (result == true)
+            {
+                Users.Add(child.NewUser);
+                var index = Users.FindIndex(u => u.NickName == child.NewUser.NickName);
+                CbNickName.SelectedIndex = index;
+            }
         }
 
-        #region Editar
         private void BntEditClick(object sender, RoutedEventArgs e)
         {
             if (!string.IsNullOrWhiteSpace(TxtCurrentPass.Text) && !string.IsNullOrWhiteSpace(TxtNewPass.Text))
-                EditUser();
-        }
-
-        private void EditUser()
-        {
-            _wc = new WaitCursor();
-            GMain.IsEnabled = false;
-
-            var bw = new BackgroundWorker();
-            bw.DoWork += EditUserOnDoWork;
-            bw.RunWorkerCompleted += EditUserRunWorkerCompleted;
-            bw.RunWorkerAsync();
-        }
-
-        private void EditUserOnDoWork(object sender, DoWorkEventArgs e)
-        {
-            var proxyContext = new ProxyContext();
-
-            var users = CompositionRoot.Instance.Resolve<IUserServiceProxy>().FindAll(proxyContext).ToList();
-
-            if (proxyContext.HasErrors)
-                e.Result = proxyContext;
+            {
+                // Comprobamos que la contraseña actual es correcta y así permitir que la actualizace
+                if(Users[CbNickName.SelectedIndex].Password.Equals(TxtCurrentPass.Text))
+                    UpdateData(TxtNewPass.Text);
+                else
+                    MessageBox.Show("La contraseña actual es incorrecta. No se actualizarán los datos del usuario.", "Aviso", MessageBoxButton.OK, MessageBoxImage.Warning);
+            }
+            else if (string.IsNullOrWhiteSpace(TxtCurrentPass.Text) && string.IsNullOrWhiteSpace(TxtNewPass.Text))
+                    UpdateData("");
             else
-            {
-                e.Result = users;
-            }
+                MessageBox.Show("Los dos campos para la contraseña deben estar rellenos si desea modificarla", "Aviso", MessageBoxButton.OK, MessageBoxImage.Warning);
         }
 
-        private void EditUserRunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
+        private void UpdateData(string newPassword)
         {
-            Dispatcher.BeginInvoke(new Action(() => { _wc.Dispose(); /*_bussy.Hide();*/ GInfo.IsEnabled = true; TxtUser.Focus(); }), DispatcherPriority.ApplicationIdle);
-
-            if (e.Result is ProxyContext)
+            var editedUser = new UserUIO
             {
-                (e.Result as ProxyContext).ShowErrors(Window.GetWindow(Parent));
-                return;
-            }
+                Id = Users[CbNickName.SelectedIndex].Id,
+                NickName = Users[CbNickName.SelectedIndex].NickName,
+                Name = TxtEmail.Text,
+                Email = TxtEmail.Text,
+                Password = String.IsNullOrWhiteSpace(newPassword) ? Users[CbNickName.SelectedIndex].Password : newPassword,
+                Permissions = CbPermissions.SelectedIndex,
+                Photo = PeplexUtils.ConvertBitmapImageToByteArray(_currentBitmapImage)
+            };
 
-            var result = e.Result as List<UserUIO>;
+            CompositionRoot.Instance.Resolve<IUserServiceProxy>().Update(new ProxyContext(), editedUser);
 
-            if (result == null)
-                return;
-
-            Users.AddRange(result);
+            MessageBox.Show("Usuario actualizado con éxito.", "Info", MessageBoxButton.OK, MessageBoxImage.Information);
         }
-        #endregion
+
         private void BntDeleteClick(object sender, RoutedEventArgs e)
         {
+            if(Users[CbNickName.SelectedIndex].NickName.Equals(PeplexConfig.Instance.CurrentUser.NickName, StringComparison.CurrentCultureIgnoreCase))
+                MessageBox.Show("No se puede eliminar el usario con el que se ha iniciado sesión.", "Aviso", MessageBoxButton.OK, MessageBoxImage.Warning);
+            else
+            {
+                Users.RemoveAt(CbNickName.SelectedIndex);
+
+                var index = Users.FindIndex(u => u.NickName == PeplexConfig.Instance.CurrentUser.NickName);
+                CbNickName.SelectedIndex = index;
+            }
         }
 
         private void ImgProfileClick(object sender, MouseButtonEventArgs e)
@@ -120,14 +141,16 @@ namespace Peplex_PFC.UI.Panels
 
                 string strImagen = dialog.FileName;
                 var bitmapImage = new BitmapImage(new Uri(strImagen));
-
-                PeplexConfig.Instance.CurrentUser.Photo = PeplexUtils.ConvertBitmapImageToByteArray(bitmapImage);
-                ImgProfile.Source = PeplexUtils.ConvertByteArrayToBitmapImage(PeplexConfig.Instance.CurrentUser.Photo);
+                
+                ImgProfile.Source = bitmapImage;
+                _currentBitmapImage = bitmapImage;
             }
             catch (Exception ex)
             {
                 MessageBox.Show(ex.Message + "\nEl archivo seleccionado no es un tipo de imagen válido");
             }
         }
+
+       
     }
 }

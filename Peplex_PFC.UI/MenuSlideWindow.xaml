@@ -61,7 +61,7 @@
                 </Grid>
             </Grid>
 
-            <Grid Grid.Row="1" Background="{StaticResource DarkGrayBrush}" Width="150" HorizontalAlignment="Right" >
+            <Grid Name="MenuGrid" Grid.Row="1" Background="{StaticResource DarkGrayBrush}" Width="150" HorizontalAlignment="Right" >
                 <Grid.RenderTransform>
                     <TranslateTransform x:Name="translate1" X="0" />
                 </Grid.RenderTransform>

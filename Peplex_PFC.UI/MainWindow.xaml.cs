@@ -29,7 +29,6 @@ namespace Peplex_PFC.UI
             switch (e.Key)
             {
                 case Key.Escape:
-                    //PeplexConfig.Instance.Save();
                     Application.Current.Shutdown();
                     break;
             }
@@ -66,7 +65,7 @@ namespace Peplex_PFC.UI
 
         private void LoadDataRunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
-            Dispatcher.BeginInvoke(new Action(() => { _wc.Dispose(); /*_bussy.Hide();*/ }), DispatcherPriority.ApplicationIdle);
+            Dispatcher.BeginInvoke(new Action(() => {/* _wc.Dispose()*/; /*_bussy.Hide();*/ }), DispatcherPriority.ApplicationIdle);
 
             if (e.Result is ProxyContext)
             {

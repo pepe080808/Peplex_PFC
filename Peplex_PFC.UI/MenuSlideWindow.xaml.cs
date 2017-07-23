@@ -35,7 +35,7 @@ namespace Peplex_PFC.UI
             if (_closing)
                 return;
 
-            if (e.GetPosition(PadGrid).X < PadGrid.ActualWidth)
+            if (e.GetPosition(PadGrid).X < PadGrid.ActualWidth - MenuGrid.ActualWidth)
             {
                 _closing = true;
                 var animation = FindResource("PadHide") as Storyboard;

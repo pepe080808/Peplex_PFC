@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
-using System.Security;
 using System.Windows;
 using System.Windows.Input;
 using System.Windows.Threading;
@@ -60,9 +59,9 @@ namespace Peplex_PFC.UI
 
             if (o.Permissions == 1)
             {
-                films = CompositionRoot.Instance.Resolve<IFilmServiceProxy>().FindAll(proxyContext).ToList();
-                series = CompositionRoot.Instance.Resolve<ISerieServiceProxy>().FindAll(proxyContext).ToList();
-                users = CompositionRoot.Instance.Resolve<IUserServiceProxy>().FindAll(proxyContext).ToList();
+                films = CompositionRoot.Instance.Resolve<IFilmServiceProxy>().FindAll(proxyContext).OrderBy(f => f.Title).ToList();
+                series = CompositionRoot.Instance.Resolve<ISerieServiceProxy>().FindAll(proxyContext).OrderBy(s => s.Title).ToList();
+                users = CompositionRoot.Instance.Resolve<IUserServiceProxy>().FindAll(proxyContext).OrderBy(u => u.NickName).ToList();
             }
 
             if (proxyContext.HasErrors)
@@ -86,6 +85,10 @@ namespace Peplex_PFC.UI
             if (result == null)
                 return;
 
+            if (PeplexConfig.Instance.CurrentUser.Permissions == 1)
+            {
+                ControlUser.Users = result.Item3;
+            }
         }
         #endregion
 

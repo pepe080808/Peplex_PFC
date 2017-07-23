@@ -29,10 +29,9 @@
         <Label Grid.Row="4" Grid.Column="0" Content="Contraseña nueva:" Style="{StaticResource FieldLabelStyle}"/>
         <Label Grid.Row="5" Grid.Column="0" Content="Permisos:" Style="{StaticResource FieldLabelStyle}"/>
 
-        <ComboBox Name="CbNickName" Grid.Row="0" Grid.Column="1" Style="{StaticResource FieldComboBoxStyle}" Visibility="Visible"/>
-        <TextBox Name="TxtNickName" Grid.Row="0" Grid.Column="1" Margin="5" Style="{StaticResource FieldTextBoxStyle}" Visibility="Collapsed"/>
-        <TextBox Name="TxtEmail" Grid.Row="1" Grid.Column="1" Margin="5" Style="{StaticResource FieldTextBoxStyle}"/>
-        <TextBox Name="TxtName" Grid.Row="2" Grid.Column="1" Margin="5" Style="{StaticResource FieldTextBoxStyle}"/>
+        <ComboBox Name="CbNickName" Grid.Row="0" Grid.Column="1" Style="{StaticResource FieldComboBoxStyle}" Visibility="Visible" SelectionChanged="CbNickNameSelectionChanged"/>
+        <TextBox Name="TxtName" Grid.Row="1" Grid.Column="1" Margin="5" Style="{StaticResource FieldTextBoxStyle}"/>
+        <TextBox Name="TxtEmail" Grid.Row="2" Grid.Column="1" Margin="5" Style="{StaticResource FieldTextBoxStyle}"/>
         <TextBox Name="TxtCurrentPass" Grid.Row="3" Grid.Column="1" Margin="5" Style="{StaticResource FieldTextBoxStyle}"/>
         <TextBox Name="TxtNewPass"  Grid.Row="4" Grid.Column="1" Margin="5" Style="{StaticResource FieldTextBoxStyle}"/>
         <ComboBox Name="CbPermissions" Grid.Row="5" Grid.Column="1" SelectedIndex="0" Style="{StaticResource FieldComboBoxStyle}">
@@ -40,11 +39,10 @@
             <ComboBoxItem Content="1 - Administrador"/>
         </ComboBox>
 
-        <Button Name="BtnAdd" Grid.Row="3" Grid.Column="2" Margin="5" Content="Añadir" Click="BntAddClick" Height="30" Width="60" Visibility="Visible"/>
-        <Button Name="BtnEdit" Grid.Row="3" Grid.Column="2" Margin="5" Content="Editar" Click="BntEditClick" Height="30" Width="60" Visibility="Hidden"/>
-        <Button Name="BtnDelete" Grid.Row="4" Grid.Column="2" Margin="5" Content="Eliminar" Click="BntDeleteClick" Height="30" Width="60"/>
-        <Button Name="BtnOk" Grid.Row="5" Grid.Column="2" Margin="5" Content="_Ok" Click="BntOkClick" Height="30" Width="60"/>
+        <Button Name="BtnAdd" Grid.Row="3" Grid.Column="2" Margin="5" Content="Añadir" Click="BntAddClick" Height="30" Width="60"/>
+        <Button Name="BtnEdit" Grid.Row="4" Grid.Column="2" Margin="5" Content="Editar" Click="BntEditClick" Height="30" Width="60"/>
+        <Button Name="BtnDelete" Grid.Row="5" Grid.Column="2" Margin="5" Content="Eliminar" Click="BntDeleteClick" Height="30" Width="60"/>
         
-        <Image Name="ImgProfile" Grid.Row="0" Grid.Column="2" Grid.RowSpan="1" VerticalAlignment="Center"  Height="80" Width="80" MouseLeftButtonDown="ImgProfileClick"/>
+        <Image Name="ImgProfile" Grid.Row="0" Grid.RowSpan="2" Grid.Column="2" VerticalAlignment="Center" Height="80" Width="80" MouseLeftButtonDown="ImgProfileClick" />
     </Grid>
 </UserControl>

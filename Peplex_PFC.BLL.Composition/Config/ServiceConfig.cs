@@ -50,14 +50,21 @@ namespace Peplex_PFC.BLL.Composition.Config
             set { _password = value; }
         }
 
-        private int _serviceLayerPort;
+        private int _serviceLayerPort = 9090;
         public int ServiceLayerPort
         {
             get { return _serviceLayerPort; }
             set { _serviceLayerPort = value; }
         }
 
-        private int _externalPlatformRestApiPort;
+        private string _serviceAddress;
+        public string ServiceAddress
+        {
+            get { return _serviceAddress; }
+            set { _serviceAddress = value; }
+        }
+
+        private int _externalPlatformRestApiPort = 9095;
         public int ExternalPlatformRestApiPort
         {
             get { return _externalPlatformRestApiPort; }
@@ -202,15 +209,16 @@ namespace Peplex_PFC.BLL.Composition.Config
                 writer.WriteStartElement("configuration");
 
                 //writer.WriteElementString("Culture", _culture);
-                writer.WriteElementString("DataSource", _dataSource);
-                writer.WriteElementString("Catalog", _catalog);
-                writer.WriteElementString("User", _user);
-                writer.WriteElementString("Password", _password);
-                writer.WriteElementString("ServiceLayerPort", _serviceLayerPort.ToString());
-                writer.WriteElementString("ExternalPlatformRestApiPort", _externalPlatformRestApiPort.ToString());
+                writer.WriteElementString("dataSource", _dataSource);
+                writer.WriteElementString("catalog", _catalog);
+                writer.WriteElementString("user", _user);
+                writer.WriteElementString("password", _password);
+                writer.WriteElementString("serviceAddress", _serviceAddress);
+                writer.WriteElementString("serviceLayerPort", _serviceLayerPort.ToString());
+                writer.WriteElementString("externalPlatformRestApiPort", _externalPlatformRestApiPort.ToString());
                 //writer.WriteElementString("UpdatesBasePath", _updatesBasePath);
 
-                writer.WriteElementString("UpdateDB", UpdateDB.ToString());
+                writer.WriteElementString("updateDB", UpdateDB.ToString());
                 writer.WriteElementString("rootMainLocal", _rootMainLocal);
                 writer.WriteElementString("rootVideosLocal", _rootVideosLocal);
                 writer.WriteElementString("rootImageLocal", _rootImageLocal);
@@ -243,27 +251,31 @@ namespace Peplex_PFC.BLL.Composition.Config
                     //if (node != null)
                     //    _culture = node.InnerText;
 
-                    var node = document.SelectSingleNode("/configuration/DataSource");
+                    var node = document.SelectSingleNode("/configuration/dataSource");
                     if (node != null)
                         _dataSource = node.InnerText;
 
-                    node = document.SelectSingleNode("/configuration/Catalog");
+                    node = document.SelectSingleNode("/configuration/catalog");
                     if (node != null)
                         _catalog = node.InnerText;
 
-                    node = document.SelectSingleNode("/configuration/User");
+                    node = document.SelectSingleNode("/configuration/user");
                     if (node != null)
                         _user = node.InnerText;
 
-                    node = document.SelectSingleNode("/configuration/Password");
+                    node = document.SelectSingleNode("/configuration/password");
                     if (node != null)
                         _password = node.InnerText;
 
-                    node = document.SelectSingleNode("/configuration/ServiceLayerPort");
+                    node = document.SelectSingleNode("/configuration/serviceAddress");
+                    if (node != null && !String.IsNullOrEmpty(node.InnerText))
+                        _serviceAddress = node.InnerText;
+
+                    node = document.SelectSingleNode("/configuration/serviceLayerPort");
                     if (node != null && !String.IsNullOrEmpty(node.InnerText))
                         _serviceLayerPort = Convert.ToInt32(node.InnerText);
 
-                    node = document.SelectSingleNode("/configuration/ExternalPlatformRestApiPort");
+                    node = document.SelectSingleNode("/configuration/externalPlatformRestApiPort");
                     if (node != null && !String.IsNullOrEmpty(node.InnerText))
                         _externalPlatformRestApiPort = Convert.ToInt32(node.InnerText);
 
@@ -271,7 +283,7 @@ namespace Peplex_PFC.BLL.Composition.Config
                     //if (node != null && !String.IsNullOrEmpty(node.InnerText))
                     //    _updatesBasePath = node.InnerText;
 
-                    node = document.SelectSingleNode("/configuration/UpdateDB");
+                    node = document.SelectSingleNode("/configuration/updateDB");
                     if (node != null && !String.IsNullOrEmpty(node.InnerText))
                         _updateDB = Convert.ToInt32(node.InnerText);
 

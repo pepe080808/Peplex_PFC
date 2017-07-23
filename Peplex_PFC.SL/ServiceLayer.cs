@@ -36,7 +36,7 @@ namespace Peplex_PFC.SL
                 new ServiceEndpointDescriptor {ServiceType = typeof (PrerequisitesCheckService), InterfaceType = typeof (IPrerequisitesCheckService), ServiceName = "AvelonRMSPrerequisitesCheckService"},
             };
 
-            BuildEndpoints(services.ToArray(), 9090, "");
+            BuildEndpoints(services.ToArray(), ServiceConfig.Instance.ServiceLayerPort, "");
         }
 
         public static void BuildEndpoints(ServiceEndpointDescriptor[] endpointDescriptors, int servicePort, string certificateCommonName)
@@ -54,7 +54,7 @@ namespace Peplex_PFC.SL
                 var serviceHost = new ServiceHost(service.ServiceType);
 
                 // Add tcp endpoint
-                var tcpEndpoint = new ServiceEndpoint(contractDesc, binding, new EndpointAddress(new Uri(String.Format("net.tcp://192.168.1.9:{0}/{1}", servicePort, service.ServiceName))));
+                var tcpEndpoint = new ServiceEndpoint(contractDesc, binding, new EndpointAddress(new Uri(String.Format("net.tcp://locahost:{0}/{1}", servicePort, service.ServiceName))));
 
                 //((ServiceAuthenticationBehavior)serviceHost.Description.Behaviors[typeof(ServiceAuthenticationBehavior)]).ServiceAuthenticationManager = new RegularServiceHelper();
 

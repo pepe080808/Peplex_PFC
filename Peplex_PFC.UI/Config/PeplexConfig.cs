@@ -12,6 +12,27 @@ namespace Peplex_PFC.UI.Config
     [Serializable]
     public sealed class PeplexConfig
     {
+        private int _serviceLayerPort = 9090;
+        public int ServiceLayerPort
+        {
+            get { return _serviceLayerPort; }
+            set { _serviceLayerPort = value; }
+        }
+
+        private string _serviceAddress;
+        public string ServiceAddress
+        {
+            get { return _serviceAddress; }
+            set { _serviceAddress = value; }
+        }
+
+        private int _externalPlatformRestApiPort = 9095;
+        public int ExternalPlatformRestApiPort
+        {
+            get { return _externalPlatformRestApiPort; }
+            set { _externalPlatformRestApiPort = value; }
+        }
+
         private string _rootMainLocal;
         public string RootMainLocal
         {
@@ -122,6 +143,10 @@ namespace Peplex_PFC.UI.Config
                 writer.WriteStartDocument();
                 writer.WriteStartElement("configuration");
 
+                writer.WriteElementString("serviceAddress", _serviceAddress);
+                writer.WriteElementString("serviceLayerPort", _serviceLayerPort.ToString());
+                writer.WriteElementString("externalPlatformRestApiPort", _externalPlatformRestApiPort.ToString());
+
                 writer.WriteElementString("rootMainLocal", _rootMainLocal);
                 writer.WriteElementString("rootVideosLocal", _rootVideosLocal);
                 writer.WriteElementString("rootImageLocal", _rootImageLocal);
@@ -142,7 +167,7 @@ namespace Peplex_PFC.UI.Config
             // Rename the $$$ to the correct file...
             File.Move(FilePath() + "$$$", FilePath());
 
-            CompositionRoot.Instance.Resolve<IUserServiceProxy>().Update(new ProxyContext(), CurrentUser);
+            //CompositionRoot.Instance.Resolve<IUserServiceProxy>().Update(new ProxyContext(), CurrentUser);
         }
 
         private void Load()
@@ -154,7 +179,19 @@ namespace Peplex_PFC.UI.Config
                     var document = new XmlDocument();
                     document.Load(fs);
 
-                    var node = document.SelectSingleNode("/configuration/rootMainLocal");
+                    var node = document.SelectSingleNode("/configuration/serviceAddress");
+                    if (node != null && !String.IsNullOrEmpty(node.InnerText))
+                        _serviceAddress = node.InnerText;
+
+                    node = document.SelectSingleNode("/configuration/serviceLayerPort");
+                    if (node != null && !String.IsNullOrEmpty(node.InnerText))
+                        _serviceLayerPort = Convert.ToInt32(node.InnerText);
+
+                    node = document.SelectSingleNode("/configuration/externalPlatformRestApiPort");
+                    if (node != null && !String.IsNullOrEmpty(node.InnerText))
+                        _externalPlatformRestApiPort = Convert.ToInt32(node.InnerText);
+
+                    node = document.SelectSingleNode("/configuration/rootMainLocal");
                     if (node != null)
                         _rootMainLocal = node.InnerText;
 

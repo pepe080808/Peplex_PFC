@@ -5,7 +5,6 @@ using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Mail;
-using System.Web.Security;
 using System.Windows;
 using System.Windows.Input;
 using System.Windows.Media.Imaging;
@@ -29,9 +28,8 @@ namespace Peplex_PFC.UI
         //private WaitIndicatorOnThread _bussy;
         private WaitCursor _wc;
 
-        public LoggingWindow(List<UserUIO> users)
+        public LoggingWindow()
         {
-            _users = users;
             InitializeComponent();
         }
 
@@ -167,7 +165,10 @@ namespace Peplex_PFC.UI
 
             //Si existe el usuario
             if (user != null)
+            {
+                user.Photo = PeplexUtils.ConvertBitmapImageToByteArray(new BitmapImage(new Uri(Path.Combine(Environment.CurrentDirectory, "..\\..", "Resources\\DefaultProfile.png"))));
                 SendEmail(user);
+            }
             else
                 MessageBox.Show("El usuario introducido no existe", "AVISO", MessageBoxButton.OK, MessageBoxImage.Warning);
         }
@@ -190,7 +191,7 @@ namespace Peplex_PFC.UI
         {
             var o = e.Argument as dynamic;
 
-            var newPassword = Membership.GeneratePassword(8, 1);
+            var newPassword = PeplexUtils.GeneratePassword();
             var body = "<h2>Contraseña de PePlex reestablecida</h2><br>Apodo: " + o.User.NickName + "<br>Password: " + newPassword;
             var subject = "Peplex, petición reestablecimiento de contraseña";
 
@@ -225,22 +226,6 @@ namespace Peplex_PFC.UI
                 envios.Send(correos);
 
                 o.User.Password = newPassword;
-
-                if (o.User.Photo == null)
-                {
-                    var image = new BitmapImage(new Uri(Path.Combine(Environment.CurrentDirectory, "..\\..", "Resources\\DefaultProfile.png")));
-
-                    byte[] data;
-                    JpegBitmapEncoder encoder = new JpegBitmapEncoder();
-                    encoder.Frames.Add(BitmapFrame.Create(image));
-                    using (MemoryStream ms = new MemoryStream())
-                    {
-                        encoder.Save(ms);
-                        data = ms.ToArray();
-                    }
-
-                    o.User.Photo = data;
-                }
 
                 CompositionRoot.Instance.Resolve<IUserServiceProxy>().Update(new ProxyContext(), o.User);
 
