@@ -13,7 +13,7 @@
         PreviewKeyDown="ConfigWindowPreviewKeyDown"
         Loaded="ConfigWindowLoad">
     
-    <Grid Name="MainGrid"  Width="500" Height="400" Background="{StaticResource LightGrayBrush}">
+    <Grid Name="MainGrid"  Width="500" Height="500" Background="{StaticResource LightGrayBrush}">
         <Grid.RowDefinitions>
             <RowDefinition Height="60"/>
             <RowDefinition/>
@@ -39,8 +39,10 @@
                     <panels:ConfigUserControl x:Name="ControlUser"/>
                 </TabItem>
                 <TabItem Name="TabItemFilm" Header="Films">
+                    <panels:ConfigFilmControl x:Name="ControlFilm"/>
                 </TabItem>
                 <TabItem Name="TabItemSerie" Header="Series">
+                    <panels:ConfigSerieControl x:Name="ControlSerie"/>
                 </TabItem>
             </TabControl>
         </Grid>

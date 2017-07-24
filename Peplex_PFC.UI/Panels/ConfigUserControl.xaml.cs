@@ -1,11 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Linq;
 using System.Windows;
 using System.Windows.Input;
 using System.Windows.Media.Imaging;
-using System.Windows.Threading;
 using Microsoft.Win32;
 using Peplex_PFC.UI.Config;
 using Peplex_PFC.UI.Interfaces;
@@ -102,6 +100,12 @@ namespace Peplex_PFC.UI.Panels
 
         private void UpdateData(string newPassword)
         {
+            if (Validate().Any())
+            {
+                MessageBox.Show(String.Format("Campos obligatorios: {0}", String.Join(",", Validate())), "Aviso", MessageBoxButton.OK, MessageBoxImage.Warning);
+                return;
+            }
+
             var editedUser = new UserUIO
             {
                 Id = Users[CbNickName.SelectedIndex].Id,
@@ -116,6 +120,18 @@ namespace Peplex_PFC.UI.Panels
             CompositionRoot.Instance.Resolve<IUserServiceProxy>().Update(new ProxyContext(), editedUser);
 
             MessageBox.Show("Usuario actualizado con éxito.", "Info", MessageBoxButton.OK, MessageBoxImage.Information);
+        }
+
+        private List<string> Validate()
+        {
+            var result = new List<string>();
+
+            if (String.IsNullOrWhiteSpace(TxtName.Text))
+                result.Add("Nombre");
+            if (String.IsNullOrWhiteSpace(TxtEmail.Text))
+                result.Add("Email");
+
+            return result;
         }
 
         private void BntDeleteClick(object sender, RoutedEventArgs e)

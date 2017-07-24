@@ -56,18 +56,20 @@ namespace Peplex_PFC.UI
             List<FilmUIO> films = null;
             List<SerieUIO> series = null;
             List<UserUIO> users = null;
+            List<GenreUIO> genres = null;
 
             if (o.Permissions == 1)
             {
                 films = CompositionRoot.Instance.Resolve<IFilmServiceProxy>().FindAll(proxyContext).OrderBy(f => f.Title).ToList();
                 series = CompositionRoot.Instance.Resolve<ISerieServiceProxy>().FindAll(proxyContext).OrderBy(s => s.Title).ToList();
                 users = CompositionRoot.Instance.Resolve<IUserServiceProxy>().FindAll(proxyContext).OrderBy(u => u.NickName).ToList();
+                genres = CompositionRoot.Instance.Resolve<IGenreServiceProxy>().FindAll(proxyContext).OrderBy(u => u.Name).ToList();
             }
 
             if (proxyContext.HasErrors)
                 e.Result = proxyContext;
             else
-                e.Result = new Tuple<List<FilmUIO>, List<SerieUIO>, List<UserUIO>>(films, series, users);
+                e.Result = new Tuple<List<FilmUIO>, List<SerieUIO>, List<UserUIO>, List<GenreUIO>>(films, series, users, genres);
         }
 
         private void LoadDataRunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
@@ -80,7 +82,7 @@ namespace Peplex_PFC.UI
                 return;
             }
 
-            var result = e.Result as Tuple<List<FilmUIO>, List<SerieUIO>, List<UserUIO>>;
+            var result = e.Result as Tuple<List<FilmUIO>, List<SerieUIO>, List<UserUIO>, List<GenreUIO>>;
 
             if (result == null)
                 return;
@@ -88,6 +90,10 @@ namespace Peplex_PFC.UI
             if (PeplexConfig.Instance.CurrentUser.Permissions == 1)
             {
                 ControlUser.Users = result.Item3;
+                ControlFilm.Genre = result.Item4;
+                ControlFilm.Films = result.Item1;
+                ControlSerie.Genre = result.Item4;
+                ControlSerie.Series = result.Item2;
             }
         }
         #endregion

@@ -118,6 +118,12 @@
     <Compile Include="MultimediaWindow.xaml.cs">
       <DependentUpon>MultimediaWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Panels\ConfigFilmControl.xaml.cs">
+      <DependentUpon>ConfigFilmControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Panels\ConfigSerieControl.xaml.cs">
+      <DependentUpon>ConfigSerieControl.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Panels\ConfigUserControl.xaml.cs">
       <DependentUpon>ConfigUserControl.xaml</DependentUpon>
     </Compile>
@@ -268,6 +274,14 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="MultimediaWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Panels\ConfigFilmControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Panels\ConfigSerieControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
