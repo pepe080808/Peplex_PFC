@@ -59,6 +59,8 @@ namespace Peplex_PFC.BLL.Composition
 
             Container.RegisterType<IEpisodeManager, EpisodeManager>(new ContainerControlledLifetimeManager());
             Container.RegisterType<IEpisodeRepository, EpisodeRepository>(new ContainerControlledLifetimeManager());
+
+            Container.RegisterType<IExternalPlatformManager, ExternalPlatformManager>(new ContainerControlledLifetimeManager());
         }
 
         public T Resolve<T>()

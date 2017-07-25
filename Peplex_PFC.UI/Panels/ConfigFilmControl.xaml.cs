@@ -8,6 +8,7 @@ using System.Windows.Media.Imaging;
 using Microsoft.Win32;
 using Peplex_PFC.UI.Interfaces;
 using Peplex_PFC.UI.Proxies;
+using Peplex_PFC.UI.Shared;
 using Peplex_PFC.UI.UIO;
 using Peplex_PFC.UIO;
 using Utils;
@@ -91,7 +92,7 @@ namespace Peplex_PFC.UI.Panels
         {
             if (Validate().Any())
             {
-                MessageBox.Show(String.Format("Campos obligatorios: {0}", String.Join(",", Validate())), "Aviso", MessageBoxButton.OK, MessageBoxImage.Warning);
+                MessageBoxWindow.Show(Window.GetWindow(Parent), "AVISO", DialogIcon.Warning, new[] { DialogButton.Accept }, String.Format("Campos obligatorios: {0}", String.Join(",", Validate())));
                 return;
             }
 
@@ -118,7 +119,7 @@ namespace Peplex_PFC.UI.Panels
 
             CompositionRoot.Instance.Resolve<IFilmServiceProxy>().Update(new ProxyContext(), editedFilm);
 
-            MessageBox.Show("Película actualizada con éxito.", "Info", MessageBoxButton.OK, MessageBoxImage.Information);
+            MessageBoxWindow.Show(Window.GetWindow(Parent), "INFO", DialogIcon.Info, new[] { DialogButton.Accept }, "Película actualizada con éxito.");
         }
 
         private List<string> Validate()
@@ -153,7 +154,7 @@ namespace Peplex_PFC.UI.Panels
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message + "\nEl archivo seleccionado no es un tipo de imagen válido");
+                MessageBoxWindow.Show(Window.GetWindow(Parent), "ERROR", DialogIcon.CommError, new[] { DialogButton.Accept }, ex.Message + "\nEl archivo seleccionado no es un tipo de imagen válido");
             }
         }
 
@@ -173,7 +174,7 @@ namespace Peplex_PFC.UI.Panels
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message + "\nEl archivo seleccionado no es un tipo de imagen válido");
+                MessageBoxWindow.Show(Window.GetWindow(Parent), "ERROR", DialogIcon.CommError, new[] { DialogButton.Accept }, ex.Message + "\nEl archivo seleccionado no es un tipo de imagen válido");
             }
         }
 

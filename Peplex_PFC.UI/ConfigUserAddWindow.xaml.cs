@@ -11,6 +11,7 @@ using System.Windows.Threading;
 using Peplex_PFC.UI.Config;
 using Peplex_PFC.UI.Interfaces;
 using Peplex_PFC.UI.Proxies;
+using Peplex_PFC.UI.Shared;
 using Peplex_PFC.UIO;
 using Utils;
 
@@ -114,12 +115,12 @@ namespace Peplex_PFC.UI
             if (result)
             {
                 CompositionRoot.Instance.Resolve<IUserServiceProxy>().Insert(new ProxyContext(), NewUser);
-                MessageBox.Show("Alta de nuevo usuario realizada con exito.", "INFO", MessageBoxButton.OK, MessageBoxImage.Information);
+                MessageBoxWindow.Show(this, "INFO", DialogIcon.Info, new[] { DialogButton.Accept }, "Alta de nuevo usuario realizada con éxito.");
                 DialogResult = true;
             }
             else
             {
-                MessageBox.Show("Error al dar de alta al nuevo usuario o no se puedo enviar el correo", "ERROR", MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBoxWindow.Show(this, "ERROR", DialogIcon.CommError, new[] { DialogButton.Accept }, "Error al dar de alta al nuevo usuario o no se puedo enviar el correo.");
                 DialogResult = false;
             }
         }

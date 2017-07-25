@@ -49,6 +49,7 @@
     <Compile Include="Classes\BO\UserBO.cs" />
     <Compile Include="Interfaces\IEpisodeManager.cs" />
     <Compile Include="Interfaces\IEpisodeRepository.cs" />
+    <Compile Include="Interfaces\IExternalPlatformManager.cs" />
     <Compile Include="Interfaces\IFilmManager.cs" />
     <Compile Include="Interfaces\IFilmRepository.cs" />
     <Compile Include="Interfaces\IFormatManager.cs" />
@@ -62,7 +63,12 @@
     <Compile Include="Interfaces\IUserRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="..\Peplex_PFC.SL.InterfacesClasses\Peplex_PFC.SL.InterfacesClasses.csproj">
+      <Project>{85B4FFE7-5801-4B77-B257-2440A5F31CE5}</Project>
+      <Name>Peplex_PFC.SL.InterfacesClasses</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

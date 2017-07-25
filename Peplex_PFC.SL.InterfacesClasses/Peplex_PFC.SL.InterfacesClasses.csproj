@@ -34,6 +34,7 @@
     <Reference Include="System.Core" />
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.ServiceModel" />
+    <Reference Include="System.ServiceModel.Web" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -43,12 +44,17 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Classes\DTO\EpisodeDTO.cs" />
+    <Compile Include="Classes\DTO\ExternalPlatformEpisodeCollection.cs" />
+    <Compile Include="Classes\DTO\ExternalPlatformFilmCollection.cs" />
+    <Compile Include="Classes\DTO\ExternalPlatformSerieCollection.cs" />
+    <Compile Include="Classes\DTO\ExternalPlatformUserCollection.cs" />
     <Compile Include="Classes\DTO\FilmDTO.cs" />
     <Compile Include="Classes\DTO\FormatDTO.cs" />
     <Compile Include="Classes\DTO\GenreDTO.cs" />
     <Compile Include="Classes\DTO\SerieDTO.cs" />
     <Compile Include="Classes\DTO\UserDTO.cs" />
     <Compile Include="Interfaces\IEpisodeService.cs" />
+    <Compile Include="Interfaces\IExternalPlatformRestService.cs" />
     <Compile Include="Interfaces\IFilmService.cs" />
     <Compile Include="Interfaces\IFormatService.cs" />
     <Compile Include="Interfaces\IGenreService.cs" />

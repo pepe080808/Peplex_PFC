@@ -41,6 +41,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Manager\EpisodeManager.cs" />
+    <Compile Include="Manager\ExternalPlatformManager.cs" />
     <Compile Include="Manager\FilmManager.cs" />
     <Compile Include="Manager\FormatManager.cs" />
     <Compile Include="Manager\GenreManager.cs" />
@@ -52,6 +53,10 @@
     <ProjectReference Include="..\Peplex_PFC.BLL.InterfacesClasses\Peplex_PFC.BLL.InterfacesClasses.csproj">
       <Project>{caf63268-87f4-40da-82f5-6abb05ed07a9}</Project>
       <Name>Peplex_PFC.BLL.InterfacesClasses</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Peplex_PFC.SL.InterfacesClasses\Peplex_PFC.SL.InterfacesClasses.csproj">
+      <Project>{85B4FFE7-5801-4B77-B257-2440A5F31CE5}</Project>
+      <Name>Peplex_PFC.SL.InterfacesClasses</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

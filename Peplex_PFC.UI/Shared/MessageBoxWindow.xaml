@@ -1,0 +1,107 @@
+﻿<Window x:Class="Peplex_PFC.UI.Shared.MessageBoxWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:panels="clr-namespace:Peplex_PFC.UI.Panels"
+        mc:Ignorable="d" Title="MainWindow"
+        WindowStyle="None" 
+        ShowInTaskbar="False"
+        ResizeMode="NoResize"
+        WindowStartupLocation="CenterScreen"
+        SizeToContent="WidthAndHeight"
+        PreviewKeyUp="WindowPreviewKeyUp">
+    
+    <Window.Resources>
+        <Style x:Key="PathInfo" TargetType="Path">
+            <Setter Property="SnapsToDevicePixels" Value="True"/>
+            <Setter Property="Data" Value="M583,435 L583,437 L585,437 L585,435 Z M584,448 C579.581722,448 576,444.418278 576,440 C576,435.581722 579.581722,432 584,432 C588.418278,432 592,435.581722 592,440 C592,444.418278 588.418278,448 584,448 Z M583,439 L583,445 L585,445 L585,439 Z"/>
+            <Setter Property="Fill" Value="#39A9D7"/>
+            <Setter Property="Stroke" Value="Transparent"/>
+            <Setter Property="Width" Value="50"/>
+            <Setter Property="Height" Value="50"/>
+            <Setter Property="Stretch" Value="Fill"/>
+        </Style>
+
+        <Style x:Key="PathWarning" TargetType="Path">
+            <Setter Property="SnapsToDevicePixels" Value="True"/>
+            <Setter Property="Data" Value="M103,443 L103,445 L105,445 L105,443 Z M104,448 C99.5817218,448 96,444.418278 96,440 C96,435.581722 99.5817218,432 104,432 C108.418278,432 112,435.581722 112,440 C112,444.418278 108.418278,448 104,448 Z M103,435 L103,442 L105,442 L105,435 Z"/>
+            <Setter Property="Fill" Value="Orange"/>
+            <Setter Property="Stroke" Value="Transparent"/>
+            <Setter Property="Width" Value="50"/>
+            <Setter Property="Height" Value="50"/>
+            <Setter Property="Stretch" Value="Fill"/>
+        </Style>
+
+        <Style x:Key="PathQuestion" TargetType="Path">
+            <Setter Property="SnapsToDevicePixels" Value="True"/>
+            <Setter Property="Data" Value="M54.8796844,443.0591 L54.8796844,445 L57.2307692,445 L57.2307692,443.0591 Z M56,448 C51.5817218,448 48,444.418278 48,440 C48,435.581722 51.5817218,432 56,432 C60.4182782,432 64,435.581722 64,440 C64,444.418278 60.4182782,448 56,448 Z M53.5700197,435.51041 C52.5864514,436.043208 52.0631167,436.947609 52,438.22364 L54.2800789,438.22364 C54.2800789,437.852024 54.4076253,437.493845 54.6627219,437.149093 C54.9178185,436.804341 55.3504243,436.631968 55.9605523,436.631968 C56.5811997,436.631968 57.0085458,436.771881 57.2426036,437.051713 C57.4766613,437.331544 57.5936884,437.641592 57.5936884,437.981867 C57.5936884,438.277369 57.4884955,438.548241 57.2781065,438.794493 L56.8205128,439.190732 L56.2445759,439.573539 C55.6765258,439.949633 55.3241295,440.282067 55.1873767,440.570853 C55.0506239,440.859639 54.9664696,441.382356 54.9349112,442.139019 L57.0650888,442.139019 C57.0703485,441.780835 57.1045362,441.516679 57.1676529,441.346541 C57.2675876,441.077903 57.4700839,440.842849 57.7751479,440.64137 L58.3353057,440.271995 C58.9033559,439.895901 59.28731,439.586972 59.4871795,439.345198 C59.8290615,438.946718 60,438.456461 60,437.874412 C60,436.925225 59.6068415,436.208867 58.8205128,435.725319 C58.0341841,435.241771 57.0466858,435 55.8579882,435 C54.9533157,435 54.1906671,435.170135 53.5700197,435.51041 Z"/>
+            <Setter Property="Fill" Value="SkyBlue"/>
+            <Setter Property="Stroke" Value="Transparent"/>
+            <Setter Property="Width" Value="50"/>
+            <Setter Property="Height" Value="50"/>
+            <Setter Property="Stretch" Value="Fill"/>
+        </Style>
+
+        <Style x:Key="PathCommError" TargetType="Path">
+            <Setter Property="SnapsToDevicePixels" Value="True"/>
+            <Setter Property="Data" Value="M 1607.9375 -59.65625 C 1560.8685 -59.65625 1522.6875 -21.50646 1522.6875 25.5625 C 1522.6875 72.63146 1560.8685 110.78125 1607.9375 110.78125 C 1655.0065 110.78125 1693.1562 72.63146 1693.1562 25.5625 C 1693.1562 -21.50646 1655.0065 -59.65625 1607.9375 -59.65625 z M 1602.875 -16 L 1608.2188 -16 L 1615.5 -16 L 1621.9062 -16 C 1626.2737 -16 1629.7812 -12.4924 1629.7812 -8.125 L 1629.7812 -2.46875 L 1638.8438 -2.46875 L 1660.4688 -2.46875 C 1664.364 -2.46875 1667.5 0.66725003 1667.5 4.5625 C 1667.5 8.45775 1664.364 11.59375 1660.4688 11.59375 L 1638.8438 11.59375 L 1629.7812 11.59375 L 1629.7812 39.53125 L 1638.8438 39.53125 L 1660.4688 39.53125 C 1664.364 39.53125 1667.5 42.66725 1667.5 46.5625 C 1667.5 50.45775 1664.364 53.59375 1660.4688 53.59375 L 1638.8438 53.59375 L 1629.7812 53.59375 L 1629.7812 59.1875 C 1629.7812 63.5549 1626.2737 67.09375 1621.9062 67.09375 L 1615.5 67.09375 L 1608.2188 67.09375 L 1602.875 67.09375 C 1584.4736 67.09375 1568.9423 56.09286 1562.8438 40.34375 L 1555.4062 40.25 C 1551.5112 40.2047 1548.375 37.114 1548.375 33.21875 L 1548.375 17.875 C 1548.375 13.97975 1551.5112 10.88901 1555.4062 10.84375 L 1562.8438 10.78125 C 1568.934 -4.9746204 1584.4632 -16 1602.875 -16 z M 1584.5312 5.46875 C 1583.4974 5.46875 1582.4797 5.8640792 1581.6875 6.65625 L 1577.875 10.46875 C 1576.2907 12.053091 1576.2907 14.603128 1577.875 16.1875 L 1588.375 26.6875 L 1577.875 37.15625 C 1576.2907 38.740622 1576.2907 41.290629 1577.875 42.875 L 1581.6875 46.6875 C 1583.2719 48.271872 1585.8219 48.271872 1587.4062 46.6875 L 1597.9062 36.21875 L 1608.375 46.6875 C 1609.9593 48.271842 1612.5094 48.271842 1614.0938 46.6875 L 1617.9062 42.875 C 1619.4905 41.290659 1619.4905 38.740592 1617.9062 37.15625 L 1607.4375 26.6875 L 1617.9062 16.1875 C 1619.4905 14.603128 1619.4905 12.053121 1617.9062 10.46875 L 1614.0938 6.65625 C 1612.5094 5.0718785 1609.9594 5.0718785 1608.375 6.65625 L 1597.9062 17.15625 L 1587.4062 6.65625 C 1586.6142 5.8640643 1585.565 5.46875 1584.5312 5.46875 z "/>
+            <Setter Property="Fill" Value="#F64646"/>
+            <Setter Property="Stroke" Value="Transparent"/>
+            <Setter Property="Width" Value="50"/>
+            <Setter Property="Height" Value="50"/>
+            <Setter Property="Stretch" Value="Fill"/>
+        </Style>
+    </Window.Resources>
+
+    <Grid Name="MainGrid"  Width="550" Height="400" Background="{StaticResource LightGrayBrush}">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="60"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+
+        <Grid Grid.Row="0" Background="{StaticResource DarkGrayBrush}">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition Width="0.3*"/>
+                </Grid.ColumnDefinitions>
+
+                <Label Grid.Column="0" Margin="10 2 0 2" Foreground="White" FontSize="20" FontFamily="Tahoma" VerticalAlignment="Center" Content="PEPLEX" />
+
+                <Image Grid.Column="1" Margin="0 2 10 2" Width="50" Height="50" Stretch="Fill" HorizontalAlignment="Right" Source="Resources/logoPePlex.png" />
+
+            </Grid>
+        </Grid>
+
+        <Grid Name="GMain" Grid.Row="1" Margin="20" Width="500" MinHeight="200">
+            <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition Height="75"/>
+        </Grid.RowDefinitions>
+
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="75"/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+
+            <StackPanel Orientation="Vertical" Margin="0,10,0,0">
+                <Path Name="PathIconInfo" Style="{StaticResource PathInfo}"/>
+                <Path Name="PathIconWarning" Style="{StaticResource PathWarning}"/>
+                <Path Name="PathIconQuestion" Style="{StaticResource PathQuestion}"/>
+                <Path Name="PathIconCommError" Style="{StaticResource PathCommError}"/>
+            </StackPanel>
+
+            <TextBlock Name="TextBlockMessage" FontFamily="Tahoma" FontSize="15" Foreground="White" Margin="20" Grid.Column="1" TextWrapping="Wrap" />
+        </Grid>
+
+        <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,15,0,0">
+            <Button Name="ButtonYes" Width="100" Height="30" Content="Sí" Click="ButtonYesClick" Margin="3" />
+                <Button Name="ButtonNo" Width="100" Height="30" Content="No" Click="ButtonNoClick" Margin="3" />
+                <Button Name="ButtonAccept" Width="100" Height="30" Content="Aceptar" Click="ButtonAcceptClick" Margin="3" />
+                <Button Name="ButtonCancel" Width="100" Height="30" Content="Cancelar" Click="ButtonCancelClick" Margin="3" />
+        </StackPanel>
+    </Grid>
+    </Grid>
+</Window>

@@ -2,10 +2,6 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Reflection;
-using System.Security.Cryptography;
-using System.Security.Cryptography.X509Certificates;
-using System.Security.Principal;
 using System.ServiceModel;
 using System.ServiceModel.Channels;
 using System.ServiceModel.Description;
@@ -13,10 +9,7 @@ using Peplex_PFC.BLL.Composition;
 using Peplex_PFC.BLL.Composition.Config;
 using Peplex_PFC.BLL.InterfacesClasses.Classes.BO;
 using Peplex_PFC.BLL.InterfacesClasses.Interfaces;
-using Peplex_PFC.SL.InterfacesClasses.Classes.DTO;
 using Peplex_PFC.SL.InterfacesClasses.Interfaces;
-using Topshelf.Logging;
-using Topshelf.Runtime.Windows;
 using Utils;
 
 namespace Peplex_PFC.SL
@@ -64,33 +57,32 @@ namespace Peplex_PFC.SL
             }
         }
 
-        //public static void SetupRegularEndpoints()
-        //{
-        //    var services = new List<ServiceEndpointDescriptor>
-        //    {
-        //        new ServiceEndpointDescriptor
-        //        {
-        //            ServiceType = typeof (GenreService),
-        //            InterfaceType = typeof (IGenreService),
-        //            ServiceName = "Peplex_PFCGenreService"
-        //        },
-        //    };
+        public static void SetupRestEndpoints()
+        {
+            var services = new[]
+            {
+                new ServiceEndpointDescriptor {ServiceType = typeof (ExternalPlatformRestService), InterfaceType = typeof (IExternalPlatformRestService), ServiceName = "PeplexExternalPlatformRestService"},
+            };
 
-        //    foreach (var service in services)
-        //    {
-        //        var contractDesc = ContractDescription.GetContract(service.InterfaceType);
-        //        var serviceHost = new ServiceHost(service.ServiceType);
+            BuildEndpointsRest(services, ServiceConfig.Instance.ExternalPlatformRestApiPort, "");
+        }
 
-        //        // Add tcp endpoint
-        //        var tcpEndpoint = new ServiceEndpoint(contractDesc, new BasicHttpBinding(), new EndpointAddress(new Uri(String.Format("net.tcp://localhost:{0}/{1}", 9090, service.ServiceName))));
+        public static void BuildEndpointsRest(ServiceEndpointDescriptor[] endpointDescriptors, int servicePort, string sslCertificateCommonName)
+        {
+            var custom = new CustomBinding(new WebHttpBinding(WebHttpSecurityMode.Transport));
+            //custom.Elements[0] = new GZipRestMessageEncodingBindingElement(custom.Elements[0] as WebMessageEncodingBindingElement);
+            (custom.Elements[1] as TransportBindingElement).MaxReceivedMessageSize = int.MaxValue;
 
-        //        //((ServiceAuthenticationBehavior)serviceHost.Description.Behaviors[typeof(ServiceAuthenticationBehavior)]).ServiceAuthenticationManager = new RegularServiceHelper();
-
-        //        serviceHost.AddServiceEndpoint(tcpEndpoint);
-
-        //        serviceHost.Open();
-        //    }
-        //}
+            foreach (var service in endpointDescriptors)
+            {
+                var baseAddress = String.Format("https://localhost:{0}/{1}", servicePort, service.ServiceName);
+                var host = new ServiceHost(service.ServiceType, new Uri(baseAddress));
+                host.AddServiceEndpoint(service.InterfaceType, custom, "").Behaviors.Add(new WebHttpBehavior());
+                //host.Description.Behaviors.Add(new GZipRestMesssageBehaviourExtension());
+                //host.Description.Behaviors.Add(new JsonMesssageBehaviourExtension());
+                host.Open();
+            }
+        }
 
         #region UPDATE DATABASE
         /// <summary>Recorre los directorios de películas y series y actualiza la base de datos insertando o borrando nuevos datos</summary>

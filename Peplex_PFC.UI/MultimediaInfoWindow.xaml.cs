@@ -79,7 +79,7 @@ namespace Peplex_PFC.UI
 
             if (e.Result is ProxyContext)
             {
-                (e.Result as ProxyContext).ShowErrors(Window.GetWindow(Parent));
+                (e.Result as ProxyContext).ShowErrors(this);
                 return;
             }
 
@@ -126,7 +126,7 @@ namespace Peplex_PFC.UI
 
             if (e.Result is ProxyContext)
             {
-                (e.Result as ProxyContext).ShowErrors(Window.GetWindow(Parent));
+                (e.Result as ProxyContext).ShowErrors(this);
                 return;
             }
 

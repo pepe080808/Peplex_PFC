@@ -39,6 +39,7 @@
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.ServiceModel" />
+    <Reference Include="System.ServiceModel.Web" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -51,6 +52,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="EpisodeService.cs" />
+    <Compile Include="ExternalPlatformRestService.cs" />
     <Compile Include="FilmService.cs" />
     <Compile Include="FormatService.cs" />
     <Compile Include="GenreService.cs" />

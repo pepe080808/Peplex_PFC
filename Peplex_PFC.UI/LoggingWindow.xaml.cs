@@ -12,6 +12,7 @@ using System.Windows.Threading;
 using Peplex_PFC.UI.Config;
 using Peplex_PFC.UI.Interfaces;
 using Peplex_PFC.UI.Proxies;
+using Peplex_PFC.UI.Shared;
 using Peplex_PFC.UI.UIO;
 using Peplex_PFC.UIO;
 using Utils;
@@ -21,7 +22,7 @@ namespace Peplex_PFC.UI
     public partial class LoggingWindow
     {
         const int MAX_OPPORTUNITIES = 3;
-        private int __oportunidades;
+        private int _oportunidades;
 
         private List<UserUIO> _users { get; set; }
 
@@ -71,7 +72,7 @@ namespace Peplex_PFC.UI
 
             if (e.Result is ProxyContext)
             {
-                (e.Result as ProxyContext).ShowErrors(Window.GetWindow(Parent));
+                (e.Result as ProxyContext).ShowErrors(this);
                 return;
             }
 
@@ -100,9 +101,9 @@ namespace Peplex_PFC.UI
             }
             else
             {
-                __oportunidades++;
-                MessageBox.Show("Usuario y Contraseña no validos.\nIntentos : " + __oportunidades + "/" + MAX_OPPORTUNITIES + ".", " ", MessageBoxButton.OK, MessageBoxImage.Exclamation);
-                if (__oportunidades == MAX_OPPORTUNITIES)
+                _oportunidades++;
+                MessageBoxWindow.Show(this, "AVISO", DialogIcon.Warning, new[] { DialogButton.Accept }, String.Format("Usuario y Contraseña no validos.\nIntentos : {0}/{1}.", _oportunidades, MAX_OPPORTUNITIES));
+                if (_oportunidades == MAX_OPPORTUNITIES)
                     Application.Current.Shutdown();
             }
         }
@@ -139,7 +140,7 @@ namespace Peplex_PFC.UI
 
             if (e.Result is ProxyContext)
             {
-                (e.Result as ProxyContext).ShowErrors(Window.GetWindow(Parent));
+                (e.Result as ProxyContext).ShowErrors(this);
                 return;
             }
 
@@ -170,7 +171,7 @@ namespace Peplex_PFC.UI
                 SendEmail(user);
             }
             else
-                MessageBox.Show("El usuario introducido no existe", "AVISO", MessageBoxButton.OK, MessageBoxImage.Warning);
+                MessageBoxWindow.Show(this, "AVISO", DialogIcon.Warning, new[] { DialogButton.Accept }, "El usuario introducido no existe.");
         }
 
         private void SendEmail(UserUIO user)
@@ -244,9 +245,9 @@ namespace Peplex_PFC.UI
             var result = (bool)e.Result;
 
             if (result)
-                MessageBox.Show("En unos segundos le llegará a su correo la nueva contraseña", "INFO", MessageBoxButton.OK, MessageBoxImage.Information);
+                MessageBoxWindow.Show(this, "INFO", DialogIcon.Info, new[] { DialogButton.Accept }, "En unos segundos le llegará a su correo la nueva contraseña.");
             else
-                MessageBox.Show("No se envio el correo correctamente", "ERROR", MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBoxWindow.Show(this, "ERROR", DialogIcon.CommError, new[] { DialogButton.Accept }, "No se envio el correo correctamente.");
         }
         #endregion
 
