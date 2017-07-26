@@ -115,8 +115,11 @@
     <Compile Include="MultimediaInfoWindow.xaml.cs">
       <DependentUpon>MultimediaInfoWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="MultimediaWindow.xaml.cs">
-      <DependentUpon>MultimediaWindow.xaml</DependentUpon>
+    <Compile Include="MultimediaPlayerWindow.xaml.cs">
+      <DependentUpon>MultimediaPlayerWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="MultimediaSearchWindow.xaml.cs">
+      <DependentUpon>MultimediaSearchWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Panels\ConfigFilmControl.xaml.cs">
       <DependentUpon>ConfigFilmControl.xaml</DependentUpon>
@@ -173,6 +176,7 @@
     <Compile Include="SerieWindow.xaml.cs">
       <DependentUpon>SerieWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Shared\ClassOrderBy.cs" />
     <Compile Include="Shared\MessageBoxWindow.xaml.cs">
       <DependentUpon>MessageBoxWindow.xaml</DependentUpon>
     </Compile>
@@ -276,7 +280,11 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="MultimediaWindow.xaml">
+    <Page Include="MultimediaPlayerWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="MultimediaSearchWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

@@ -1,0 +1,121 @@
+﻿<Window x:Class="Peplex_PFC.UI.MultimediaSearchWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Peplex_PFC.UI"
+        xmlns:panels="clr-namespace:Peplex_PFC.UI.Panels"
+        xmlns:utils="clr-namespace:Utils;assembly=Utils"
+        mc:Ignorable="d"
+        Title="MainWindow"
+        WindowStyle="None" 
+        ShowInTaskbar="false"
+        WindowState="Maximized"
+        SizeToContent="WidthAndHeight"
+        PreviewKeyDown="MultimediaSearchWindowPreviewKeyDown"
+        Activated="MultimediaSearchActivated">
+    <Viewbox Stretch="Fill">
+        <Grid Name="MainGrid"  Width="1200" Height="640" Background="{StaticResource LightGrayBrush}">
+            <Grid.Resources>
+                <utils:ByteToImageConverter x:Key="BinImageConverter"/>
+                <utils:SeenToFillDarkColorConvert x:Key="SeenToFillDarkColorConvert"/>
+                <utils:SeenToFillLightColorConvert x:Key="SeenToFillLightColorConvert"/>
+            </Grid.Resources>
+
+            <Grid.RowDefinitions>
+                <RowDefinition Height="60"/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+
+            <Grid Grid.Row="0" Grid.Column="0" Background="{StaticResource DarkGrayBrush}">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition/>
+                        <ColumnDefinition Width="0.3*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <Label Grid.Column="0" Margin="10 2 0 2" Foreground="White" FontSize="20" FontFamily="Tahoma" VerticalAlignment="Center" Content="PEPLEX"/>
+
+                    <Image Grid.Column="1" Margin="0 2 10 2" Width="50" Height="50" Stretch="Fill" HorizontalAlignment="Right" Source="Resources/logoPePlex.png" />
+
+                </Grid>
+            </Grid>
+
+            <Grid Name="GMain" Grid.Row="1" Margin="20">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition Width="0.3*"/>
+                </Grid.ColumnDefinitions>
+                
+                <Grid Name="GSearchResult" Grid.Column="0">
+                    
+                </Grid>
+
+                <Grid Name="GSearchPanel" Grid.Column="1" VerticalAlignment="Top" HorizontalAlignment="Left" >
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="30"/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition Height="10"/>
+                        <RowDefinition Height="30"/>
+                    </Grid.RowDefinitions>
+                    
+                    <StackPanel Grid.Row="0" Orientation="Horizontal">
+                        <Label Content="Buscar: " Style="{StaticResource FieldLabelStyle}"/>
+                        <TextBox  Name="TxtSearch" KeyUp="KeyUpTextBox" Style="{StaticResource FieldTextBoxStyle}"/>
+                    </StackPanel>
+                    
+                    <Grid Grid.Row="1">
+                        <Grid.RowDefinitions>
+                            <RowDefinition/>
+                            <RowDefinition/>
+                            <RowDefinition/>
+                            <RowDefinition/>
+                            <RowDefinition/>
+                        </Grid.RowDefinitions>
+                        
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition/>
+                            <ColumnDefinition/>
+                            <ColumnDefinition/>
+                            <ColumnDefinition/>
+                            <ColumnDefinition/>
+                            <ColumnDefinition/>
+                        </Grid.ColumnDefinitions>
+
+                        <TextBlock Name="TxtA" Text="A" TextDecorations="Underline" Grid.Row="0" Grid.Column="0" Style="{StaticResource FieldTextBlockStyle}"/>
+                        <TextBlock Name="TxtB" Text="B" TextDecorations="Underline" Grid.Row="0" Grid.Column="1" Style="{StaticResource FieldTextBlockStyle}"/>
+                        <TextBlock Name="TxtC" Text="C" TextDecorations="Underline" Grid.Row="0" Grid.Column="2" Style="{StaticResource FieldTextBlockStyle}"/>
+                        <TextBlock Name="TxtD" Text="D" TextDecorations="Underline" Grid.Row="0" Grid.Column="3" Style="{StaticResource FieldTextBlockStyle}"/>
+                        <TextBlock Name="TxtE" Text="E" TextDecorations="Underline" Grid.Row="0" Grid.Column="4" Style="{StaticResource FieldTextBlockStyle}"/>
+                        <TextBlock Name="TxtF" Text="F" TextDecorations="Underline" Grid.Row="0" Grid.Column="5" Style="{StaticResource FieldTextBlockStyle}"/>
+                        <TextBlock Name="TxtG" Text="G" TextDecorations="Underline" Grid.Row="1" Grid.Column="0" Style="{StaticResource FieldTextBlockStyle}"/>
+                        <TextBlock Name="TxtH" Text="H" TextDecorations="Underline" Grid.Row="1" Grid.Column="1" Style="{StaticResource FieldTextBlockStyle}"/>
+                        <TextBlock Name="TxtI" Text="I" TextDecorations="Underline" Grid.Row="1" Grid.Column="2" Style="{StaticResource FieldTextBlockStyle}"/>
+                        <TextBlock Name="TxtJ" Text="J" TextDecorations="Underline" Grid.Row="1" Grid.Column="3" Style="{StaticResource FieldTextBlockStyle}"/>
+                        <TextBlock Name="TxtK" Text="K" TextDecorations="Underline" Grid.Row="1" Grid.Column="4" Style="{StaticResource FieldTextBlockStyle}"/>
+                        <TextBlock Name="TxtL" Text="L" TextDecorations="Underline" Grid.Row="1" Grid.Column="5" Style="{StaticResource FieldTextBlockStyle}"/>
+                        <TextBlock Name="TxtM" Text="M" TextDecorations="Underline" Grid.Row="2" Grid.Column="0" Style="{StaticResource FieldTextBlockStyle}"/>
+                        <TextBlock Name="TxtN" Text="N" TextDecorations="Underline" Grid.Row="2" Grid.Column="1" Style="{StaticResource FieldTextBlockStyle}"/>
+                        <TextBlock Name="TxtO" Text="O" TextDecorations="Underline" Grid.Row="2" Grid.Column="2" Style="{StaticResource FieldTextBlockStyle}"/>
+                        <TextBlock Name="TxtP" Text="P" TextDecorations="Underline" Grid.Row="2" Grid.Column="3" Style="{StaticResource FieldTextBlockStyle}"/>
+                        <TextBlock Name="TxtQ" Text="Q" TextDecorations="Underline" Grid.Row="2" Grid.Column="4" Style="{StaticResource FieldTextBlockStyle}"/>
+                        <TextBlock Name="TxtR" Text="R" TextDecorations="Underline" Grid.Row="2" Grid.Column="5" Style="{StaticResource FieldTextBlockStyle}"/>
+                        <TextBlock Name="TxtS" Text="S" TextDecorations="Underline" Grid.Row="3" Grid.Column="0" Style="{StaticResource FieldTextBlockStyle}"/>
+                        <TextBlock Name="TxtT" Text="T" TextDecorations="Underline" Grid.Row="3" Grid.Column="1" Style="{StaticResource FieldTextBlockStyle}"/>
+                        <TextBlock Name="TxtU" Text="U" TextDecorations="Underline" Grid.Row="3" Grid.Column="2" Style="{StaticResource FieldTextBlockStyle}"/>
+                        <TextBlock Name="TxtV" Text="V" TextDecorations="Underline" Grid.Row="3" Grid.Column="3" Style="{StaticResource FieldTextBlockStyle}"/>
+                        <TextBlock Name="TxtW" Text="W" TextDecorations="Underline" Grid.Row="3" Grid.Column="4" Style="{StaticResource FieldTextBlockStyle}"/>
+                        <TextBlock Name="TxtX" Text="X" TextDecorations="Underline" Grid.Row="3" Grid.Column="5" Style="{StaticResource FieldTextBlockStyle}"/>
+                        <TextBlock Name="TxtY" Text="Y" TextDecorations="Underline" Grid.Row="4" Grid.Column="0" Style="{StaticResource FieldTextBlockStyle}"/>
+                        <TextBlock Name="TxtZ" Text="Z"  TextDecorations="Underline" Grid.Row="4" Grid.Column="1" Style="{StaticResource FieldTextBlockStyle}"/>
+                        <TextBlock Name="Txt0_9" Text="0-9" TextDecorations="Underline" Grid.Row="4" Grid.Column="2" Style="{StaticResource FieldTextBlockStyle}"/>
+                        <TextBlock Name="TxtAll" Text="ALL" TextDecorations="Underline" Grid.Row="4" Grid.Column="3" Style="{StaticResource FieldTextBlockStyle}" MouseLeftButtonDown="TextBlockClick"/>
+                    </Grid>
+
+                    <Button Name="BtnOk" Grid.Row="4" HorizontalAlignment="Right" Width="80" Height="30" Content="_Ok" Click="BtnOkClick"/>
+                </Grid>
+            </Grid>
+        </Grid>
+    </Viewbox>
+</Window>
