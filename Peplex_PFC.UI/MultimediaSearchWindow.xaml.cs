@@ -193,9 +193,15 @@ namespace Peplex_PFC.UI
 
         private void UpdateInfo()
         {
+            GSearchResult.Children.Clear();
             GSearchResult.ColumnDefinitions.Clear();
             GSearchResult.RowDefinitions.Clear();
 
+            var btn = new Button();
+            btn.SetValue(Grid.ColumnProperty, 0);
+            btn.SetValue(Grid.RowProperty, 0);
+
+            GSearchResult.Children.Add(btn);
         }
 
         #region UpdateInfo
