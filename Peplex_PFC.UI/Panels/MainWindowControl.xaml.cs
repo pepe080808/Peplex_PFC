@@ -1,10 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
-using System.Windows.Media.Imaging;
-using Peplex_PFC.UI.Config;
 using Peplex_PFC.UI.UIO;
+using Utils;
 
 namespace Peplex_PFC.UI.Panels
 {
@@ -62,24 +60,8 @@ namespace Peplex_PFC.UI.Panels
 
                     if (currentControl == null) continue;
 
-                    ((CoverControl) currentControl).Film = film;    
-
-                    if (film.Cover != null)
-                    {
-                        var memStream = new MemoryStream();
-                        memStream.Write(film.Cover, 0, film.Cover.Length);
-                        memStream.Seek(0, SeekOrigin.Begin);
-
-                        var img = new BitmapImage();
-                        img.BeginInit();
-                        img.StreamSource = memStream;
-                        img.EndInit();
-
-                        ((CoverControl)currentControl).Img = img;
-                    }
-                    else
-                        ((CoverControl)currentControl).ImgCover = null;
-
+                    ((CoverControl)currentControl).Id = film.Id;
+                    ((CoverControl) currentControl).Img = PeplexUtils.ConvertByteArrayToBitmapImage(film.Cover);
                     ((CoverControl) currentControl).StrTitle = film.Title ?? "";
                     ((CoverControl)currentControl).StrTag = "Film";
                 }
@@ -99,24 +81,9 @@ namespace Peplex_PFC.UI.Panels
 
                     if (currentControl == null) continue;
 
-                    ((CoverControl)currentControl).Serie = serie;
 
-                    if (serie.Cover != null)
-                    {
-                        var memStream = new MemoryStream();
-                        memStream.Write(serie.Cover, 0, serie.Cover.Length);
-                        memStream.Seek(0, SeekOrigin.Begin);
-
-                        var img = new BitmapImage();
-                        img.BeginInit();
-                        img.StreamSource = memStream;
-                        img.EndInit();
-
-                        ((CoverControl)currentControl).Img = img;
-                    }
-                    else
-                        ((CoverControl)currentControl).ImgCover = null;
-
+                    ((CoverControl)currentControl).Id = serie.Id;
+                    ((CoverControl)currentControl).Img = PeplexUtils.ConvertByteArrayToBitmapImage(serie.Cover);
                     ((CoverControl)currentControl).StrTitle = serie.Title ?? "";
                     ((CoverControl)currentControl).StrTag = "Serie";
                 }

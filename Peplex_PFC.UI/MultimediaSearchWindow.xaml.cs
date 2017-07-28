@@ -6,6 +6,7 @@ using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Threading;
 using Peplex_PFC.UI.Interfaces;
+using Peplex_PFC.UI.Panels;
 using Peplex_PFC.UI.Proxies;
 using Peplex_PFC.UI.Shared;
 using Peplex_PFC.UI.UIO;
@@ -16,6 +17,8 @@ namespace Peplex_PFC.UI
 {
     public partial class MultimediaSearchWindow
     {
+        public const int MAX_COLUMN = 4;
+
         private WaitCursor _wc;
 
         public class MultimediaData
@@ -197,11 +200,33 @@ namespace Peplex_PFC.UI
             GSearchResult.ColumnDefinitions.Clear();
             GSearchResult.RowDefinitions.Clear();
 
-            var btn = new Button();
-            btn.SetValue(Grid.ColumnProperty, 0);
-            btn.SetValue(Grid.RowProperty, 0);
+            var f = 0;
+            var c = 0;
 
-            GSearchResult.Children.Add(btn);
+            foreach (var data in _filterData)
+            {
+                var cover = new CoverControl();
+
+                cover.Id = data.Id;
+                cover.Img = PeplexUtils.ConvertByteArrayToBitmapImage(data.Cover);
+                cover.StrTitle = data.Title ?? "";
+                cover.StrTag = data.Tag;
+                
+
+                cover.SetValue(Grid.RowProperty, f);
+                cover.SetValue(Grid.ColumnProperty, c);
+
+                GSearchResult.Children.Add(cover);
+
+                c++;
+
+                if (c == MAX_COLUMN)
+                {
+                    c = 0;
+                    f++;
+                }
+
+            }
         }
 
         #region UpdateInfo

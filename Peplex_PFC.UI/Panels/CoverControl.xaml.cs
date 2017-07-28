@@ -1,13 +1,12 @@
 ﻿using System.Windows.Media.Imaging;
-using Peplex_PFC.UI.UIO;
+using Peplex_PFC.UI.Interfaces;
+using Peplex_PFC.UI.Proxies;
+using Peplex_PFC.UIO;
 
 namespace Peplex_PFC.UI.Panels
 {
     public partial class CoverControl
     {
-        public FilmUIO Film { get; set; }
-        public SerieUIO Serie { get; set; }
-
         private string _strTag;
         public string StrTag
         {
@@ -29,6 +28,12 @@ namespace Peplex_PFC.UI.Panels
             set { _img = value; UpdateImg(); }
         }
 
+        private int _id;
+        public int Id
+        {
+            get { return _id; }
+            set { _id = value;}
+        }
 
         public CoverControl()
         {
@@ -52,18 +57,14 @@ namespace Peplex_PFC.UI.Panels
             switch (StrTag)
             {
                 case "Film":
-                    if (Film != null)
-                    {
-                        var child = new FilmWindow {Film = Film};
-                        child.Show();
-                    }
+                    var film = CompositionRoot.Instance.Resolve<IFilmServiceProxy>().Single(new ProxyContext(), Id);
+                    var childFilm = new FilmWindow {Film = film};
+                    childFilm.Show();
                     break;
                 case "Serie":
-                    if (Serie != null)
-                    {
-                        var child = new SerieWindow { Serie = Serie };
-                        child.Show();
-                    }
+                    var serie= CompositionRoot.Instance.Resolve<ISerieServiceProxy>().Single(new ProxyContext(), Id);
+                    var childSerie = new SerieWindow { Serie = serie };
+                    childSerie.Show();
                     break;
             }
         }

@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Diagnostics;
 using System.IO;
 using System.Windows;
 using System.Windows.Input;
@@ -9,6 +8,7 @@ using Peplex_PFC.UI.Config;
 using Peplex_PFC.UI.Panels;
 using Peplex_PFC.UI.Shared;
 using Peplex_PFC.UI.UIO;
+using Utils;
 
 namespace Peplex_PFC.UI
 {
@@ -42,39 +42,12 @@ namespace Peplex_PFC.UI
 
         private void UpdateUI()
         {
-            if (Film.Cover != null)
-            {
-                var memStream = new MemoryStream();
-                memStream.Write(Film.Cover, 0, Film.Cover.Length);
-                memStream.Seek(0, SeekOrigin.Begin);
+            ImgCover.Source = PeplexUtils.ConvertByteArrayToBitmapImage(Film.Cover);
 
-                var img = new BitmapImage();
-                img.BeginInit();
-                img.StreamSource = memStream;
-                img.EndInit();
-
-                ImgCover.Source = img;
-            }
-            else
-                ImgCover.Source = null;
-
-            if (Film.Background != null)
-            {
-                var memStream = new MemoryStream();
-                memStream.Write(Film.Background, 0, Film.Background.Length);
-                memStream.Seek(0, SeekOrigin.Begin);
-
-                var img = new BitmapImage();
-                img.BeginInit();
-                img.StreamSource = memStream;
-                img.EndInit();
-
-                ImageBrush myBrush = new ImageBrush();
-                myBrush.ImageSource = img;
-                Background = myBrush;
-            }
-            else
-                ImgCover.Source = null;
+            var img = PeplexUtils.ConvertByteArrayToBitmapImage(Film.Background);
+            ImageBrush myBrush = new ImageBrush();
+            myBrush.ImageSource = img;
+            Background = myBrush;
 
             LblTitle.Content = Film.Title;
             LblSubtitle.Content = Film.Subtitle;

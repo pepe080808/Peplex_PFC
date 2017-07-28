@@ -1,20 +1,14 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 using Peplex_PFC.UI.Config;
 using Peplex_PFC.UI.Panels;
 using Peplex_PFC.UI.UIO;
+using Utils;
 
 namespace Peplex_PFC.UI
 {
@@ -49,39 +43,12 @@ namespace Peplex_PFC.UI
 
         private void UpdateUI()
         {
-            if (Serie.Cover != null)
-            {
-                var memStream = new MemoryStream();
-                memStream.Write(Serie.Cover, 0, Serie.Cover.Length);
-                memStream.Seek(0, SeekOrigin.Begin);
+            ImgCover.Source = PeplexUtils.ConvertByteArrayToBitmapImage(Serie.Cover);
 
-                var img = new BitmapImage();
-                img.BeginInit();
-                img.StreamSource = memStream;
-                img.EndInit();
-
-                ImgCover.Source = img;
-            }
-            else
-                ImgCover.Source = null;
-
-            if (Serie.Background != null)
-            {
-                var memStream = new MemoryStream();
-                memStream.Write(Serie.Background, 0, Serie.Background.Length);
-                memStream.Seek(0, SeekOrigin.Begin);
-
-                var img = new BitmapImage();
-                img.BeginInit();
-                img.StreamSource = memStream;
-                img.EndInit();
-
-                ImageBrush myBrush = new ImageBrush();
-                myBrush.ImageSource = img;
-                Background = myBrush;
-            }
-            else
-                ImgCover.Source = null;
+            var img = PeplexUtils.ConvertByteArrayToBitmapImage(Serie.Background);
+            ImageBrush myBrush = new ImageBrush();
+            myBrush.ImageSource = img;
+            Background = myBrush;
 
             LblTitle.Content = Serie.Title;
             TxtSynopsis.Text = Serie.Synopsis;
