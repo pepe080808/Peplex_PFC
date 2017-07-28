@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
+using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Threading;
 using Peplex_PFC.UI.Interfaces;
@@ -28,6 +29,22 @@ namespace Peplex_PFC.UI
         private List<MultimediaData> _filterData { get; set; }
         private List<MultimediaData> _allData { get; set; }
 
+        public string Sort
+        {
+            get
+            {
+                if (SortTitle.IsChecked == true)
+                    return "Title";
+                if (SortPremiereDate.IsChecked == true)
+                    return "PremiereDate";
+                if (SortNote.IsChecked == true)
+                    return "Note";
+                return "Title";
+            }
+        }
+
+        public string SortType { get { return SortTypeAsc.IsChecked == true ? "asc" : "desc";} }
+
         public MultimediaSearchWindow()
         {
             _filterData = new List<MultimediaData>();
@@ -35,9 +52,20 @@ namespace Peplex_PFC.UI
             InitializeComponent();
         }
 
-        private void TextBlockClick(object sender, MouseButtonEventArgs e)
-        {
 
+        private void MultimediaSearchActivated(object sender, EventArgs e)
+        {
+            LoadData();
+        }
+
+        private void MultimediaSearchWindowPreviewKeyDown(object sender, KeyEventArgs e)
+        {
+            switch (e.Key)
+            {
+                case Key.Escape:
+                    Close();
+                    break;
+            }
         }
 
         #region Load Data
@@ -165,7 +193,13 @@ namespace Peplex_PFC.UI
 
         private void UpdateInfo()
         {
+            GSearchResult.ColumnDefinitions.Clear();
+            GSearchResult.RowDefinitions.Clear();
+
         }
+
+        #region UpdateInfo
+        #endregion
 
         private void KeyUpTextBox(object sender, KeyEventArgs e)
         {
@@ -177,7 +211,13 @@ namespace Peplex_PFC.UI
 
         private void BtnOkClick(object sender, System.Windows.RoutedEventArgs e)
         {
-            FilterData("asc", "ALL", "Title");
+            FilterData(SortType, "ALL", Sort);
+        }
+
+        private void TextBlockClick(object sender, MouseButtonEventArgs e)
+        {
+            var textBlock = (TextBlock) sender;
+            FilterData(SortType, textBlock.Text, Sort);
         }
     }
 }

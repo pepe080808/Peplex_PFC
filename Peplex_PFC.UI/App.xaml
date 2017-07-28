@@ -46,6 +46,13 @@
             <Setter Property="FontFamily" Value="Tahoma"/>
             <Setter Property="Margin" Value="10 5"/>
         </Style>
+
+        <Style x:Key="FieldLabelRadioButtonStyle" TargetType="{x:Type RadioButton}">
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="FontSize" Value="12" />
+            <Setter Property="FontFamily" Value="Tahoma"/>
+            <Setter Property="Margin" Value="0 2"/>
+        </Style>
         
         <Style x:Key="FieldPasswordBoxStyle" TargetType="{x:Type PasswordBox}">
             <Setter Property="HorizontalAlignment" Value="Left"/>
