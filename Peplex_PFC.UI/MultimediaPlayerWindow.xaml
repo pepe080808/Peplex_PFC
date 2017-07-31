@@ -3,7 +3,6 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:Peplex_PFC.UI"
         xmlns:panels="clr-namespace:Peplex_PFC.UI.Panels"
         mc:Ignorable="d"
         Title="MainWindow"
@@ -35,8 +34,56 @@
                 </Grid>
             </Grid>
 
-            <Grid Name="GMain" Grid.Row="1" Visibility="Visible">
-                <MediaElement Name="MediaPlayer" LoadedBehavior="Manual"/>
+            <Grid Name="GMain" Grid.Row="1" MouseMove="MouseMoveGMain">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+                <MediaElement Name="MediaPlayer" Grid.Row="0" Grid.RowSpan="2" LoadedBehavior="Manual" UnloadedBehavior="Stop" Stretch="Fill" MediaOpened="MediaPlayerOpened" MediaEnded="MediaPlayerEnded"/>
+                <StackPanel Name="ControlPanel" Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Bottom" Width="450" Orientation="Vertical" Height="75" Visibility="Visible">
+
+                    <StackPanel Orientation="Horizontal">
+                        <!-- Volume slider. This slider allows a Volume range between 0 and 1. -->
+                        <TextBlock Text="Volumen" Style="{StaticResource FieldTextBlockMediaPlayerStyle}"/>
+                        <Slider Name="volumeSlider" VerticalAlignment="Center" ValueChanged="ChangeMediaVolume" Minimum="0" Maximum="1" Value="0.5" Width="70" Style="{StaticResource Horizontal_Slider}"/>
+
+                        <!-- Play button. -->
+                        <Button Click="BtnPlayClick" Style="{StaticResource FieldDataGridButton}">
+                            <Button.Content>
+                                <StackPanel VerticalAlignment="Top" HorizontalAlignment="Left">
+                                    <panels:PlayControl Margin="0 0 20 20"/>
+                                </StackPanel>
+                            </Button.Content>
+                        </Button>
+
+                        <!-- Pause button. -->
+                        <Button Click="BtnPauseClick" Style="{StaticResource FieldDataGridButton}">
+                            <Button.Content>
+                                <StackPanel VerticalAlignment="Top" HorizontalAlignment="Left">
+                                    <panels:PauseControl Margin="0 0 20 20"/>
+                                </StackPanel>
+                            </Button.Content>
+                        </Button>
+
+                        <!-- Stop button. -->
+                        <Button Click="BtnStopClick" Style="{StaticResource FieldDataGridButton}">
+                            <Button.Content>
+                                <StackPanel VerticalAlignment="Top" HorizontalAlignment="Left">
+                                    <panels:StopControl Margin="0 0 20 20"/>
+                                </StackPanel>
+                            </Button.Content>
+                        </Button>
+
+                        <!-- Volume slider. This slider allows you to change the speed of the media playback. -->
+                        <TextBlock Text="Velocidad" Style="{StaticResource FieldTextBlockMediaPlayerStyle}"/>
+                        <Slider Name="speedRatioSlider" VerticalAlignment="Center" ValueChanged="ChangeMediaSpeedRatio" Value="1" Width="70" Style="{StaticResource Horizontal_Slider}"/>
+                    </StackPanel>
+                    
+                    <StackPanel Orientation="Horizontal">
+                        <!-- Seek to slider. Ths slider allows you to jump to different parts of the media playback. -->
+                        <Slider Name="timelineSlider" VerticalAlignment="Center" ValueChanged="SeekToMediaPosition" Width="450" Style="{StaticResource Horizontal_Slider}"/>
+                    </StackPanel>
+                </StackPanel>
             </Grid>
 
         </Grid>

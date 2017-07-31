@@ -1,8 +1,8 @@
 ﻿namespace Peplex_PFC.UI.Panels
 {
-    public partial class PlayControl
+    public partial class PauseControl
     {
-        public PlayControl()
+        public PauseControl()
         {
             InitializeComponent();
         }

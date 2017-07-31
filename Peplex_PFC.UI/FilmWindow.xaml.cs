@@ -1,9 +1,7 @@
 ﻿using System;
-using System.IO;
 using System.Windows;
 using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
 using Peplex_PFC.UI.Config;
 using Peplex_PFC.UI.Panels;
 using Peplex_PFC.UI.Shared;
@@ -88,8 +86,14 @@ namespace Peplex_PFC.UI
         {
             if (e.ChangedButton == MouseButton.Left && e.ClickCount == 2)
             {
-                MessageBoxWindow.Show(this, "PLAY", DialogIcon.Info, new[] { DialogButton.Accept }, "REPRODUCIR.");
-                EyeControl.Value = true;
+                PeplexConfig.Instance.CurrentUser.FilmSeen.Remove(_film.Id);
+                PeplexConfig.Instance.CurrentUser.FilmSeen.Add(_film.Id);
+
+                _film.Seen = true;
+                //EyeControl.Value = true;
+
+                var child = new MultimediaWindow { Owner = this, Tag = "Film", Title = _film.Title, Film = _film };
+                child.ShowDialog();
             }
         }
 

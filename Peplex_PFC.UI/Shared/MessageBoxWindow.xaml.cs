@@ -1,16 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Linq;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 
 namespace Peplex_PFC.UI.Shared
 {
@@ -103,7 +93,7 @@ namespace Peplex_PFC.UI.Shared
 
         private void WindowPreviewKeyUp(object sender, KeyEventArgs e)
         {
-            if (e.Key == Key.Return)
+            /*if (e.Key == Key.Return)
             {
                 if (ButtonYes.Visibility == Visibility.Visible)
                 {
@@ -116,7 +106,7 @@ namespace Peplex_PFC.UI.Shared
                     e.Handled = true;
                 }
             }
-            else if (e.Key == Key.Escape)
+            else*/ if (e.Key == Key.Escape)
             {
                 if (ButtonCancel.Visibility == Visibility.Visible)
                 {

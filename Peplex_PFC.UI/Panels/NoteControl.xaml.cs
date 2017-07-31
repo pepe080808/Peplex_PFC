@@ -1,7 +1,4 @@
-﻿using System.Windows;
-using System.Windows.Media;
-
-namespace Peplex_PFC.UI.Panels
+﻿namespace Peplex_PFC.UI.Panels
 {
     public partial class NoteControl
     {

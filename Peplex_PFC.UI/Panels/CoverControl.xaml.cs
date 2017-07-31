@@ -1,4 +1,5 @@
-﻿using System.Windows.Media.Imaging;
+﻿using System.Windows;
+using System.Windows.Media.Imaging;
 using Peplex_PFC.UI.Interfaces;
 using Peplex_PFC.UI.Proxies;
 using Peplex_PFC.UIO;
@@ -58,13 +59,13 @@ namespace Peplex_PFC.UI.Panels
             {
                 case "Film":
                     var film = CompositionRoot.Instance.Resolve<IFilmServiceProxy>().Single(new ProxyContext(), Id);
-                    var childFilm = new FilmWindow {Film = film};
-                    childFilm.Show();
+                    var childFilm = new FilmWindow { Owner = Window.GetWindow(Parent), Film = film};
+                    childFilm.ShowDialog();
                     break;
                 case "Serie":
                     var serie= CompositionRoot.Instance.Resolve<ISerieServiceProxy>().Single(new ProxyContext(), Id);
-                    var childSerie = new SerieWindow { Serie = serie };
-                    childSerie.Show();
+                    var childSerie = new SerieWindow { Owner = Window.GetWindow(Parent), Serie = serie };
+                    childSerie.ShowDialog();
                     break;
             }
         }

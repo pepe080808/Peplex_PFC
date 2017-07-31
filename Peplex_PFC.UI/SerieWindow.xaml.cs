@@ -135,7 +135,7 @@ namespace Peplex_PFC.UI
 
             currentdata.Seen = true;
 
-            var child = new MultimediaWindow {Owner = this, Title = _serie.Title, Episode = currentdata};
+            var child = new MultimediaWindow {Owner = this, Tag="Episode", Title = _serie.Title, Episode = currentdata};
             child.ShowDialog();
         }
 

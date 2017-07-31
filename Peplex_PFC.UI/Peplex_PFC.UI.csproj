@@ -157,11 +157,17 @@
     <Compile Include="Panels\NoteControl.xaml.cs">
       <DependentUpon>NoteControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Panels\PauseControl.xaml.cs">
+      <DependentUpon>PauseControl.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Panels\PlayControl.xaml.cs">
       <DependentUpon>PlayControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="Panels\SoundControl.xaml.cs">
       <DependentUpon>SoundControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Panels\StopControl.xaml.cs">
+      <DependentUpon>StopControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="Proxies\ChannelFactoryFactory.cs" />
     <Compile Include="Proxies\EpisodeServiceProxy.cs" />
@@ -190,9 +196,6 @@
     <Compile Include="UIO\FormatUIO.cs" />
     <Compile Include="UIO\Generic.cs" />
     <Compile Include="UIO\GenreUIO.cs" />
-    <Compile Include="UIO\MediaPlayerWindow.xaml.cs">
-      <DependentUpon>MediaPlayerWindow.xaml</DependentUpon>
-    </Compile>
     <Compile Include="UIO\SerieUIO.cs" />
     <Compile Include="UIO\UserInterfaceObject.cs" />
     <Compile Include="UIO\UserUIO.cs" />
@@ -336,11 +339,19 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Panels\PauseControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Panels\PlayControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Panels\SoundControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Panels\StopControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -353,10 +364,6 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="SplashWindow.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="UIO\MediaPlayerWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

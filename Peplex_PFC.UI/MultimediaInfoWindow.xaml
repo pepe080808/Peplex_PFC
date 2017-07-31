@@ -44,7 +44,25 @@
 
             <Grid Name="GMain" Grid.Row="1" Margin="20">
 
-                <DataGrid x:Name="dgMultimedia" Margin="20,20" Background="{StaticResource LightGrayBrush}" AutoGenerateColumns="False" RowHeight="100" IsReadOnly="True">
+                <DataGrid x:Name="dgMultimedia" Style="{StaticResource FieldDataGrid}">
+                    
+                    <DataGrid.CellStyle>
+                        <Style TargetType="DataGridCell">
+                            <Style.Triggers>
+                                <Trigger Property="IsSelected" Value="True">
+                                    <Setter Property="Background" Value="{StaticResource DarkGrayBrush}" />
+                                    <Setter Property="BorderBrush" Value="{StaticResource DarkGrayBrush}" />
+                                    <Setter Property="BorderThickness" Value="0" />
+                                </Trigger>
+                                <Trigger Property="IsSelected" Value="False">
+                                    <Setter Property="Background" Value="{StaticResource LightGrayBrush}" />
+                                    <Setter Property="BorderBrush" Value="{StaticResource LightGrayBrush}" />
+                                    <Setter Property="BorderThickness" Value="0" />
+                                </Trigger>
+                            </Style.Triggers>
+                        </Style>
+                    </DataGrid.CellStyle>
+                    
                     <DataGrid.Columns>
                         <DataGridTemplateColumn Header="" Width="SizeToCells" IsReadOnly="True">
                             <DataGridTemplateColumn.CellTemplate>
@@ -53,12 +71,24 @@
                                 </DataTemplate>
                             </DataGridTemplateColumn.CellTemplate>
                         </DataGridTemplateColumn>
-                        <DataGridTextColumn Binding="{Binding Title}" Header="Title" Width="*" MinWidth="30"/>
-                        <DataGridTextColumn Binding="{Binding Note}" Header="Note" Width="50" MinWidth="50" />
+                        <DataGridTemplateColumn Header="Title" Width="*" MinWidth="40">
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate>
+                                    <TextBlock Text="{Binding Title}" VerticalAlignment="Center" Margin="5"/>
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>
+                        <DataGridTemplateColumn Header="Note" Width="50" MinWidth="50">
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate>
+                                    <TextBlock Text="{Binding Note}" VerticalAlignment="Center" Margin="5"/>
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>
                         <DataGridTemplateColumn Header="" Width="40" MinWidth="40" MaxWidth="40">
                             <DataGridTemplateColumn.CellTemplate>
                                 <DataTemplate>
-                                    <Button Click="BtnPlayClick">
+                                    <Button Click="BtnPlayClick" Style="{StaticResource FieldDataGridButton}">
                                         <Button.Content>
                                             <StackPanel VerticalAlignment="Top" HorizontalAlignment="Left">
                                                 <panels:PlayControl Margin="0 0 20 20"/>
@@ -71,7 +101,7 @@
                         <DataGridTemplateColumn Header="" Width="40" MinWidth="40" MaxWidth="40">
                             <DataGridTemplateColumn.CellTemplate>
                                 <DataTemplate>
-                                    <Button Click="BtnSeenClick">
+                                    <Button Click="BtnSeenClick" Style="{StaticResource FieldDataGridButton}">
                                         <Button.Content>
                                             <StackPanel VerticalAlignment="Top" HorizontalAlignment="Left">
                                                 <Path Data="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zM12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z"  Stretch="Uniform" Height="20" Width="20">

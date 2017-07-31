@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
+using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Threading;
@@ -17,8 +18,8 @@ namespace Peplex_PFC.UI
 {
     public partial class MultimediaSearchWindow
     {
-        public const int MAX_COLUMN = 4;
-
+        public const int MAX_COLUMN = 6;
+        private bool _loadData;
         private WaitCursor _wc;
 
         public class MultimediaData
@@ -58,7 +59,11 @@ namespace Peplex_PFC.UI
 
         private void MultimediaSearchActivated(object sender, EventArgs e)
         {
-            LoadData();
+            if (!_loadData)
+            {
+                _loadData = true;
+                LoadData();
+            }
         }
 
         private void MultimediaSearchWindowPreviewKeyDown(object sender, KeyEventArgs e)
@@ -110,6 +115,8 @@ namespace Peplex_PFC.UI
 
             if (result == null)
                 return;
+
+            _allData.Clear();
 
             foreach (var film in result.Item1)
             {
@@ -186,8 +193,10 @@ namespace Peplex_PFC.UI
             // Ordenar
             var lstTupleOrderBy = new List<Tuple<string, string>>();
 
-            if (String.IsNullOrWhiteSpace(sort))
+            if (!String.IsNullOrWhiteSpace(sort))
                 lstTupleOrderBy.Add(new Tuple<string, string>(sort, order));
+            else
+                lstTupleOrderBy.Add(new Tuple<string, string>("Title", "asc"));
 
             _filterData = new List<MultimediaData>(_filterData.MultipleSort(lstTupleOrderBy).ToList());
 
@@ -202,6 +211,13 @@ namespace Peplex_PFC.UI
 
             var f = 0;
             var c = 0;
+
+            var plus = _filterData.Count % MAX_COLUMN != 0 ? 1 : 0; // el resto no es cero se añade un fila más al grid
+            for (var i = 0; i < _filterData.Count / MAX_COLUMN + plus; i++)
+                GSearchResult.RowDefinitions.Add(new RowDefinition { Height = new GridLength(160) });
+
+            for (var i = 0; i < MAX_COLUMN; i++)
+                GSearchResult.ColumnDefinitions.Add(new ColumnDefinition());
 
             foreach (var data in _filterData)
             {
@@ -240,9 +256,9 @@ namespace Peplex_PFC.UI
             }
         }
 
-        private void BtnOkClick(object sender, System.Windows.RoutedEventArgs e)
+        private void BtnOkClick(object sender, RoutedEventArgs e)
         {
-            FilterData(SortType, "ALL", Sort);
+            FilterData(SortType, TxtSearch.Text, Sort);
         }
 
         private void TextBlockClick(object sender, MouseButtonEventArgs e)

@@ -77,6 +77,7 @@ namespace Peplex_PFC.UI
 
         void AnimationCompletedReturnFalse(object sender, EventArgs e)
         {
+            Close();
             //DialogResult = false;
         }
 

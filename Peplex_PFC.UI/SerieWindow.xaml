@@ -112,15 +112,53 @@
                     <TextBlock Grid.Row="2" Name="TxtSynopsis" Margin="10 2 0 2" Background="Transparent" Foreground="White" FontSize="23" FontFamily="Tahoma" VerticalAlignment="Top" Text="Synopsis" ScrollViewer.VerticalScrollBarVisibility="Auto"/>
                 </Grid>
 
-                <DataGrid x:Name="dgEpisode" Grid.Row="2" Grid.RowSpan="2" Grid.Column="1" Margin="160,20" AutoGenerateColumns="False" Background="Transparent" Opacity="0.5" Foreground="Black" FontFamily="Tahoma" FontSize="15" RowHeight="30" IsReadOnly="True">
+                <DataGrid x:Name="dgEpisode" Grid.Row="2" Grid.RowSpan="2" Grid.Column="1" Margin="160,20" Style="{StaticResource FieldDataGrid}" Background="Transparent" RowHeight="50">
+
+                    <DataGrid.CellStyle>
+                        <Style TargetType="DataGridCell">
+                            <Style.Triggers>
+                                <Trigger Property="IsSelected" Value="True">
+                                    <Setter Property="Background" Value="{StaticResource DarkGrayBrush}" />
+                                    <Setter Property="BorderBrush" Value="{StaticResource DarkGrayBrush}" />
+                                    <Setter Property="BorderThickness" Value="0" />
+                                </Trigger>
+                                <Trigger Property="IsSelected" Value="False">
+                                    <Setter Property="Background" Value="{StaticResource LightGrayBrush}" />
+                                    <Setter Property="BorderBrush" Value="{StaticResource LightGrayBrush}" />
+                                    <Setter Property="BorderThickness" Value="0" />
+                                </Trigger>
+                            </Style.Triggers>
+                        </Style>
+                    </DataGrid.CellStyle>
+
                     <DataGrid.Columns>
-                        <DataGridTextColumn Binding="{Binding Season}" Header="Season" Width="30" MinWidth="30"/>
-                        <DataGridTextColumn Binding="{Binding Number}" Header="Number" Width="30" MinWidth="30"/>
-                        <DataGridTextColumn Binding="{Binding Name}" Header="Name" Width="*" MinWidth="60" />
+
+                        <DataGridTemplateColumn Header="" Width="30" MinWidth="30">
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate>
+                                    <TextBlock Text="{Binding Season}" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="5"/>
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>
+
+                        <DataGridTemplateColumn Header="" Width="50" MinWidth="50">
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate>
+                                    <TextBlock Text="{Binding Number}" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="5"/>
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>
+                        <DataGridTemplateColumn Header="Name" Width="*" MinWidth="40">
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate>
+                                    <TextBlock Text="{Binding Name}" VerticalAlignment="Center" Margin="5"/>
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>
                         <DataGridTemplateColumn Header="" Width="40" MinWidth="40" MaxWidth="40">
                             <DataGridTemplateColumn.CellTemplate>
                                 <DataTemplate>
-                                    <Button Click="BtnPlayClick">
+                                    <Button Click="BtnPlayClick" Style="{StaticResource FieldDataGridButton}">
                                         <Button.Content>
                                             <StackPanel VerticalAlignment="Top" HorizontalAlignment="Left">
                                                 <panels:PlayControl Margin="0 0 20 20"/>
@@ -133,7 +171,7 @@
                         <DataGridTemplateColumn Header="" Width="40" MinWidth="40" MaxWidth="40">
                             <DataGridTemplateColumn.CellTemplate>
                                 <DataTemplate>
-                                    <Button Click="BtnSeenClick">
+                                    <Button Click="BtnSeenClick" Style="{StaticResource FieldDataGridButton}">
                                         <Button.Content>
                                             <StackPanel VerticalAlignment="Top" HorizontalAlignment="Left">
                                                 <Path Data="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zM12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z"  Stretch="Uniform" Height="20" Width="20">

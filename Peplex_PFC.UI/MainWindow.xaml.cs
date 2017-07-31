@@ -106,8 +106,8 @@ namespace Peplex_PFC.UI
 
                 _menu.Close();
 
-                if (result != true)
-                    return;
+                //if (result != true)
+                //    return;
 
                 if (!String.IsNullOrWhiteSpace(_menu.EnteredOption))
                     menuGoto(_menu.EnteredOption);
@@ -125,6 +125,10 @@ namespace Peplex_PFC.UI
                 case "Serie":
                     var childSerie = new MultimediaInfoWindow { Owner = this, StrTag = "Serie" };
                     childSerie.ShowDialog();
+                    break;
+                case "Search":
+                    var childSearch = new MultimediaSearchWindow { Owner = this };
+                    childSearch.ShowDialog();
                     break;
                 case "Config":
                     var childConfig = new ConfigWindow { Owner = this };

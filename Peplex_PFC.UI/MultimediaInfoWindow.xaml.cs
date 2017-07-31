@@ -17,6 +17,7 @@ namespace Peplex_PFC.UI
 {
     public partial class MultimediaInfoWindow
     {
+        private bool _loadData;
         private WaitCursor _wc;
 
         private string _strTag;
@@ -34,14 +35,18 @@ namespace Peplex_PFC.UI
         #region Load data
         private void MultimediainfoActivated(object sender, System.EventArgs e)
         {
-            switch (StrTag)
+            if (!_loadData)
             {
-                case "Film":
-                    LoadDataFilms();
-                    break;
-                case "Serie":
-                    LoadDataSeries();
-                    break;
+                _loadData = true;
+                switch (StrTag)
+                {
+                    case "Film":
+                        LoadDataFilms();
+                        break;
+                    case "Serie":
+                        LoadDataSeries();
+                        break;
+                }
             }
         }
 
@@ -161,14 +166,14 @@ namespace Peplex_PFC.UI
                     var currentdataFilm = (FilmUIO)btn.DataContext;
 
                     var childFilm = new FilmWindow { Film = currentdataFilm };
-                    childFilm.Show();
+                    childFilm.ShowDialog();
 
                     break;
                 case "Serie":
                     var currentdataSerie = (SerieUIO)btn.DataContext;
 
                     var childSerie = new SerieWindow { Serie = currentdataSerie };
-                    childSerie.Show();
+                    childSerie.ShowDialog();
 
                     break;
             }

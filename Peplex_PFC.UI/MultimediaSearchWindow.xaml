@@ -45,10 +45,10 @@
                     <ColumnDefinition/>
                     <ColumnDefinition Width="0.3*"/>
                 </Grid.ColumnDefinitions>
-                
-                <Grid Name="GSearchResult" Grid.Column="0">
-                    
-                </Grid>
+
+                <ScrollViewer Grid.Column="0">
+                    <Grid Name="GSearchResult" d:DesignHeight="285" d:DesignWidth="640"/>
+                </ScrollViewer>
 
                 <Grid Name="GSearchPanel" Grid.Column="1" VerticalAlignment="Top" HorizontalAlignment="Left" >
                     <Grid.RowDefinitions>
@@ -82,33 +82,33 @@
                             <ColumnDefinition/>
                         </Grid.ColumnDefinitions>
 
-                        <TextBlock Name="TxtA" Text="A" TextDecorations="Underline" Grid.Row="0" Grid.Column="0" Style="{StaticResource FieldTextBlockStyle}"/>
-                        <TextBlock Name="TxtB" Text="B" TextDecorations="Underline" Grid.Row="0" Grid.Column="1" Style="{StaticResource FieldTextBlockStyle}"/>
-                        <TextBlock Name="TxtC" Text="C" TextDecorations="Underline" Grid.Row="0" Grid.Column="2" Style="{StaticResource FieldTextBlockStyle}"/>
-                        <TextBlock Name="TxtD" Text="D" TextDecorations="Underline" Grid.Row="0" Grid.Column="3" Style="{StaticResource FieldTextBlockStyle}"/>
-                        <TextBlock Name="TxtE" Text="E" TextDecorations="Underline" Grid.Row="0" Grid.Column="4" Style="{StaticResource FieldTextBlockStyle}"/>
-                        <TextBlock Name="TxtF" Text="F" TextDecorations="Underline" Grid.Row="0" Grid.Column="5" Style="{StaticResource FieldTextBlockStyle}"/>
-                        <TextBlock Name="TxtG" Text="G" TextDecorations="Underline" Grid.Row="1" Grid.Column="0" Style="{StaticResource FieldTextBlockStyle}"/>
-                        <TextBlock Name="TxtH" Text="H" TextDecorations="Underline" Grid.Row="1" Grid.Column="1" Style="{StaticResource FieldTextBlockStyle}"/>
-                        <TextBlock Name="TxtI" Text="I" TextDecorations="Underline" Grid.Row="1" Grid.Column="2" Style="{StaticResource FieldTextBlockStyle}"/>
-                        <TextBlock Name="TxtJ" Text="J" TextDecorations="Underline" Grid.Row="1" Grid.Column="3" Style="{StaticResource FieldTextBlockStyle}"/>
-                        <TextBlock Name="TxtK" Text="K" TextDecorations="Underline" Grid.Row="1" Grid.Column="4" Style="{StaticResource FieldTextBlockStyle}"/>
-                        <TextBlock Name="TxtL" Text="L" TextDecorations="Underline" Grid.Row="1" Grid.Column="5" Style="{StaticResource FieldTextBlockStyle}"/>
-                        <TextBlock Name="TxtM" Text="M" TextDecorations="Underline" Grid.Row="2" Grid.Column="0" Style="{StaticResource FieldTextBlockStyle}"/>
-                        <TextBlock Name="TxtN" Text="N" TextDecorations="Underline" Grid.Row="2" Grid.Column="1" Style="{StaticResource FieldTextBlockStyle}"/>
-                        <TextBlock Name="TxtO" Text="O" TextDecorations="Underline" Grid.Row="2" Grid.Column="2" Style="{StaticResource FieldTextBlockStyle}"/>
-                        <TextBlock Name="TxtP" Text="P" TextDecorations="Underline" Grid.Row="2" Grid.Column="3" Style="{StaticResource FieldTextBlockStyle}"/>
-                        <TextBlock Name="TxtQ" Text="Q" TextDecorations="Underline" Grid.Row="2" Grid.Column="4" Style="{StaticResource FieldTextBlockStyle}"/>
-                        <TextBlock Name="TxtR" Text="R" TextDecorations="Underline" Grid.Row="2" Grid.Column="5" Style="{StaticResource FieldTextBlockStyle}"/>
-                        <TextBlock Name="TxtS" Text="S" TextDecorations="Underline" Grid.Row="3" Grid.Column="0" Style="{StaticResource FieldTextBlockStyle}"/>
-                        <TextBlock Name="TxtT" Text="T" TextDecorations="Underline" Grid.Row="3" Grid.Column="1" Style="{StaticResource FieldTextBlockStyle}"/>
-                        <TextBlock Name="TxtU" Text="U" TextDecorations="Underline" Grid.Row="3" Grid.Column="2" Style="{StaticResource FieldTextBlockStyle}"/>
-                        <TextBlock Name="TxtV" Text="V" TextDecorations="Underline" Grid.Row="3" Grid.Column="3" Style="{StaticResource FieldTextBlockStyle}"/>
-                        <TextBlock Name="TxtW" Text="W" TextDecorations="Underline" Grid.Row="3" Grid.Column="4" Style="{StaticResource FieldTextBlockStyle}"/>
-                        <TextBlock Name="TxtX" Text="X" TextDecorations="Underline" Grid.Row="3" Grid.Column="5" Style="{StaticResource FieldTextBlockStyle}"/>
-                        <TextBlock Name="TxtY" Text="Y" TextDecorations="Underline" Grid.Row="4" Grid.Column="0" Style="{StaticResource FieldTextBlockStyle}"/>
-                        <TextBlock Name="TxtZ" Text="Z"  TextDecorations="Underline" Grid.Row="4" Grid.Column="1" Style="{StaticResource FieldTextBlockStyle}"/>
-                        <TextBlock Name="Txt0_9" Text="0-9" TextDecorations="Underline" Grid.Row="4" Grid.Column="2" Style="{StaticResource FieldTextBlockStyle}"/>
+                        <TextBlock Name="TxtA" Text="A" TextDecorations="Underline" Grid.Row="0" Grid.Column="0" Style="{StaticResource FieldTextBlockStyle}" MouseLeftButtonDown="TextBlockClick"/>
+                        <TextBlock Name="TxtB" Text="B" TextDecorations="Underline" Grid.Row="0" Grid.Column="1" Style="{StaticResource FieldTextBlockStyle}" MouseLeftButtonDown="TextBlockClick"/>
+                        <TextBlock Name="TxtC" Text="C" TextDecorations="Underline" Grid.Row="0" Grid.Column="2" Style="{StaticResource FieldTextBlockStyle}" MouseLeftButtonDown="TextBlockClick"/>
+                        <TextBlock Name="TxtD" Text="D" TextDecorations="Underline" Grid.Row="0" Grid.Column="3" Style="{StaticResource FieldTextBlockStyle}" MouseLeftButtonDown="TextBlockClick"/>
+                        <TextBlock Name="TxtE" Text="E" TextDecorations="Underline" Grid.Row="0" Grid.Column="4" Style="{StaticResource FieldTextBlockStyle}" MouseLeftButtonDown="TextBlockClick"/>
+                        <TextBlock Name="TxtF" Text="F" TextDecorations="Underline" Grid.Row="0" Grid.Column="5" Style="{StaticResource FieldTextBlockStyle}" MouseLeftButtonDown="TextBlockClick"/>
+                        <TextBlock Name="TxtG" Text="G" TextDecorations="Underline" Grid.Row="1" Grid.Column="0" Style="{StaticResource FieldTextBlockStyle}" MouseLeftButtonDown="TextBlockClick"/>
+                        <TextBlock Name="TxtH" Text="H" TextDecorations="Underline" Grid.Row="1" Grid.Column="1" Style="{StaticResource FieldTextBlockStyle}" MouseLeftButtonDown="TextBlockClick"/>
+                        <TextBlock Name="TxtI" Text="I" TextDecorations="Underline" Grid.Row="1" Grid.Column="2" Style="{StaticResource FieldTextBlockStyle}" MouseLeftButtonDown="TextBlockClick"/>
+                        <TextBlock Name="TxtJ" Text="J" TextDecorations="Underline" Grid.Row="1" Grid.Column="3" Style="{StaticResource FieldTextBlockStyle}" MouseLeftButtonDown="TextBlockClick"/>
+                        <TextBlock Name="TxtK" Text="K" TextDecorations="Underline" Grid.Row="1" Grid.Column="4" Style="{StaticResource FieldTextBlockStyle}" MouseLeftButtonDown="TextBlockClick"/>
+                        <TextBlock Name="TxtL" Text="L" TextDecorations="Underline" Grid.Row="1" Grid.Column="5" Style="{StaticResource FieldTextBlockStyle}" MouseLeftButtonDown="TextBlockClick"/>
+                        <TextBlock Name="TxtM" Text="M" TextDecorations="Underline" Grid.Row="2" Grid.Column="0" Style="{StaticResource FieldTextBlockStyle}" MouseLeftButtonDown="TextBlockClick"/>
+                        <TextBlock Name="TxtN" Text="N" TextDecorations="Underline" Grid.Row="2" Grid.Column="1" Style="{StaticResource FieldTextBlockStyle}" MouseLeftButtonDown="TextBlockClick"/>
+                        <TextBlock Name="TxtO" Text="O" TextDecorations="Underline" Grid.Row="2" Grid.Column="2" Style="{StaticResource FieldTextBlockStyle}" MouseLeftButtonDown="TextBlockClick"/>
+                        <TextBlock Name="TxtP" Text="P" TextDecorations="Underline" Grid.Row="2" Grid.Column="3" Style="{StaticResource FieldTextBlockStyle}" MouseLeftButtonDown="TextBlockClick"/>
+                        <TextBlock Name="TxtQ" Text="Q" TextDecorations="Underline" Grid.Row="2" Grid.Column="4" Style="{StaticResource FieldTextBlockStyle}" MouseLeftButtonDown="TextBlockClick"/>
+                        <TextBlock Name="TxtR" Text="R" TextDecorations="Underline" Grid.Row="2" Grid.Column="5" Style="{StaticResource FieldTextBlockStyle}" MouseLeftButtonDown="TextBlockClick"/>
+                        <TextBlock Name="TxtS" Text="S" TextDecorations="Underline" Grid.Row="3" Grid.Column="0" Style="{StaticResource FieldTextBlockStyle}" MouseLeftButtonDown="TextBlockClick"/>
+                        <TextBlock Name="TxtT" Text="T" TextDecorations="Underline" Grid.Row="3" Grid.Column="1" Style="{StaticResource FieldTextBlockStyle}" MouseLeftButtonDown="TextBlockClick"/>
+                        <TextBlock Name="TxtU" Text="U" TextDecorations="Underline" Grid.Row="3" Grid.Column="2" Style="{StaticResource FieldTextBlockStyle}" MouseLeftButtonDown="TextBlockClick"/>
+                        <TextBlock Name="TxtV" Text="V" TextDecorations="Underline" Grid.Row="3" Grid.Column="3" Style="{StaticResource FieldTextBlockStyle}" MouseLeftButtonDown="TextBlockClick"/>
+                        <TextBlock Name="TxtW" Text="W" TextDecorations="Underline" Grid.Row="3" Grid.Column="4" Style="{StaticResource FieldTextBlockStyle}" MouseLeftButtonDown="TextBlockClick"/>
+                        <TextBlock Name="TxtX" Text="X" TextDecorations="Underline" Grid.Row="3" Grid.Column="5" Style="{StaticResource FieldTextBlockStyle}" MouseLeftButtonDown="TextBlockClick"/>
+                        <TextBlock Name="TxtY" Text="Y" TextDecorations="Underline" Grid.Row="4" Grid.Column="0" Style="{StaticResource FieldTextBlockStyle}" MouseLeftButtonDown="TextBlockClick"/>
+                        <TextBlock Name="TxtZ" Text="Z"  TextDecorations="Underline" Grid.Row="4" Grid.Column="1" Style="{StaticResource FieldTextBlockStyle}" MouseLeftButtonDown="TextBlockClick"/>
+                        <TextBlock Name="Txt0_9" Text="0-9" TextDecorations="Underline" Grid.Row="4" Grid.Column="2" Style="{StaticResource FieldTextBlockStyle}" MouseLeftButtonDown="TextBlockClick"/>
                         <TextBlock Name="TxtAll" Text="ALL" TextDecorations="Underline" Grid.Row="4" Grid.Column="3" Style="{StaticResource FieldTextBlockStyle}" MouseLeftButtonDown="TextBlockClick"/>
                     </Grid>
 
