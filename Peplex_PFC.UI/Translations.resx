@@ -211,4 +211,13 @@ Intentos : {0}/{1}.</value>
   <data name="LblUpperSearch" xml:space="preserve">
     <value>BUSCAR</value>
   </data>
+  <data name="lblVolume" xml:space="preserve">
+    <value>Volumen</value>
+  </data>
+  <data name="lblSpeed" xml:space="preserve">
+    <value>Velocidad</value>
+  </data>
+  <data name="MultimediaPlayerWindowResumeTime" xml:space="preserve">
+    <value>¿Desea reanudar la reproducción?</value>
+  </data>
 </root>

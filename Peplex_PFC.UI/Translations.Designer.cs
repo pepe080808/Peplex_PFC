@@ -160,6 +160,15 @@ namespace Peplex_PFC.UI {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Velocidad.
+        /// </summary>
+        public static string lblSpeed {
+            get {
+                return ResourceManager.GetString("lblSpeed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to CONFIG.
         /// </summary>
         public static string LblUpperConfig {
@@ -201,6 +210,15 @@ namespace Peplex_PFC.UI {
         public static string lblUserLbl {
             get {
                 return ResourceManager.GetString("lblUserLbl", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Volumen.
+        /// </summary>
+        public static string lblVolume {
+            get {
+                return ResourceManager.GetString("lblVolume", resourceCulture);
             }
         }
         
@@ -247,6 +265,15 @@ namespace Peplex_PFC.UI {
         public static string loggingWindowUserNotExits {
             get {
                 return ResourceManager.GetString("loggingWindowUserNotExits", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to ¿Desea reanudar la reproducción?.
+        /// </summary>
+        public static string MultimediaPlayerWindowResumeTime {
+            get {
+                return ResourceManager.GetString("MultimediaPlayerWindowResumeTime", resourceCulture);
             }
         }
         

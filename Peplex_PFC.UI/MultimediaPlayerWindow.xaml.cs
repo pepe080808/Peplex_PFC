@@ -3,12 +3,14 @@ using System.Windows;
 using System.Windows.Input;
 using System.Windows.Threading;
 using Peplex_PFC.UI.Config;
+using Peplex_PFC.UI.Shared;
 using Peplex_PFC.UI.UIO;
 
 namespace Peplex_PFC.UI
 {
     public partial class MultimediaWindow
     {
+        #region Properties
         private readonly DispatcherTimer _controlPanelTimer;
 
         private FilmUIO _film;
@@ -39,6 +41,55 @@ namespace Peplex_PFC.UI
             set { _tag = value; }
         }
 
+        private string CompleteName
+        {
+            get
+            {
+                return Tag == "Episode" ? 
+                    String.Format("{0}x{1} - {2}.{3}", _episode.Season, _episode.Number.ToString("d2"), _episode.Name, _episode.FormatName) :
+                    String.Format("{0} - {1}.{2}", _film.Title, _film.Subtitle, _film.FormatName); ;
+            }
+        }
+
+        private string Url
+        {
+            get
+            {
+                return Tag == "Episode" ? 
+                    String.Format("{0}/{1}/{2}/{3}/T{4}/{5}", PeplexConfig.Instance.RootMainLocal, PeplexConfig.Instance.RootVideosLocal, PeplexConfig.Instance.RootSeriesLocal, _title, _episode.Season, CompleteName) :
+                    String.Format("{0}/{1}/{2}/{3}", PeplexConfig.Instance.RootMainLocal, PeplexConfig.Instance.RootVideosLocal, PeplexConfig.Instance.RootFilmsLocal, CompleteName);
+            }
+        }
+
+        private int ResumeTime
+        {
+            get
+            {
+                return Tag == "Episode" ? 
+                    (PeplexConfig.Instance.CurrentUser.EpisodeTime.ContainsKey(CompleteName) ? PeplexConfig.Instance.CurrentUser.EpisodeTime[CompleteName] : 0) :
+                    (PeplexConfig.Instance.CurrentUser.FilmTime.ContainsKey(_film.Id) ? PeplexConfig.Instance.CurrentUser.FilmTime[_film.Id] : 0);
+            }
+            set
+            {
+                if (Tag == "Episode")
+                {
+                    if (PeplexConfig.Instance.CurrentUser.EpisodeTime.ContainsKey(CompleteName))
+                        PeplexConfig.Instance.CurrentUser.EpisodeTime[CompleteName] = value;
+                    else
+                        PeplexConfig.Instance.CurrentUser.EpisodeTime.Add(CompleteName, value);
+                }
+                else
+                {
+                    if (PeplexConfig.Instance.CurrentUser.FilmTime.ContainsKey(_film.Id))
+                        PeplexConfig.Instance.CurrentUser.FilmTime[_film.Id] = value;
+                    else
+                        PeplexConfig.Instance.CurrentUser.FilmTime.Add(_film.Id, value);
+                }
+
+            }
+        }
+        #endregion
+
         public MultimediaWindow()
         {
             InitializeComponent();
@@ -55,31 +106,29 @@ namespace Peplex_PFC.UI
             }
         }
 
-        //
         private void MultimediaWindowLoad(object sender, RoutedEventArgs e)
         {
-            string completeName = "";
-            string url = "";
+            MediaPlayer.Source = new Uri(Url);
 
-            if (Tag == "Episode")
-            {
-                completeName = String.Format("{0}x{1} - {2}.{3}", _episode.Season, _episode.Number.ToString("d2"), _episode.Name, _episode.FormatName);
-                url = String.Format("{0}/{1}/{2}/{3}/T{4}/{5}", PeplexConfig.Instance.RootMainLocal, PeplexConfig.Instance.RootVideosLocal, PeplexConfig.Instance.RootSeriesLocal, _title, _episode.Season, completeName);
-            }
-            else
-            {
-                completeName = String.Format("{0} - {1}.{2}", _film.Title, _film.Subtitle, _film.FormatName);
-                url = String.Format("{0}/{1}/{2}/{3}", PeplexConfig.Instance.RootMainLocal, PeplexConfig.Instance.RootVideosLocal, PeplexConfig.Instance.RootFilmsLocal, completeName);
-            }
+            if (MessageBoxWindow.Show(this, Translations.lblInfo, DialogIcon.Info, new[] { DialogButton.Yes, DialogButton.No, }, Translations.MultimediaPlayerWindowResumeTime) == DialogAction.Yes) ;
+                SetAndLoadResumeTime();
 
-            MediaPlayer.Source = new Uri(url);
             MediaPlayer.Play();
         }
 
-        // Play the media.
+        private void MultimediaWindowClosing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            GetAndSaveResumeTime();
+            MediaPlayer.Stop();
+        }
 
+        #region ControlPanel Acciones
+        // Play the media.
         private void BtnPlayClick(object sender, RoutedEventArgs e)
         {
+            if(MessageBoxWindow.Show(this, Translations.lblInfo, DialogIcon.Info, new[] { DialogButton.Yes, DialogButton.No, }, Translations.MultimediaPlayerWindowResumeTime) == DialogAction.Yes);
+                SetAndLoadResumeTime();
+
             // The Play method will begin the media if it is not currently active or 
             // resume media if it is paused. This has no effect if the media is
             // already running.
@@ -92,7 +141,6 @@ namespace Peplex_PFC.UI
         // Pause the media.
         private void BtnPauseClick(object sender, RoutedEventArgs e)
         {
-
             // The Pause method pauses the media if it is currently running.
             // The Play method can be used to resume.
             MediaPlayer.Pause();
@@ -103,6 +151,7 @@ namespace Peplex_PFC.UI
         {
             // The Stop method stops and resets the media to be played from
             // the beginning.
+            GetAndSaveResumeTime();
             MediaPlayer.Stop();
         }
 
@@ -128,6 +177,7 @@ namespace Peplex_PFC.UI
         // When the media playback is finished. Stop() the media to seek to media start.
         private void MediaPlayerEnded(object sender, EventArgs e)
         {
+            DeleteResumeTime();
             MediaPlayer.Stop();
         }
 
@@ -149,7 +199,9 @@ namespace Peplex_PFC.UI
             MediaPlayer.Volume = (double)volumeSlider.Value;
             MediaPlayer.SpeedRatio = (double)speedRatioSlider.Value;
         }
+        #endregion
 
+        #region ControlPanel Visibilidad
         private void MouseMoveGMain(object sender, MouseEventArgs e)
         {
             Start();
@@ -172,6 +224,31 @@ namespace Peplex_PFC.UI
         {
             ControlPanel.Visibility = Visibility.Collapsed;
             Stop();
+        }
+        #endregion
+
+        private void GetAndSaveResumeTime()
+        {
+            ResumeTime = (int) (timelineSlider.Value / 1000); // Segundos 
+        }
+
+        private void SetAndLoadResumeTime()
+        {
+            timelineSlider.Value = ResumeTime * 1000; // Milisegundos
+        }
+
+        private void DeleteResumeTime()
+        {
+            if (Tag == "Episode")
+            {
+                if (PeplexConfig.Instance.CurrentUser.EpisodeTime.ContainsKey(CompleteName))
+                    PeplexConfig.Instance.CurrentUser.EpisodeTime.Remove(CompleteName);
+            }
+            else
+            {
+                if (PeplexConfig.Instance.CurrentUser.FilmTime.ContainsKey(_film.Id))
+                    PeplexConfig.Instance.CurrentUser.FilmTime.Remove(_film.Id);
+            }
         }
     }
 }

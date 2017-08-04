@@ -4,6 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:panels="clr-namespace:Peplex_PFC.UI.Panels"
+        xmlns:UI="clr-namespace:Peplex_PFC.UI"
         mc:Ignorable="d"
         Title="MainWindow"
         WindowStyle="None" 
@@ -11,7 +12,8 @@
         WindowState="Maximized"
         SizeToContent="WidthAndHeight"
         PreviewKeyDown="MultimediaWindowPreviewKeyDown"
-        Loaded="MultimediaWindowLoad">
+        Loaded="MultimediaWindowLoad"
+        Closing="MultimediaWindowClosing">
 
     <Viewbox Stretch="Fill">
         <Grid Name="MainGrid"  Width="1200" Height="640" Background="{StaticResource LightGrayBrush}">
@@ -44,7 +46,7 @@
 
                     <StackPanel Orientation="Horizontal">
                         <!-- Volume slider. This slider allows a Volume range between 0 and 1. -->
-                        <TextBlock Text="Volumen" Style="{StaticResource FieldTextBlockMediaPlayerStyle}"/>
+                        <TextBlock Text="{x:Static UI:Translations.lblVolume}" Style="{StaticResource FieldTextBlockMediaPlayerStyle}"/>
                         <Slider Name="volumeSlider" VerticalAlignment="Center" ValueChanged="ChangeMediaVolume" Minimum="0" Maximum="1" Value="0.5" Width="70" Style="{StaticResource Horizontal_Slider}"/>
 
                         <!-- Play button. -->
@@ -75,7 +77,7 @@
                         </Button>
 
                         <!-- Volume slider. This slider allows you to change the speed of the media playback. -->
-                        <TextBlock Text="Velocidad" Style="{StaticResource FieldTextBlockMediaPlayerStyle}"/>
+                        <TextBlock Text="{x:Static UI:Translations.lblSpeed}" Style="{StaticResource FieldTextBlockMediaPlayerStyle}"/>
                         <Slider Name="speedRatioSlider" VerticalAlignment="Center" ValueChanged="ChangeMediaSpeedRatio" Value="1" Width="70" Style="{StaticResource Horizontal_Slider}"/>
                     </StackPanel>
                     
