@@ -79,5 +79,14 @@ namespace Peplex_PFC.UI.Properties {
                 return ((System.Drawing.Icon)(obj));
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Checking service....
+        /// </summary>
+        internal static string splashWindowLblCheckingService {
+            get {
+                return ResourceManager.GetString("splashWindowLblCheckingService", resourceCulture);
+            }
+        }
     }
 }

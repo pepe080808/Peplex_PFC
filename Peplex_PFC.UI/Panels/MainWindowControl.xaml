@@ -27,8 +27,8 @@
         <local:CoverControl x:Name="CoverControl06" Grid.Column="5"/>
         
         <StackPanel Grid.Column="6" Orientation="Vertical" VerticalAlignment="Center">
-            <Label Name="Lbl01" VerticalContentAlignment="Center" VerticalAlignment="Center" Foreground="White" FontSize="12" FontFamily="Tahoma"/>
-            <Label Name="Lbl02" VerticalContentAlignment="Center" VerticalAlignment="Center" Foreground="White" FontSize="12" FontFamily="Tahoma"/>
+            <Label Name="Lbl01" VerticalContentAlignment="Center" VerticalAlignment="Center" Foreground="White" FontSize="21" FontFamily="Tahoma"/>
+            <Label Name="Lbl02" VerticalContentAlignment="Center" VerticalAlignment="Center" Foreground="White" FontSize="21" FontFamily="Tahoma"/>
         </StackPanel>
     </Grid>
 </UserControl>

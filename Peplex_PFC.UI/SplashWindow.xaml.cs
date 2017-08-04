@@ -84,7 +84,7 @@ namespace Peplex_PFC.UI
 
             if (_currentTask == StartupTask.CheckServiceAvailability)
             {
-                worker.ReportProgress(0, "Checking service...");
+                worker.ReportProgress(0, Translations.splashWindowCheckingService);
 
                 var isAlive = false;
                 for (var i = 0; i < 6; i++)
@@ -112,7 +112,7 @@ namespace Peplex_PFC.UI
 
             if (_currentTask == StartupTask.CheckUpdatedata)
             {
-                worker.ReportProgress(0, "Updating Datas...");
+                worker.ReportProgress(0, Translations.splashWindowUpdatingData);
 
                 var updated = preReqService.UpdateDataBase(new ProxyContext());
                 if (!updated)
@@ -137,14 +137,14 @@ namespace Peplex_PFC.UI
             switch (result.ResultCode)
             {
                 case StartupResultCode.ServiceNotAlive:
-                    if (MessageBox.Show(this, "Service is not alive, retry?", "Warning", MessageBoxButton.YesNo, MessageBoxImage.Warning) != MessageBoxResult.Yes)
+                    if (MessageBox.Show(this, Translations.splashWindowServiceIsNotAlive, Translations.lblWarning, MessageBoxButton.YesNo, MessageBoxImage.Warning) != MessageBoxResult.Yes)
                         Close();
                     else
                         RunBackgroundTasks(StartupTask.CheckServiceAvailability);
                     break;
 
                 case StartupResultCode.CheckUpdatedata:
-                    MessageBox.Show("ERROR: Al intentar actualizar los datos de la BD");
+                    MessageBox.Show(Translations.splashWindowErrorCheckUpdateData);
                     Close();
                     break;
             }
@@ -152,7 +152,7 @@ namespace Peplex_PFC.UI
             Dispatcher.BeginInvoke(new Action(() => { _wc.Dispose(); /*_bussy.Hide();*/ }), DispatcherPriority.ApplicationIdle);
 
             _loadCompleted = true;
-            TextBlockFeedback.Text = "¡Load completed! Pulse 'Enter' to continue.";
+            TextBlockFeedback.Text = Translations.splashWindowLoadCompleted;
             EllipseFeedback.Visibility = Visibility.Hidden;
         }
     }

@@ -2,10 +2,7 @@
 using System.IO;
 using System.Text;
 using System.Xml;
-using Peplex_PFC.UI.Interfaces;
-using Peplex_PFC.UI.Proxies;
 using Peplex_PFC.UI.UIO;
-using Peplex_PFC.UIO;
 
 namespace Peplex_PFC.UI.Config
 {
@@ -90,8 +87,6 @@ namespace Peplex_PFC.UI.Config
         }
 
         public UserUIO CurrentUser { get; set; }
-        //public List<FilmUIO> Films { get; set; }
-        //public List<SerieUIO> Series { get; set; }
 
         #region Singelton construction, Load and Save methods
         private static readonly object InstanceAccess = new Object();

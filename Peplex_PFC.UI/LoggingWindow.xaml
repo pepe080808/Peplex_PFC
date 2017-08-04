@@ -3,6 +3,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:UI="clr-namespace:Peplex_PFC.UI"
         mc:Ignorable="d"
         Title="LogginghWindow"
         ShowInTaskbar="False" 
@@ -29,9 +30,9 @@
                         <ColumnDefinition Width="0.3*"/>
                     </Grid.ColumnDefinitions>
 
-                    <Label Grid.Column="0" Margin="10 2 0 2" Foreground="White" FontSize="20" FontFamily="Tahoma" VerticalAlignment="Center" Content="PEPLEX" />
+                    <Label Grid.Column="0" Content="{x:Static UI:Translations.lblApplicationTitle}" Style="{StaticResource FieldApplicationTitleStyle}"/>
 
-                    <Image Grid.Column="1" Margin="0 2 10 2" Width="50" Height="50" Stretch="Fill" HorizontalAlignment="Right" Source="Resources/logoPePlex.png" />
+                    <Image Grid.Column="1" Source="Resources/logoPePlex.png" Style="{StaticResource FieldApplicationIconStyle}"/>
 
                 </Grid>
             </Grid>
@@ -48,17 +49,17 @@
                     <RowDefinition/>
                 </Grid.RowDefinitions>
 
-                <Label Grid.Column="0" Grid.Row="0" Content="Usuario:" Style="{StaticResource FieldLabelStyle}" />
+                <Label Grid.Column="0" Grid.Row="0" Content="{x:Static UI:Translations.lblUserLbl}" Style="{StaticResource FieldLabelStyle}" />
                 <TextBox  Name="TxtUser"  Grid.Column="1" Grid.Row="0" KeyUp="KeyUpTextBox" Style="{StaticResource FieldTextBoxStyle}"/>
 
-                <Label Grid.Column="0" Grid.Row="1" Style="{StaticResource FieldLabelStyle}" Content="Password:" />
+                <Label Grid.Column="0" Grid.Row="1" Style="{StaticResource FieldLabelStyle}" Content="{x:Static UI:Translations.lblPasswordLbl}" />
                 <PasswordBox  Name="TxtPass"  Grid.Column="1" Grid.Row="1"  Style="{StaticResource FieldPasswordBoxStyle}" KeyUp="KeyUpTextBox"/>
 
                 <Grid Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="2" Margin="5 2 5 2">
                 <Label  Foreground="Blue" FontSize="15" FontFamily="Tahoma" VerticalAlignment="Center" HorizontalAlignment="Left">
-                        <TextBlock TextDecorations="UnderLine" Text="¿Has olvidado tu contraseña?" PreviewMouseLeftButtonDown="PasswordClick" Cursor="Hand"/>
+                        <TextBlock TextDecorations="UnderLine" Text="{x:Static UI:Translations.lblForgottenPassword}" PreviewMouseLeftButtonDown="PasswordClick" Cursor="Hand"/>
                 </Label>
-                <Button Name="BtnOk" HorizontalAlignment="Right" Width="80" Height="30" Content="_Ok" Click="BtnOkClick"/>
+                <Button Name="BtnOk" HorizontalAlignment="Right" Width="80" Height="30" Content="{x:Static UI:Translations.btnOk}" Click="BtnOkClick"/>
                 </Grid>
             </Grid>
         </Grid>

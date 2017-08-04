@@ -245,9 +245,6 @@ namespace Peplex_PFC.UI
             }
         }
 
-        #region UpdateInfo
-        #endregion
-
         private void KeyUpTextBox(object sender, KeyEventArgs e)
         {
             if (e.Key == Key.Enter && GMain.IsEnabled)

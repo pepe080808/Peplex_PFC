@@ -34,10 +34,6 @@ namespace Peplex_PFC.UI
             }
         }
 
-        private void FilmWindowLoad(object sender, RoutedEventArgs e)
-        {
-        }
-
         private void UpdateUI()
         {
             ImgCover.Source = PeplexUtils.ConvertByteArrayToBitmapImage(Film.Cover);
@@ -51,7 +47,6 @@ namespace Peplex_PFC.UI
             LblSubtitle.Content = Film.Subtitle;
             TxtSynopsis.Text = Film.Synopsis;
 
-            //Wbtrailer.ShowYouTubeVideo(Film.TrailerURL);
             Wbtrailer.GetYoutubeVideo(Film.TrailerURL);
 
             CalculateNoteStar();
@@ -109,8 +104,6 @@ namespace Peplex_PFC.UI
 
             if(EyeControl.Value)
                 PeplexConfig.Instance.CurrentUser.FilmSeen.Add(_film.Id);
-
-            // Save el tiempo de visualizacion de la pelicula
         }
 
         private void SoundControlClick(object sender, MouseButtonEventArgs e)

@@ -6,6 +6,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Threading;
+using Peplex_PFC.UI.Config;
 using Peplex_PFC.UI.Interfaces;
 using Peplex_PFC.UI.Proxies;
 using Peplex_PFC.UI.UIO;
@@ -29,12 +30,13 @@ namespace Peplex_PFC.UI
             switch (e.Key)
             {
                 case Key.Escape:
+                    CompositionRoot.Instance.Resolve<IUserServiceProxy>().Update(new ProxyContext(), PeplexConfig.Instance.CurrentUser);
                     Application.Current.Shutdown();
                     break;
             }
         }
 
-        #region
+        #region Load Data
         private void MainWindowLoad(object sender, RoutedEventArgs e)
         {
             LoadData();
@@ -65,7 +67,7 @@ namespace Peplex_PFC.UI
 
         private void LoadDataRunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
-            Dispatcher.BeginInvoke(new Action(() => {/* _wc.Dispose()*/; /*_bussy.Hide();*/ }), DispatcherPriority.ApplicationIdle);
+            Dispatcher.BeginInvoke(new Action(() => { _wc.Dispose(); /*_bussy.Hide();*/ }), DispatcherPriority.ApplicationIdle);
 
             if (e.Result is ProxyContext)
             {
@@ -79,17 +81,17 @@ namespace Peplex_PFC.UI
                 return;
 
             Control01.Films = result.Item1.OrderByDescending(r => r.DownloadDate).Take(6).ToList();
-            Control01.StrLbl01 = "Últimas";
-            Control01.StrLbl02 = "Películas";
+            Control01.StrLbl01 = Translations.lblLast;
+            Control01.StrLbl02 = Translations.lblFilms;
             Control02.Series = result.Item2.OrderByDescending(r => r.DownloadDate).Take(6).ToList();
-            Control02.StrLbl01 = "Últimas";
-            Control02.StrLbl02 = "Series";
+            Control02.StrLbl01 = Translations.lblLast;
+            Control02.StrLbl02 = Translations.lblSeries;
             Control03.Films = result.Item1.OrderByDescending(r => r.Note).Take(6).ToList();
-            Control03.StrLbl01 = "Mejores";
-            Control03.StrLbl02 = "Películas";
+            Control03.StrLbl01 = Translations.lblBest;
+            Control03.StrLbl02 = Translations.lblFilms;
             Control04.Series = result.Item2.OrderByDescending(r => r.Note).Take(6).ToList();
-            Control04.StrLbl01 = "Mejores";
-            Control04.StrLbl02 = "Series";
+            Control04.StrLbl01 = Translations.lblBest;
+            Control04.StrLbl02 = Translations.lblSeries;
         }
         #endregion
 

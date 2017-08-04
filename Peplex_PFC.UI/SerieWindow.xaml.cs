@@ -1,10 +1,8 @@
 ﻿using System;
-using System.IO;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
 using Peplex_PFC.UI.Config;
 using Peplex_PFC.UI.Panels;
 using Peplex_PFC.UI.UIO;
@@ -34,11 +32,6 @@ namespace Peplex_PFC.UI
                     Close();
                     break;
             }
-        }
-
-        private void SerieWindowLoad(object sender, RoutedEventArgs e)
-        {
-
         }
 
         private void UpdateUI()

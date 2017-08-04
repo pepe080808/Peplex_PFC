@@ -102,7 +102,7 @@ namespace Peplex_PFC.UI
             else
             {
                 _oportunidades++;
-                MessageBoxWindow.Show(this, "AVISO", DialogIcon.Warning, new[] { DialogButton.Accept }, String.Format("Usuario y Contraseña no validos.\nIntentos : {0}/{1}.", _oportunidades, MAX_OPPORTUNITIES));
+                MessageBoxWindow.Show(this, Translations.lblWarning, DialogIcon.Warning, new[] { DialogButton.Accept }, String.Format(Translations.LoggingWindowUserAndPasswordNotValid, _oportunidades, MAX_OPPORTUNITIES));
                 if (_oportunidades == MAX_OPPORTUNITIES)
                     Application.Current.Shutdown();
             }
@@ -171,7 +171,7 @@ namespace Peplex_PFC.UI
                 SendEmail(user);
             }
             else
-                MessageBoxWindow.Show(this, "AVISO", DialogIcon.Warning, new[] { DialogButton.Accept }, "El usuario introducido no existe.");
+                MessageBoxWindow.Show(this, Translations.lblWarning, DialogIcon.Warning, new[] { DialogButton.Accept }, Translations.loggingWindowUserNotExits);
         }
 
         private void SendEmail(UserUIO user)
@@ -219,7 +219,6 @@ namespace Peplex_PFC.UI
                 envios.Credentials = new NetworkCredential(PeplexConfig.Instance.AdminEmail, PeplexConfig.Instance.AdminEmailPass);
 
                 //Datos importantes no modificables para tener acceso a las cuentas
-
                 envios.Host = "smtp.live.com";
                 envios.Port = 587;
                 envios.EnableSsl = true;
@@ -245,9 +244,9 @@ namespace Peplex_PFC.UI
             var result = (bool)e.Result;
 
             if (result)
-                MessageBoxWindow.Show(this, "INFO", DialogIcon.Info, new[] { DialogButton.Accept }, "En unos segundos le llegará a su correo la nueva contraseña.");
+                MessageBoxWindow.Show(this, Translations.lblInfo, DialogIcon.Info, new[] { DialogButton.Accept }, Translations.loggingWindowEmailSentSuccessful);
             else
-                MessageBoxWindow.Show(this, "ERROR", DialogIcon.CommError, new[] { DialogButton.Accept }, "No se envio el correo correctamente.");
+                MessageBoxWindow.Show(this, Translations.lblError, DialogIcon.CommError, new[] { DialogButton.Accept }, Translations.loggingWindowEmailSentError);
         }
         #endregion
 
