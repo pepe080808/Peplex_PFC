@@ -29,9 +29,9 @@
                         <ColumnDefinition Width="0.3*"/>
                     </Grid.ColumnDefinitions>
 
-                    <Label Grid.Column="0" Margin="10 2 0 2" Foreground="White" FontSize="20" FontFamily="Tahoma" VerticalAlignment="Center" Content="PEPLEX"/>
+                    <Label Grid.Column="0" Content="{x:Static UI:Translations.lblApplicationTitle}" Style="{StaticResource FieldApplicationTitleStyle}"/>
 
-                    <Image Grid.Column="1" Margin="0 2 10 2" Width="50" Height="50" Stretch="Fill" HorizontalAlignment="Right" Source="Resources/logoPePlex.png" />
+                    <Image Grid.Column="1" Source="Resources/logoPePlex.png" Style="{StaticResource FieldApplicationIconStyle}"/>
 
                 </Grid>
             </Grid>
@@ -41,7 +41,7 @@
                     <RowDefinition Height="*"/>
                     <RowDefinition Height="Auto"/>
                 </Grid.RowDefinitions>
-                <MediaElement Name="MediaPlayer" Grid.Row="0" Grid.RowSpan="2" LoadedBehavior="Manual" UnloadedBehavior="Stop" Stretch="Fill" MediaOpened="MediaPlayerOpened" MediaEnded="MediaPlayerEnded"/>
+                <MediaElement Name="MediaPlayer" Grid.Row="0" Grid.RowSpan="2" LoadedBehavior="Manual" UnloadedBehavior="Stop" Stretch="Fill" MediaOpened="MediaPlayerOpened" MediaEnded="MediaPlayerEnded" ScrubbingEnabled="True"/>
                 <StackPanel Name="ControlPanel" Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Bottom" Width="450" Orientation="Vertical" Height="75" Visibility="Visible">
 
                     <StackPanel Orientation="Horizontal">

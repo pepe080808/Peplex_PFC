@@ -2,22 +2,23 @@
       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+      xmlns:UI="clr-namespace:Peplex_PFC.UI"
       mc:Ignorable="d" 
-      d:DesignHeight="400" d:DesignWidth="450"
+      d:DesignHeight="550" d:DesignWidth="650"
              Loaded="ConfigFilmControlLoaded">
 
     <Grid Name="GMain">
         <Grid.RowDefinitions>
-            <RowDefinition/>
-            <RowDefinition/>
-            <RowDefinition/>
-            <RowDefinition/>
-            <RowDefinition/>
-            <RowDefinition/>
-            <RowDefinition/>
-            <RowDefinition/>
-            <RowDefinition/>
+            <RowDefinition Height="50"/>
+            <RowDefinition Height="50"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="50"/>
+            <RowDefinition Height="50"/>
+            <RowDefinition Height="50"/>
+            <RowDefinition Height="50"/>
+            <RowDefinition Height="50"/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition/>
@@ -25,28 +26,28 @@
             <ColumnDefinition Width="Auto"/>
         </Grid.ColumnDefinitions>
 
-        <Label Grid.Row="0" Grid.Column="0" Content="Título:" Style="{StaticResource FieldLabelStyle}"/>
-        <Label Grid.Row="1" Grid.Column="0" Content="Nota:" Style="{StaticResource FieldLabelStyle}"/>
-        <Label Grid.Row="2" Grid.Column="0" Content="Sinopsis:" Style="{StaticResource FieldLabelStyle}"/>
-        <Label Grid.Row="4" Grid.Column="0" Content="Género 01:" Style="{StaticResource FieldLabelStyle}"/>
-        <Label Grid.Row="5" Grid.Column="0" Content="Género 02:" Style="{StaticResource FieldLabelStyle}"/>
-        <Label Grid.Row="6" Grid.Column="0" Content="Url trailer:" Style="{StaticResource FieldLabelStyle}"/>
-        <Label Grid.Row="7" Grid.Column="0" Content="Fecha estreno:" Style="{StaticResource FieldLabelStyle}"/>
-        <Label Grid.Row="8" Grid.Column="0" Content="Duración:" Style="{StaticResource FieldLabelStyle}"/>
+        <Label Grid.Row="0" Grid.Column="0" Content="{x:Static UI:Translations.lblTitleLbl}" Style="{StaticResource FieldLabelStyle}"/>
+        <Label Grid.Row="1" Grid.Column="0" Content="{x:Static UI:Translations.lblNoteLbl}" Style="{StaticResource FieldLabelStyle}"/>
+        <Label Grid.Row="2" Grid.Column="0" Content="{x:Static UI:Translations.lblSynopsisLbl}" Style="{StaticResource FieldLabelStyle}"/>
+        <Label Grid.Row="4" Grid.Column="0" Content="{x:Static UI:Translations.lblGenre01Lbl}" Style="{StaticResource FieldLabelStyle}"/>
+        <Label Grid.Row="5" Grid.Column="0" Content="{x:Static UI:Translations.lblGenre02Lbl}" Style="{StaticResource FieldLabelStyle}"/>
+        <Label Grid.Row="6" Grid.Column="0" Content="{x:Static UI:Translations.lblUrlLbl}" Style="{StaticResource FieldLabelStyle}"/>
+        <Label Grid.Row="7" Grid.Column="0" Content="{x:Static UI:Translations.lblPremiereDateLbl}" Style="{StaticResource FieldLabelStyle}"/>
+        <Label Grid.Row="8" Grid.Column="0" Content="{x:Static UI:Translations.lblDurationLbl}" Style="{StaticResource FieldLabelStyle}"/>
 
         <ComboBox Name="CbTitle" Grid.Row="0" Grid.Column="1" Style="{StaticResource FieldComboBoxStyle}" Visibility="Visible" SelectionChanged="CbTitleSelectionChanged"/>
-        <TextBox Name="TxtNote" Grid.Row="1" Grid.Column="1" Margin="5" Style="{StaticResource FieldTextBoxStyle}" PreviewTextInput="TxtNotePreviewTextInput"/>
-        <TextBox Name="TxtSynopsis" Grid.Row="2" Grid.RowSpan="2" Grid.Column="1" Margin="5 10" Style="{StaticResource FieldTextBoxStyle}" VerticalAlignment="Top" Height="80" VerticalScrollBarVisibility="Auto"/>
+        <TextBox Name="TxtNote" Grid.Row="1" Grid.Column="1" Margin="5" Style="{StaticResource FieldTextBoxStyle}" PreviewTextInput="TxtNotePreviewTextInput" MaxLength="5"/>
+        <TextBox Name="TxtSynopsis" Grid.Row="2" Grid.RowSpan="2" Grid.Column="1" Margin="5 10" Style="{StaticResource FieldTextBoxStyle}" VerticalContentAlignment="Top" Height="180" TextWrapping="Wrap" MaxLength="1000"/>
         <ComboBox Name="CbGenre01" Grid.Row="4" Grid.Column="1" SelectedIndex="0" Style="{StaticResource FieldComboBoxStyle}"/>
         <ComboBox Name="CbGenre02" Grid.Row="5" Grid.Column="1" SelectedIndex="0" Style="{StaticResource FieldComboBoxStyle}"/>
-        <TextBox Name="TxtTrailer" Grid.Row="6" Grid.Column="1" Margin="5" Style="{StaticResource FieldTextBoxStyle}"/>
+        <TextBox Name="TxtTrailer" Grid.Row="6" Grid.Column="1" Margin="5" Style="{StaticResource FieldTextBoxStyle}" MaxLength="30"/>
         <DatePicker Name="TxtPremierDate" Grid.Row="7" Grid.Column="1" VerticalAlignment="Center" Height="30"/>
-        <TextBox Name="TxtDuration" Grid.Row="8" Grid.Column="1" Margin="5" Style="{StaticResource FieldTextBoxStyle}" PreviewTextInput="TxtDurationPreviewTextInput"/>
+        <TextBox Name="TxtDuration" Grid.Row="8" Grid.Column="1" Margin="5" Style="{StaticResource FieldTextBoxStyle}" PreviewTextInput="TxtDurationPreviewTextInput" MaxLength="3"/>
 
-        <Button Name="BtnEdit" Grid.Row="8" Grid.Column="2" Margin="5" Content="Editar" Click="BntEditClick" Height="30" Width="60"/>
+        <Button Name="BtnEdit" Grid.Row="8" Grid.Column="2" Margin="5" Content="{x:Static UI:Translations.btnEdit}" Click="BntEditClick" Height="30" Width="60"/>
 
-        <Image Name="ImgCover" Grid.Row="0" Grid.Column="2" VerticalAlignment="Center" Height="80" Width="80" MouseLeftButtonDown="ImgCoverClick" />
-        <Image Name="ImgBackground" Grid.Row="2" Grid.RowSpan="2" Grid.Column="2" VerticalAlignment="Center" Height="80" Width="80" MouseLeftButtonDown="ImgBackgroundClick" />
+        <Image Name="ImgCover" Grid.Row="0" Grid.RowSpan="3" Grid.Column="2" VerticalAlignment="Top" Height="180" Width="90" MouseLeftButtonDown="ImgCoverClick" Stretch="Uniform"/>
+        <Image Name="ImgBackground" Grid.Row="2" Grid.RowSpan="2" Grid.Column="2" VerticalAlignment="Center" Height="90" Width="180" MouseLeftButtonDown="ImgBackgroundClick" Stretch="Uniform"/>
     </Grid>
 </UserControl>
 

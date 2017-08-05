@@ -200,7 +200,7 @@ Intentos : {0}/{1}.</value>
     <value>Nota</value>
   </data>
   <data name="LblUpperFilms" xml:space="preserve">
-    <value>PELÍCULAS</value>
+    <value>PELIS</value>
   </data>
   <data name="LblUpperSeries" xml:space="preserve">
     <value>SERIES</value>
@@ -219,5 +219,111 @@ Intentos : {0}/{1}.</value>
   </data>
   <data name="MultimediaPlayerWindowResumeTime" xml:space="preserve">
     <value>¿Desea reanudar la reproducción?</value>
+  </data>
+  <data name="lblNickNameLbl" xml:space="preserve">
+    <value>Apodo:</value>
+  </data>
+  <data name="lblNameLbl" xml:space="preserve">
+    <value>Nombre:</value>
+  </data>
+  <data name="lblEmailLbl" xml:space="preserve">
+    <value>E-mail:</value>
+  </data>
+  <data name="lblCurrentPasswordLbl" xml:space="preserve">
+    <value>Contraseña actual:</value>
+  </data>
+  <data name="lblNewPasswordLbl" xml:space="preserve">
+    <value>Contraseña nueva:</value>
+  </data>
+  <data name="lblPermissionsLbl" xml:space="preserve">
+    <value>Permisos:</value>
+  </data>
+  <data name="btnAdd" xml:space="preserve">
+    <value>_Añadir</value>
+  </data>
+  <data name="btnEdit" xml:space="preserve">
+    <value>_Editar</value>
+  </data>
+  <data name="btnDelete" xml:space="preserve">
+    <value>_Eliminar</value>
+  </data>
+  <data name="cUserUpdateSuccessfully" xml:space="preserve">
+    <value>Usuario actualizado con éxito.</value>
+  </data>
+  <data name="ConfigUserControlObligatoryField" xml:space="preserve">
+    <value>Campos obligatorios: {0}</value>
+  </data>
+  <data name="ConfigUserControlObligatoryBothPasswordField" xml:space="preserve">
+    <value>Los dos campos para la contraseña deben estar rellenos si desea modificarla.</value>
+  </data>
+  <data name="ConfigUserControlCurrentPasswordError" xml:space="preserve">
+    <value>La contraseña actual es incorrecta. No se actualizarán los datos del usuario.</value>
+  </data>
+  <data name="ConfigUserControlSelectImageToProfile" xml:space="preserve">
+    <value>Seleccione imagen para el perfil</value>
+  </data>
+  <data name="ConfigUserControlDelteUserError" xml:space="preserve">
+    <value>No se puede eliminar el usario con el que se ha iniciado sesión.</value>
+  </data>
+  <data name="ConfigWindowUserHeader" xml:space="preserve">
+    <value>Usuarios</value>
+  </data>
+  <data name="ConfigWindowFilmHeader" xml:space="preserve">
+    <value>Películas</value>
+  </data>
+  <data name="ConfigWindowSerieHeader" xml:space="preserve">
+    <value>Series</value>
+  </data>
+  <data name="ConfigFilmControlUpdateFilmSuccessfully" xml:space="preserve">
+    <value>Película actualizada con éxito.</value>
+  </data>
+  <data name="ConfigControlSelectImageToCover" xml:space="preserve">
+    <value>Seleccíone imagen para la carátula</value>
+  </data>
+  <data name="ConfigControlImageNotValidError" xml:space="preserve">
+    <value>
+El archivo seleccionado no es un tipo de imagen válido</value>
+  </data>
+  <data name="ConfigControlSelectImageToBackground" xml:space="preserve">
+    <value>Seleccione imagen de fondo</value>
+  </data>
+  <data name="lblTitleLbl" xml:space="preserve">
+    <value>Título:</value>
+  </data>
+  <data name="lblNoteLbl" xml:space="preserve">
+    <value>Nota:</value>
+  </data>
+  <data name="lblSynopsisLbl" xml:space="preserve">
+    <value>Sinopsis:</value>
+  </data>
+  <data name="lblGenre01Lbl" xml:space="preserve">
+    <value>Género 01:</value>
+  </data>
+  <data name="lblGenre02Lbl" xml:space="preserve">
+    <value>Género 02:</value>
+  </data>
+  <data name="lblUrlLbl" xml:space="preserve">
+    <value>Url trailer:</value>
+  </data>
+  <data name="lblPremiereDateLbl" xml:space="preserve">
+    <value>Fecha estreno:</value>
+  </data>
+  <data name="lblDurationLbl" xml:space="preserve">
+    <value>Duración:</value>
+  </data>
+  <data name="ConfigFilmControlUpdateSerieSuccessfully" xml:space="preserve">
+    <value>Serie actualizada con éxito.</value>
+  </data>
+  <data name="lblNote" xml:space="preserve">
+    <value>Nota</value>
+  </data>
+  <data name="lblSynopsis" xml:space="preserve">
+    <value>Sinópsis</value>
+  </data>
+  <data name="lblUrl" xml:space="preserve">
+    <value>Url trailer</value>
+  </data>
+  <data name="lblDuration" xml:space="preserve">
+    <value>Duración</value>
   </data>
 </root>

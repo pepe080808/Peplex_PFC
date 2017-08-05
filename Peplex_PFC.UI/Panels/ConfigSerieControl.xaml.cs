@@ -53,8 +53,13 @@ namespace Peplex_PFC.UI.Panels
                 // Rellenamos el ComboBox con los Title de las películas
                 CbTitle.ItemsSource = Series;
                 CbTitle.DisplayMemberPath = "Title";
-
                 CbTitle.SelectedIndex = 0;
+
+                CbGenre01.ItemsSource = Genre;
+                CbGenre01.DisplayMemberPath = "Name";
+
+                CbGenre02.ItemsSource = Genre;
+                CbGenre02.DisplayMemberPath = "Name";
 
                 AssignData();
             }
@@ -79,6 +84,97 @@ namespace Peplex_PFC.UI.Panels
             _currentBitmapImageCover = PeplexUtils.ConvertByteArrayToBitmapImage(Series[CbTitle.SelectedIndex].Cover);
             ImgBackground.Source = PeplexUtils.ConvertByteArrayToBitmapImage(Series[CbTitle.SelectedIndex].Background);
             _currentBitmapImageBackground = PeplexUtils.ConvertByteArrayToBitmapImage(Series[CbTitle.SelectedIndex].Background);
+        }
+
+        private void BntEditClick(object sender, RoutedEventArgs e)
+        {
+            UpdateData();
+        }
+
+        private void UpdateData()
+        {
+            if (Validate().Any())
+            {
+                MessageBoxWindow.Show(Window.GetWindow(Parent), Translations.lblWarning, DialogIcon.Warning, new[] { DialogButton.Accept }, String.Format(Translations.ConfigUserControlObligatoryField, String.Join(",", Validate())));
+                return;
+            }
+
+            var indexGenreId01 = Genre.FindIndex(g => g.Name.Equals(((GenreUIO)CbGenre01.SelectedValue).Name.ToString(), StringComparison.CurrentCultureIgnoreCase));
+            var indexGenreId02 = Genre.FindIndex(g => g.Name.Equals(((GenreUIO)CbGenre02.SelectedValue).Name.ToString(), StringComparison.CurrentCultureIgnoreCase));
+
+            var editedSerie = new SerieUIO
+            {
+                Id = Series[CbTitle.SelectedIndex].Id,
+                Title = Series[CbTitle.SelectedIndex].Title,
+                Synopsis = TxtSynopsis.Text,
+                Note = Convert.ToDecimal(TxtNote.Text),
+                GenreId01 = Genre[indexGenreId01].Id,
+                GenreId02 = Genre[indexGenreId02].Id,
+                DownloadDate = Series[CbTitle.SelectedIndex].PremiereDate,
+                PremiereDate = TxtPremierDate.SelectedDate ?? Series[CbTitle.SelectedIndex].PremiereDate,
+                DurationMin = Convert.ToInt32(TxtDuration.Text),
+                Cover = PeplexUtils.ConvertBitmapImageToByteArray(_currentBitmapImageCover),
+                Background = PeplexUtils.ConvertBitmapImageToByteArray(_currentBitmapImageBackground)
+            };
+
+            CompositionRoot.Instance.Resolve<ISerieServiceProxy>().Update(new ProxyContext(), editedSerie);
+
+            Series[CbTitle.SelectedIndex] = CompositionRoot.Instance.Resolve<ISerieServiceProxy>().Single(new ProxyContext(), editedSerie.Id);
+            MessageBoxWindow.Show(Window.GetWindow(Parent), Translations.lblInfo, DialogIcon.Info, new[] { DialogButton.Accept }, Translations.ConfigFilmControlUpdateSerieSuccessfully);
+        }
+
+        private List<string> Validate()
+        {
+            var result = new List<string>();
+
+            if (String.IsNullOrWhiteSpace(TxtNote.Text))
+                result.Add(Translations.lblNote);
+            if (String.IsNullOrWhiteSpace(TxtSynopsis.Text))
+                result.Add(Translations.lblSynopsis);
+            if (String.IsNullOrWhiteSpace(TxtDuration.Text))
+                result.Add(Translations.lblDuration);
+
+            return result;
+        }
+
+        private void ImgCoverClick(object sender, MouseButtonEventArgs e)
+        {
+            try
+            {
+                var dialog = new OpenFileDialog { Filter = "PNG|*.png|JPG|*jpg", Title = Translations.ConfigControlSelectImageToCover, FilterIndex = 1 };
+                if (dialog.ShowDialog() != true)
+                    return;
+
+                string strImagen = dialog.FileName;
+                var bitmapImage = new BitmapImage(new Uri(strImagen));
+
+                ImgCover.Source = bitmapImage;
+                _currentBitmapImageCover = bitmapImage;
+            }
+            catch (Exception ex)
+            {
+                MessageBoxWindow.Show(Window.GetWindow(Parent), Translations.lblError, DialogIcon.CommError, new[] { DialogButton.Accept }, ex.Message + Translations.ConfigControlImageNotValidError);
+            }
+        }
+
+        private void ImgBackgroundClick(object sender, MouseButtonEventArgs e)
+        {
+            try
+            {
+                var dialog = new OpenFileDialog { Filter = "PNG|*.png|JPG|*jpg", Title = Translations.ConfigControlSelectImageToBackground, FilterIndex = 1 };
+                if (dialog.ShowDialog() != true)
+                    return;
+
+                string strImagen = dialog.FileName;
+                var bitmapImage = new BitmapImage(new Uri(strImagen));
+
+                ImgBackground.Source = bitmapImage;
+                _currentBitmapImageBackground = bitmapImage;
+            }
+            catch (Exception ex)
+            {
+                MessageBoxWindow.Show(Window.GetWindow(Parent), Translations.lblError, DialogIcon.CommError, new[] { DialogButton.Accept }, ex.Message + Translations.ConfigControlImageNotValidError);
+            }
         }
 
         private void TxtNotePreviewTextInput(object sender, TextCompositionEventArgs e)
@@ -131,97 +227,6 @@ namespace Peplex_PFC.UI.Panels
                 e.CancelCommand();
                 e.Handled = true;
             }
-        }
-
-        private void BntEditClick(object sender, RoutedEventArgs e)
-        {
-            UpdateData();
-        }
-
-        private void UpdateData()
-        {
-            if (Validate().Any())
-            {
-                MessageBoxWindow.Show(Window.GetWindow(Parent), "AVISO", DialogIcon.Warning, new[] { DialogButton.Accept }, String.Format("Campos obligatorios: {0}", String.Join(",", Validate())));
-                return;
-            }
-
-            var indexGenreId01 = Genre.FindIndex(g => g.Name.Equals(CbGenre01.SelectedValue.ToString(), StringComparison.CurrentCultureIgnoreCase));
-            var indexGenreId02 = Genre.FindIndex(g => g.Name.Equals(CbGenre02.SelectedValue.ToString(), StringComparison.CurrentCultureIgnoreCase));
-
-            var editedFilm = new FilmUIO
-            {
-                Id = Series[CbTitle.SelectedIndex].Id,
-                Title = Series[CbTitle.SelectedIndex].Title,
-                Synopsis = TxtSynopsis.Text,
-                Note = Convert.ToDecimal(TxtNote.Text),
-                GenreId01 = Genre[indexGenreId01].Id,
-                GenreId02 = Genre[indexGenreId02].Id,
-                DownloadDate = Series[CbTitle.SelectedIndex].PremiereDate,
-                PremiereDate = TxtPremierDate.SelectedDate ?? Series[CbTitle.SelectedIndex].PremiereDate,
-                DurationMin = Convert.ToInt32(TxtDuration.Text),
-                Cover = PeplexUtils.ConvertBitmapImageToByteArray(_currentBitmapImageCover),
-                Background = PeplexUtils.ConvertBitmapImageToByteArray(_currentBitmapImageBackground)
-            };
-
-            CompositionRoot.Instance.Resolve<IFilmServiceProxy>().Update(new ProxyContext(), editedFilm);
-
-            MessageBoxWindow.Show(Window.GetWindow(Parent), "INFO", DialogIcon.Info, new[] { DialogButton.Accept }, "Serie actualizada con éxito.");
-        }
-
-        private List<string> Validate()
-        {
-            var result = new List<string>();
-
-            if (String.IsNullOrWhiteSpace(TxtNote.Text))
-                result.Add("Nota");
-            if (String.IsNullOrWhiteSpace(TxtSynopsis.Text))
-                result.Add("Sinópsis");
-            if (String.IsNullOrWhiteSpace(TxtDuration.Text))
-                result.Add("Duración");
-
-            return result;
-        }
-
-        private void ImgCoverClick(object sender, MouseButtonEventArgs e)
-        {
-            try
-            {
-                var dialog = new OpenFileDialog { Filter = "PNG|*.png JPG|*jpg", Title = "Seleccíone imagen para la carátula", FilterIndex = 1 };
-                if (dialog.ShowDialog() != true)
-                    return;
-
-                string strImagen = dialog.FileName;
-                var bitmapImage = new BitmapImage(new Uri(strImagen));
-
-                ImgCover.Source = bitmapImage;
-                _currentBitmapImageCover = bitmapImage;
-            }
-            catch (Exception ex)
-            {
-                MessageBoxWindow.Show(Window.GetWindow(Parent), "ERROR", DialogIcon.CommError, new[] { DialogButton.Accept }, ex.Message + "\nEl archivo seleccionado no es un tipo de imagen válido");
-            }
-        }
-
-        private void ImgBackgroundClick(object sender, MouseButtonEventArgs e)
-        {
-            try
-            {
-                var dialog = new OpenFileDialog { Filter = "PNG|*.png JPG|*jpg", Title = "Seleccíone imagen de fondo", FilterIndex = 1 };
-                if (dialog.ShowDialog() != true)
-                    return;
-
-                string strImagen = dialog.FileName;
-                var bitmapImage = new BitmapImage(new Uri(strImagen));
-
-                ImgBackground.Source = bitmapImage;
-                _currentBitmapImageBackground = bitmapImage;
-            }
-            catch (Exception ex)
-            {
-                MessageBoxWindow.Show(Window.GetWindow(Parent), "ERROR", DialogIcon.CommError, new[] { DialogButton.Accept }, ex.Message + "\nEl archivo seleccionado no es un tipo de imagen válido");
-            }
-
         }
     }
 }

@@ -50,7 +50,7 @@ CREATE TABLE Film (
     FormatId 		INT DEFAULT 1,
 	GenreId01		INT DEFAULT 1,
 	GenreId02		INT DEFAULT 1,
-	Synopsis 		NVARCHAR (250) NOT NULL,
+	Synopsis 		NVARCHAR (1000) NOT NULL,
 	DurationMin		INT DEFAULT 0,
     DownloadDate 	DATETIME NOT NULL,
 	PremiereDate	DATETIME NOT NULL,
@@ -72,7 +72,7 @@ CREATE TABLE Serie (
     Title 			NVARCHAR (80) NOT NULL,
 	GenreId01		INT DEFAULT 1,
 	GenreId02		INT DEFAULT 1,
-    Synopsis 		NVARCHAR (250) NOT NULL,
+    Synopsis 		NVARCHAR (1000) NOT NULL,
 	DurationMin		INT DEFAULT 0,
     DownloadDate 	DATETIME NOT NULL,
 	PremiereDate	DATETIME NOT NULL,
@@ -159,7 +159,7 @@ GO
 CREATE TABLE UserFilmTime (
 	UserId			INT NOT NULL,
 	FilmId			INT NOT NULL,
-	SencondTime		INT DEFAULT 0,
+	SecondTime		INT DEFAULT 0,
 	
 	CONSTRAINT PK_UserFilmTime PRIMARY KEY(UserId, FilmId),
 	CONSTRAINT FK_UserFilmTime_UserId FOREIGN KEY(UserId) REFERENCES UserInfo(Id) ON DELETE CASCADE,
@@ -173,7 +173,7 @@ CREATE TABLE UserEpisodeTime (
 	SerieId			INT NOT NULL,
 	Season			INT NOT NULL,
 	Number			INT NOT NULL,
-	SencondTime		INT DEFAULT 0,
+	SecondTime		INT DEFAULT 0,
 	
 	CONSTRAINT PK_UserEpisodeTime PRIMARY KEY(UserId, SerieId, Season, Number),
 	CONSTRAINT FK_UserEpisodeTime_UserId FOREIGN KEY(UserId) REFERENCES UserInfo(Id) ON DELETE CASCADE,

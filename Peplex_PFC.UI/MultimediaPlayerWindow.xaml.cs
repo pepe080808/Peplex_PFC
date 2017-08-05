@@ -51,6 +51,11 @@ namespace Peplex_PFC.UI
             }
         }
 
+        private string KeyResumeTime
+        {
+            get { return String.Format("{0};{1};{2}", _episode.SerieId, _episode.Season, _episode.Number); }
+        }
+
         private string Url
         {
             get
@@ -66,17 +71,17 @@ namespace Peplex_PFC.UI
             get
             {
                 return Tag == "Episode" ? 
-                    (PeplexConfig.Instance.CurrentUser.EpisodeTime.ContainsKey(CompleteName) ? PeplexConfig.Instance.CurrentUser.EpisodeTime[CompleteName] : 0) :
+                    (PeplexConfig.Instance.CurrentUser.EpisodeTime.ContainsKey(KeyResumeTime) ? PeplexConfig.Instance.CurrentUser.EpisodeTime[KeyResumeTime] : 0) :
                     (PeplexConfig.Instance.CurrentUser.FilmTime.ContainsKey(_film.Id) ? PeplexConfig.Instance.CurrentUser.FilmTime[_film.Id] : 0);
             }
             set
             {
                 if (Tag == "Episode")
                 {
-                    if (PeplexConfig.Instance.CurrentUser.EpisodeTime.ContainsKey(CompleteName))
-                        PeplexConfig.Instance.CurrentUser.EpisodeTime[CompleteName] = value;
+                    if (PeplexConfig.Instance.CurrentUser.EpisodeTime.ContainsKey(KeyResumeTime))
+                        PeplexConfig.Instance.CurrentUser.EpisodeTime[KeyResumeTime] = value;
                     else
-                        PeplexConfig.Instance.CurrentUser.EpisodeTime.Add(CompleteName, value);
+                        PeplexConfig.Instance.CurrentUser.EpisodeTime.Add(KeyResumeTime, value);
                 }
                 else
                 {
@@ -109,10 +114,6 @@ namespace Peplex_PFC.UI
         private void MultimediaWindowLoad(object sender, RoutedEventArgs e)
         {
             MediaPlayer.Source = new Uri(Url);
-
-            if (MessageBoxWindow.Show(this, Translations.lblInfo, DialogIcon.Info, new[] { DialogButton.Yes, DialogButton.No, }, Translations.MultimediaPlayerWindowResumeTime) == DialogAction.Yes) ;
-                SetAndLoadResumeTime();
-
             MediaPlayer.Play();
         }
 
@@ -126,9 +127,6 @@ namespace Peplex_PFC.UI
         // Play the media.
         private void BtnPlayClick(object sender, RoutedEventArgs e)
         {
-            if(MessageBoxWindow.Show(this, Translations.lblInfo, DialogIcon.Info, new[] { DialogButton.Yes, DialogButton.No, }, Translations.MultimediaPlayerWindowResumeTime) == DialogAction.Yes);
-                SetAndLoadResumeTime();
-
             // The Play method will begin the media if it is not currently active or 
             // resume media if it is paused. This has no effect if the media is
             // already running.
@@ -172,6 +170,10 @@ namespace Peplex_PFC.UI
         private void MediaPlayerOpened(object sender, EventArgs e)
         {
             timelineSlider.Maximum = MediaPlayer.NaturalDuration.TimeSpan.TotalMilliseconds;
+
+            if (ExistsResumeTime())
+                if (MessageBoxWindow.Show(this, Translations.lblInfo, DialogIcon.Info, new[] { DialogButton.Yes, DialogButton.No, }, Translations.MultimediaPlayerWindowResumeTime) == DialogAction.Yes)
+                    SetAndLoadResumeTime();
         }
 
         // When the media playback is finished. Stop() the media to seek to media start.
@@ -184,12 +186,7 @@ namespace Peplex_PFC.UI
         // Jump to different parts of the media (seek to). 
         private void SeekToMediaPosition(object sender, RoutedPropertyChangedEventArgs<double> args)
         {
-            int SliderValue = (int)timelineSlider.Value;
-
-            // Overloaded constructor takes the arguments days, hours, minutes, seconds, miniseconds.
-            // Create a TimeSpan with miliseconds equal to the slider value.
-            TimeSpan ts = new TimeSpan(0, 0, 0, 0, SliderValue);
-            MediaPlayer.Position = ts;
+            ChangePosition();
         }
 
         void InitializePropertyValues()
@@ -229,7 +226,8 @@ namespace Peplex_PFC.UI
 
         private void GetAndSaveResumeTime()
         {
-            ResumeTime = (int) (timelineSlider.Value / 1000); // Segundos 
+            if((int) MediaPlayer.Position.TotalSeconds != 0)
+                ResumeTime = (int) MediaPlayer.Position.TotalSeconds; // Segundos 
         }
 
         private void SetAndLoadResumeTime()
@@ -241,14 +239,29 @@ namespace Peplex_PFC.UI
         {
             if (Tag == "Episode")
             {
-                if (PeplexConfig.Instance.CurrentUser.EpisodeTime.ContainsKey(CompleteName))
-                    PeplexConfig.Instance.CurrentUser.EpisodeTime.Remove(CompleteName);
+                if (PeplexConfig.Instance.CurrentUser.EpisodeTime.ContainsKey(KeyResumeTime))
+                    PeplexConfig.Instance.CurrentUser.EpisodeTime.Remove(KeyResumeTime);
             }
             else
             {
                 if (PeplexConfig.Instance.CurrentUser.FilmTime.ContainsKey(_film.Id))
                     PeplexConfig.Instance.CurrentUser.FilmTime.Remove(_film.Id);
             }
+        }
+
+        private bool ExistsResumeTime()
+        {
+            return  (Tag == "Episode" && PeplexConfig.Instance.CurrentUser.EpisodeTime.ContainsKey(KeyResumeTime)) || (Tag != "Episode" && PeplexConfig.Instance.CurrentUser.FilmTime.ContainsKey(_film.Id));
+        }
+
+        private void ChangePosition()
+        {
+            int SliderValue = (int)timelineSlider.Value;
+
+            // Overloaded constructor takes the arguments days, hours, minutes, seconds, miniseconds.
+            // Create a TimeSpan with miliseconds equal to the slider value.
+            TimeSpan ts = new TimeSpan(0, 0, 0, 0, SliderValue);
+            MediaPlayer.Position = ts;
         }
     }
 }

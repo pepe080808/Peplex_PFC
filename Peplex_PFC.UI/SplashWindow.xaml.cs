@@ -153,7 +153,8 @@ namespace Peplex_PFC.UI
 
             _loadCompleted = true;
             TextBlockFeedback.Text = Translations.splashWindowLoadCompleted;
-            EllipseFeedback.Visibility = Visibility.Hidden;
+            EllipseFeedback.Visibility = Visibility.Collapsed;
+            TextBlockFeedback.Margin = new Thickness(20,0,0,0);
         }
     }
 }

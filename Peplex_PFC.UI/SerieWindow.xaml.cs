@@ -81,7 +81,7 @@ namespace Peplex_PFC.UI
         private void CheckSeenEpisode()
         {
             foreach (var ep in _serie.Episodes)
-                ep.Seen = PeplexConfig.Instance.CurrentUser.EpisodeSeen.Contains(String.Format("{0};{1};{2}", ep.SerieId, ep.SerieId, ep.Number));
+                ep.Seen = PeplexConfig.Instance.CurrentUser.EpisodeSeen.Contains(String.Format("{0};{1};{2}", ep.SerieId, ep.Season, ep.Number));
         }
 
         private void SerieWindowClosed(object sender, EventArgs e)
@@ -123,8 +123,8 @@ namespace Peplex_PFC.UI
             var btn = (Button) sender;
             var currentdata = (EpisodeUIO)btn.DataContext;
 
-            PeplexConfig.Instance.CurrentUser.EpisodeSeen.Remove(String.Format("{0};{1};{2}", currentdata.SerieId, currentdata.SerieId, currentdata.Number));
-            PeplexConfig.Instance.CurrentUser.EpisodeSeen.Add(String.Format("{0};{1};{2}", currentdata.SerieId, currentdata.SerieId, currentdata.Number));
+            PeplexConfig.Instance.CurrentUser.EpisodeSeen.Remove(String.Format("{0};{1};{2}", currentdata.SerieId, currentdata.Season, currentdata.Number));
+            PeplexConfig.Instance.CurrentUser.EpisodeSeen.Add(String.Format("{0};{1};{2}", currentdata.SerieId, currentdata.Season, currentdata.Number));
 
             currentdata.Seen = true;
 
@@ -138,9 +138,9 @@ namespace Peplex_PFC.UI
             var currentdata = (EpisodeUIO)btn.DataContext;
 
             if (currentdata.Seen)
-                PeplexConfig.Instance.CurrentUser.EpisodeSeen.Remove(String.Format("{0};{1};{2}", currentdata.SerieId, currentdata.SerieId, currentdata.Number));
+                PeplexConfig.Instance.CurrentUser.EpisodeSeen.Remove(String.Format("{0};{1};{2}", currentdata.SerieId, currentdata.Season, currentdata.Number));
             else
-                PeplexConfig.Instance.CurrentUser.EpisodeSeen.Add(String.Format("{0};{1};{2}", currentdata.SerieId, currentdata.SerieId, currentdata.Number));
+                PeplexConfig.Instance.CurrentUser.EpisodeSeen.Add(String.Format("{0};{1};{2}", currentdata.SerieId, currentdata.Season, currentdata.Number));
 
             currentdata.Seen = !currentdata.Seen;
         }

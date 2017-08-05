@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Windows;
 using System.Windows.Input;
@@ -66,8 +67,12 @@ namespace Peplex_PFC.UI.Panels
             TxtName.Text = Users[CbNickName.SelectedIndex].Name;
             TxtEmail.Text = Users[CbNickName.SelectedIndex].Email;
             CbPermissions.SelectedIndex = Users[CbNickName.SelectedIndex].Permissions;
-            ImgProfile.Source = PeplexUtils.ConvertByteArrayToBitmapImage(Users[CbNickName.SelectedIndex].Photo);
-            _currentBitmapImage = PeplexUtils.ConvertByteArrayToBitmapImage(Users[CbNickName.SelectedIndex].Photo);
+
+            var auxPhoto = Users[CbNickName.SelectedIndex].Photo;
+            if (auxPhoto == null)
+                auxPhoto = PeplexUtils.ConvertBitmapImageToByteArray(new BitmapImage(new Uri(Path.Combine(Environment.CurrentDirectory, "..\\..", "Resources\\DefaultProfile.png"))));
+            ImgProfile.Source = PeplexUtils.ConvertByteArrayToBitmapImage(auxPhoto);
+            _currentBitmapImage = PeplexUtils.ConvertByteArrayToBitmapImage(auxPhoto);
         }
 
         private void BntAddClick(object sender, RoutedEventArgs e)
@@ -91,19 +96,19 @@ namespace Peplex_PFC.UI.Panels
                 if(Users[CbNickName.SelectedIndex].Password.Equals(TxtCurrentPass.Text))
                     UpdateData(TxtNewPass.Text);
                 else
-                    MessageBoxWindow.Show(Window.GetWindow(Parent), "AVISO", DialogIcon.Warning, new[] { DialogButton.Accept }, "La contraseña actual es incorrecta.No se actualizarán los datos del usuario.");
+                    MessageBoxWindow.Show(Window.GetWindow(Parent), Translations.lblWarning, DialogIcon.Warning, new[] { DialogButton.Accept }, Translations.ConfigUserControlCurrentPasswordError);
             }
             else if (string.IsNullOrWhiteSpace(TxtCurrentPass.Text) && string.IsNullOrWhiteSpace(TxtNewPass.Text))
                     UpdateData("");
             else
-                MessageBoxWindow.Show(Window.GetWindow(Parent), "AVISO", DialogIcon.Warning, new[] { DialogButton.Accept }, "Los dos campos para la contraseña deben estar rellenos si desea modificarla.");
+                MessageBoxWindow.Show(Window.GetWindow(Parent), Translations.lblWarning, DialogIcon.Warning, new[] { DialogButton.Accept }, Translations.ConfigUserControlObligatoryBothPasswordField);
         }
 
         private void UpdateData(string newPassword)
         {
             if (Validate().Any())
             {
-                MessageBoxWindow.Show(Window.GetWindow(Parent), "AVISO", DialogIcon.Warning, new[] { DialogButton.Accept }, String.Format("Campos obligatorios: {0}", String.Join(",", Validate())));
+                MessageBoxWindow.Show(Window.GetWindow(Parent), Translations.lblWarning, DialogIcon.Warning, new[] { DialogButton.Accept }, String.Format(Translations.ConfigUserControlObligatoryField, String.Join(",", Validate())));
                 return;
             }
 
@@ -120,8 +125,13 @@ namespace Peplex_PFC.UI.Panels
 
             CompositionRoot.Instance.Resolve<IUserServiceProxy>().Update(new ProxyContext(), editedUser);
 
-            MessageBoxWindow.Show(Window.GetWindow(Parent), "AVISO", DialogIcon.Warning, new[] { DialogButton.Accept }, String.Format("Campos obligatorios: {0}", String.Join(",", Validate())));
-            MessageBoxWindow.Show(Window.GetWindow(Parent), "INFO", DialogIcon.Info, new[] { DialogButton.Accept }, "Usuario actualizada con éxito.");
+            // Si hemos actualizado el usuario actual, modificamos su foto de perfil
+            if (PeplexConfig.Instance.CurrentUser.Id == editedUser.Id)
+                PeplexConfig.Instance.CurrentUser.Photo = editedUser.Photo;
+
+            Users[CbNickName.SelectedIndex] = editedUser;
+
+            MessageBoxWindow.Show(Window.GetWindow(Parent), Translations.lblInfo, DialogIcon.Info, new[] { DialogButton.Accept }, Translations.cUserUpdateSuccessfully);
         }
 
         private List<string> Validate()
@@ -139,11 +149,11 @@ namespace Peplex_PFC.UI.Panels
         private void BntDeleteClick(object sender, RoutedEventArgs e)
         {
             if(Users[CbNickName.SelectedIndex].NickName.Equals(PeplexConfig.Instance.CurrentUser.NickName, StringComparison.CurrentCultureIgnoreCase))
-                MessageBoxWindow.Show(Window.GetWindow(Parent), "AVISO", DialogIcon.Warning, new[] { DialogButton.Accept }, "No se puede eliminar el usario con el que se ha iniciado sesión.");
+                MessageBoxWindow.Show(Window.GetWindow(Parent), Translations.lblWarning, DialogIcon.Warning, new[] { DialogButton.Accept }, Translations.ConfigUserControlDelteUserError);
             else
             {
                 Users.RemoveAt(CbNickName.SelectedIndex);
-
+                CbNickName.Items.RemoveAt(CbNickName.SelectedIndex  );
                 var index = Users.FindIndex(u => u.NickName == PeplexConfig.Instance.CurrentUser.NickName);
                 CbNickName.SelectedIndex = index;
             }
@@ -153,7 +163,7 @@ namespace Peplex_PFC.UI.Panels
         {
             try
             {
-                var dialog = new OpenFileDialog { Filter = "PNG|*.png JPG|*jpg", Title = "Seleccíone imagen para el perfil", FilterIndex = 1};
+                var dialog = new OpenFileDialog { Filter = "PNG|*.png|JPG|*jpg", Title = Translations.ConfigUserControlSelectImageToProfile, FilterIndex = 1};
                 if (dialog.ShowDialog() != true)
                     return;
 
@@ -165,7 +175,7 @@ namespace Peplex_PFC.UI.Panels
             }
             catch (Exception ex)
             {
-                MessageBoxWindow.Show(Window.GetWindow(Parent), "ERROR", DialogIcon.CommError, new[] { DialogButton.Accept }, ex.Message + "\nEl archivo seleccionado no es un tipo de imagen válido");
+                MessageBoxWindow.Show(Window.GetWindow(Parent), Translations.lblError, DialogIcon.CommError, new[] { DialogButton.Accept }, ex.Message + Translations.ConfigControlImageNotValidError);
             }
         }
 

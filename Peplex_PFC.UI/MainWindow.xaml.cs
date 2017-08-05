@@ -44,7 +44,7 @@ namespace Peplex_PFC.UI
 
         private void LoadData()
         {
-            _wc = new WaitCursor();
+            //_wc = new WaitCursor();
 
             var bw = new BackgroundWorker();
             bw.DoWork += LoadDataOnDoWork;
@@ -67,7 +67,7 @@ namespace Peplex_PFC.UI
 
         private void LoadDataRunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
-            Dispatcher.BeginInvoke(new Action(() => { _wc.Dispose(); /*_bussy.Hide();*/ }), DispatcherPriority.ApplicationIdle);
+            Dispatcher.BeginInvoke(new Action(() => { /*_wc.Dispose();*/ /*_bussy.Hide();*/ }), DispatcherPriority.ApplicationIdle);
 
             if (e.Result is ProxyContext)
             {

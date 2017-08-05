@@ -163,7 +163,7 @@ WHERE Id = @Id</value>
   </data>
   <data name="FilmUpdate" xml:space="preserve">
     <value>UPDATE Film
-SET Title = @Title, Subtitle = @Subtitle, FormatId = @FormatId,  GenreId01 = @GenreId01, GenreId02 = @GenreId02, Synopsis = @Synopsis, DurationMin = @DurationMin, DownloadDate = @DownloadDate, PremiereDate = @PremiereDate, Note = @Note, Cover = @Cover, Background = @Background
+SET Title = @Title, Subtitle = @Subtitle, FormatId = @FormatId,  GenreId01 = @GenreId01, GenreId02 = @GenreId02, TrailerURL = @TrailerURL, Synopsis = @Synopsis, DurationMin = @DurationMin, DownloadDate = @DownloadDate, PremiereDate = @PremiereDate, Note = @Note, Cover = @Cover, Background = @Background
 WHERE Id = @Id</value>
   </data>
   <data name="FormatDelete" xml:space="preserve">
@@ -274,8 +274,8 @@ SELECT @@IDENTITY;
     <value>SELECT ISNULL(MAX(Id), 0) FROM UserInfo</value>
   </data>
   <data name="UserUpdateEpisodeSeen" xml:space="preserve">
-    <value>DELETE FROM SerieSeen WHERE UserId = @UserId;
-INSERT INTO SerieSeen (UserId, SerieId, Season, Number) VALUES (@UserId, @SerieId, @Season, @Number);</value>
+    <value>DELETE FROM EpisodeSeen WHERE UserId = @UserId;
+INSERT INTO EpisodeSeen (UserId, SerieId, Season, Number) VALUES (@UserId, @SerieId, @Season, @Number);</value>
   </data>
   <data name="UserUpdateEpisodeTime" xml:space="preserve">
     <value>DELETE FROM UserEpisodeTime WHERE UserId = @UserId;

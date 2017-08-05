@@ -13,11 +13,11 @@ namespace Peplex_PFC.BLL.InterfacesClasses.Classes.BO
         public byte[] Photo { get; set; }
         public int Permissions { get; set; }
 
-        public List<int> FilmSeen { get; private set; }
-        public List<int> SerieSeen { get; private set; }
-        public List<string> EpisodeSeen { get; private set; }
-        public Dictionary<int, int> FilmTime { get; private set; }
-        public Dictionary<string, int> EpisodeTime { get; private set; }
+        public List<int> FilmSeen { get; set; }
+        public List<int> SerieSeen { get; set; }
+        public List<string> EpisodeSeen { get; set; }
+        public Dictionary<int, int> FilmTime { get; set; }
+        public Dictionary<string, int> EpisodeTime { get; set; }
 
         public UserBO()
         {

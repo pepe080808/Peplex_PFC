@@ -7,6 +7,8 @@ namespace Peplex_PFC.SL
     {
         private static void Main()
         {
+            Console.SetWindowSize(Console.WindowWidth, Console.WindowHeight/2);
+
             HostFactory.Run(x =>
             {
                 x.Service<HeadofficeServiceLayer>(sc =>
@@ -16,9 +18,9 @@ namespace Peplex_PFC.SL
                     sc.WhenStopped(rn => rn.Stop());
                 });
                 x.RunAsLocalSystem();
-                x.SetDescription("Descripción del servicio");
-                x.SetDisplayName("DisplayName");
-                x.SetServiceName("Nombre del servicio");
+                x.SetDescription("Servicio para acceder a la información de la biblioteca multimedia de la aplicación Peplex.");
+                x.SetDisplayName("Peplex Console");
+                x.SetServiceName("Peplex Service");
             });
 
             //ServiceConfig.ConfigFileName = "Headoffice.SL.Config";

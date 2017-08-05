@@ -61,11 +61,165 @@ namespace Peplex_PFC.UI {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to _Añadir.
+        /// </summary>
+        public static string btnAdd {
+            get {
+                return ResourceManager.GetString("btnAdd", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to _Eliminar.
+        /// </summary>
+        public static string btnDelete {
+            get {
+                return ResourceManager.GetString("btnDelete", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to _Editar.
+        /// </summary>
+        public static string btnEdit {
+            get {
+                return ResourceManager.GetString("btnEdit", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to _Ok.
         /// </summary>
         public static string btnOk {
             get {
                 return ResourceManager.GetString("btnOk", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 
+        ///El archivo seleccionado no es un tipo de imagen válido.
+        /// </summary>
+        public static string ConfigControlImageNotValidError {
+            get {
+                return ResourceManager.GetString("ConfigControlImageNotValidError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Seleccione imagen de fondo.
+        /// </summary>
+        public static string ConfigControlSelectImageToBackground {
+            get {
+                return ResourceManager.GetString("ConfigControlSelectImageToBackground", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Seleccíone imagen para la carátula.
+        /// </summary>
+        public static string ConfigControlSelectImageToCover {
+            get {
+                return ResourceManager.GetString("ConfigControlSelectImageToCover", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Película actualizada con éxito..
+        /// </summary>
+        public static string ConfigFilmControlUpdateFilmSuccessfully {
+            get {
+                return ResourceManager.GetString("ConfigFilmControlUpdateFilmSuccessfully", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Serie actualizada con éxito..
+        /// </summary>
+        public static string ConfigFilmControlUpdateSerieSuccessfully {
+            get {
+                return ResourceManager.GetString("ConfigFilmControlUpdateSerieSuccessfully", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to La contraseña actual es incorrecta. No se actualizarán los datos del usuario..
+        /// </summary>
+        public static string ConfigUserControlCurrentPasswordError {
+            get {
+                return ResourceManager.GetString("ConfigUserControlCurrentPasswordError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to No se puede eliminar el usario con el que se ha iniciado sesión..
+        /// </summary>
+        public static string ConfigUserControlDelteUserError {
+            get {
+                return ResourceManager.GetString("ConfigUserControlDelteUserError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Los dos campos para la contraseña deben estar rellenos si desea modificarla..
+        /// </summary>
+        public static string ConfigUserControlObligatoryBothPasswordField {
+            get {
+                return ResourceManager.GetString("ConfigUserControlObligatoryBothPasswordField", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Campos obligatorios: {0}.
+        /// </summary>
+        public static string ConfigUserControlObligatoryField {
+            get {
+                return ResourceManager.GetString("ConfigUserControlObligatoryField", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Seleccione imagen para el perfil.
+        /// </summary>
+        public static string ConfigUserControlSelectImageToProfile {
+            get {
+                return ResourceManager.GetString("ConfigUserControlSelectImageToProfile", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Películas.
+        /// </summary>
+        public static string ConfigWindowFilmHeader {
+            get {
+                return ResourceManager.GetString("ConfigWindowFilmHeader", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Series.
+        /// </summary>
+        public static string ConfigWindowSerieHeader {
+            get {
+                return ResourceManager.GetString("ConfigWindowSerieHeader", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Usuarios.
+        /// </summary>
+        public static string ConfigWindowUserHeader {
+            get {
+                return ResourceManager.GetString("ConfigWindowUserHeader", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Usuario actualizado con éxito..
+        /// </summary>
+        public static string cUserUpdateSuccessfully {
+            get {
+                return ResourceManager.GetString("cUserUpdateSuccessfully", resourceCulture);
             }
         }
         
@@ -84,6 +238,42 @@ namespace Peplex_PFC.UI {
         public static string lblBest {
             get {
                 return ResourceManager.GetString("lblBest", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Contraseña actual:.
+        /// </summary>
+        public static string lblCurrentPasswordLbl {
+            get {
+                return ResourceManager.GetString("lblCurrentPasswordLbl", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Duración.
+        /// </summary>
+        public static string lblDuration {
+            get {
+                return ResourceManager.GetString("lblDuration", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Duración:.
+        /// </summary>
+        public static string lblDurationLbl {
+            get {
+                return ResourceManager.GetString("lblDurationLbl", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to E-mail:.
+        /// </summary>
+        public static string lblEmailLbl {
+            get {
+                return ResourceManager.GetString("lblEmailLbl", resourceCulture);
             }
         }
         
@@ -124,6 +314,24 @@ namespace Peplex_PFC.UI {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Género 01:.
+        /// </summary>
+        public static string lblGenre01Lbl {
+            get {
+                return ResourceManager.GetString("lblGenre01Lbl", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Género 02:.
+        /// </summary>
+        public static string lblGenre02Lbl {
+            get {
+                return ResourceManager.GetString("lblGenre02Lbl", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Info.
         /// </summary>
         public static string lblInfo {
@@ -142,11 +350,74 @@ namespace Peplex_PFC.UI {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Nombre:.
+        /// </summary>
+        public static string lblNameLbl {
+            get {
+                return ResourceManager.GetString("lblNameLbl", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Contraseña nueva:.
+        /// </summary>
+        public static string lblNewPasswordLbl {
+            get {
+                return ResourceManager.GetString("lblNewPasswordLbl", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Apodo:.
+        /// </summary>
+        public static string lblNickNameLbl {
+            get {
+                return ResourceManager.GetString("lblNickNameLbl", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Nota.
+        /// </summary>
+        public static string lblNote {
+            get {
+                return ResourceManager.GetString("lblNote", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Nota:.
+        /// </summary>
+        public static string lblNoteLbl {
+            get {
+                return ResourceManager.GetString("lblNoteLbl", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Password:.
         /// </summary>
         public static string lblPasswordLbl {
             get {
                 return ResourceManager.GetString("lblPasswordLbl", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Permisos:.
+        /// </summary>
+        public static string lblPermissionsLbl {
+            get {
+                return ResourceManager.GetString("lblPermissionsLbl", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Fecha estreno:.
+        /// </summary>
+        public static string lblPremiereDateLbl {
+            get {
+                return ResourceManager.GetString("lblPremiereDateLbl", resourceCulture);
             }
         }
         
@@ -169,6 +440,33 @@ namespace Peplex_PFC.UI {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Sinópsis.
+        /// </summary>
+        public static string lblSynopsis {
+            get {
+                return ResourceManager.GetString("lblSynopsis", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sinopsis:.
+        /// </summary>
+        public static string lblSynopsisLbl {
+            get {
+                return ResourceManager.GetString("lblSynopsisLbl", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Título:.
+        /// </summary>
+        public static string lblTitleLbl {
+            get {
+                return ResourceManager.GetString("lblTitleLbl", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to CONFIG.
         /// </summary>
         public static string LblUpperConfig {
@@ -178,7 +476,7 @@ namespace Peplex_PFC.UI {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to PELÍCULAS.
+        ///   Looks up a localized string similar to PELIS.
         /// </summary>
         public static string LblUpperFilms {
             get {
@@ -201,6 +499,24 @@ namespace Peplex_PFC.UI {
         public static string LblUpperSeries {
             get {
                 return ResourceManager.GetString("LblUpperSeries", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Url trailer.
+        /// </summary>
+        public static string lblUrl {
+            get {
+                return ResourceManager.GetString("lblUrl", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Url trailer:.
+        /// </summary>
+        public static string lblUrlLbl {
+            get {
+                return ResourceManager.GetString("lblUrlLbl", resourceCulture);
             }
         }
         

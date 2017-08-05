@@ -1,1 +1,1 @@
-﻿INSERT INTO Genre (Name) VALUES ('NA')
+﻿

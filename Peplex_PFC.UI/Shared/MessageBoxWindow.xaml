@@ -9,7 +9,9 @@
         ResizeMode="NoResize"
         WindowStartupLocation="CenterScreen"
         SizeToContent="WidthAndHeight"
-        PreviewKeyUp="WindowPreviewKeyUp">
+        PreviewKeyUp="WindowPreviewKeyUp"
+        BorderBrush="{StaticResource DarkGrayBrush}"
+        BorderThickness="5">
     
     <Window.Resources>
         <Style x:Key="PathInfo" TargetType="Path">
@@ -53,7 +55,7 @@
         </Style>
     </Window.Resources>
 
-    <Grid Name="MainGrid"  Width="550" Height="200" Background="{StaticResource LightGrayBrush}">
+    <Grid Name="MainGrid"  Width="550" Height="250" Background="{StaticResource LightGrayBrush}">
         <Grid.RowDefinitions>
             <RowDefinition Height="60"/>
             <RowDefinition/>
@@ -73,7 +75,7 @@
             </Grid>
         </Grid>
 
-        <Grid Name="GMain" Grid.Row="1" Margin="20" Width="500" MinHeight="100" Height="100" VerticalAlignment="Top">
+        <Grid Name="GMain" Grid.Row="1" Margin="20" Width="500" MinHeight="150" Height="150" VerticalAlignment="Top">
             <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="50"/>
@@ -92,7 +94,7 @@
                 <Path Name="PathIconCommError" Style="{StaticResource PathCommError}"/>
             </StackPanel>
 
-            <TextBlock Name="TextBlockMessage" FontFamily="Tahoma" FontSize="15" Foreground="White" Margin="5" Grid.Column="1" TextWrapping="Wrap" Height="50" VerticalAlignment="Top"/>
+            <TextBlock Name="TextBlockMessage" Grid.Column="1" FontFamily="Tahoma" FontSize="15" Foreground="White" Margin="5" TextWrapping="Wrap" Height="80" VerticalAlignment="Center" HorizontalAlignment="Left" TextTrimming="CharacterEllipsis"/>
         </Grid>
 
         <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Center" Margin="0" Height="50">

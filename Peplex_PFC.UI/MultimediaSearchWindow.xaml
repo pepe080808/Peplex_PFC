@@ -47,7 +47,7 @@
                     <ColumnDefinition Width="0.3*"/>
                 </Grid.ColumnDefinitions>
 
-                <ScrollViewer Grid.Column="0">
+                <ScrollViewer Grid.Column="0" VerticalScrollBarVisibility="Auto">
                     <Grid Name="GSearchResult" d:DesignHeight="285" d:DesignWidth="640"/>
                 </ScrollViewer>
 

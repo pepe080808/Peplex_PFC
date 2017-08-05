@@ -32,6 +32,7 @@ namespace Peplex_PFC.DAL
         {
             using (var cmd = uow.CreateCommand(Queries.FilmUpdate))
             {
+                cmd.Parameters.AddWithValue("@Id", entity.Id);
                 cmd.Parameters.AddWithValue("@Title", entity.Title);
                 cmd.Parameters.AddWithValue("@Subtitle", entity.Subtitle);
                 cmd.Parameters.AddWithValue("@FormatId", entity.FormatId);

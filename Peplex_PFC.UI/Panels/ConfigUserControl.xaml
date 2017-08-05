@@ -2,19 +2,23 @@
       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+      xmlns:UI="clr-namespace:Peplex_PFC.UI"
       mc:Ignorable="d" 
-      d:DesignHeight="300" d:DesignWidth="450"
-             Loaded="ConfigUserControlLoaded">
+      d:DesignHeight="550" d:DesignWidth="650"
+      Loaded="ConfigUserControlLoaded">
 
     <Grid Name="GMain">
         <Grid.RowDefinitions>
-            <RowDefinition/>
-            <RowDefinition/>
-            <RowDefinition/>
-            <RowDefinition/>
-            <RowDefinition/>
-            <RowDefinition/>
+            <RowDefinition Height="50"/>
+            <RowDefinition Height="50"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="50"/>
+            <RowDefinition Height="50"/>
+            <RowDefinition Height="50"/>
+            <RowDefinition Height="50"/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition/>
@@ -22,27 +26,29 @@
             <ColumnDefinition Width="Auto"/>
         </Grid.ColumnDefinitions>
 
-        <Label Grid.Row="0" Grid.Column="0" Content="Apodo:" Style="{StaticResource FieldLabelStyle}"/>
-        <Label Grid.Row="1" Grid.Column="0" Content="Nombre:" Style="{StaticResource FieldLabelStyle}"/>
-        <Label Grid.Row="2" Grid.Column="0" Content="E-mail:" Style="{StaticResource FieldLabelStyle}"/>
-        <Label Grid.Row="3" Grid.Column="0" Content="Contraseña actual:" Style="{StaticResource FieldLabelStyle}"/>
-        <Label Grid.Row="4" Grid.Column="0" Content="Contraseña nueva:" Style="{StaticResource FieldLabelStyle}"/>
-        <Label Grid.Row="5" Grid.Column="0" Content="Permisos:" Style="{StaticResource FieldLabelStyle}"/>
+        <Label Grid.Row="0" Grid.Column="0" Content="{x:Static UI:Translations.lblNickNameLbl}" Style="{StaticResource FieldLabelStyle}"/>
+        <Label Grid.Row="1" Grid.Column="0" Content="{x:Static UI:Translations.lblNameLbl}" Style="{StaticResource FieldLabelStyle}"/>
+        <Label Grid.Row="2" Grid.Column="0" Content="Gustos:" Style="{StaticResource FieldLabelStyle}"/>
+        <Label Grid.Row="5" Grid.Column="0" Content="{x:Static UI:Translations.lblEmailLbl}" Style="{StaticResource FieldLabelStyle}"/>
+        <Label Grid.Row="6" Grid.Column="0" Content="{x:Static UI:Translations.lblCurrentPasswordLbl}" Style="{StaticResource FieldLabelStyle}"/>
+        <Label Grid.Row="7" Grid.Column="0" Content="{x:Static UI:Translations.lblNewPasswordLbl}" Style="{StaticResource FieldLabelStyle}"/>
+        <Label Grid.Row="8" Grid.Column="0" Content="{x:Static UI:Translations.lblPermissionsLbl}" Style="{StaticResource FieldLabelStyle}"/>
 
         <ComboBox Name="CbNickName" Grid.Row="0" Grid.Column="1" Style="{StaticResource FieldComboBoxStyle}" Visibility="Visible" SelectionChanged="CbNickNameSelectionChanged"/>
-        <TextBox Name="TxtName" Grid.Row="1" Grid.Column="1" Margin="5" Style="{StaticResource FieldTextBoxStyle}"/>
-        <TextBox Name="TxtEmail" Grid.Row="2" Grid.Column="1" Margin="5" Style="{StaticResource FieldTextBoxStyle}"/>
-        <TextBox Name="TxtCurrentPass" Grid.Row="3" Grid.Column="1" Margin="5" Style="{StaticResource FieldTextBoxStyle}"/>
-        <TextBox Name="TxtNewPass"  Grid.Row="4" Grid.Column="1" Margin="5" Style="{StaticResource FieldTextBoxStyle}"/>
-        <ComboBox Name="CbPermissions" Grid.Row="5" Grid.Column="1" SelectedIndex="0" Style="{StaticResource FieldComboBoxStyle}">
+        <TextBox Name="TxtName" Grid.Row="1" Grid.Column="1" Margin="5" Style="{StaticResource FieldTextBoxStyle}" MaxLength="50"/>
+        <TextBox Name="TxtLikes" Grid.Row="2" Grid.RowSpan="3" Grid.Column="1" Margin="5 10" Style="{StaticResource FieldTextBoxStyle}" VerticalContentAlignment="Top" Height="230" TextWrapping="Wrap" MaxLength="1000"/>
+        <TextBox Name="TxtEmail" Grid.Row="5" Grid.Column="1" Margin="5" Style="{StaticResource FieldTextBoxStyle}" MaxLength="50"/>
+        <TextBox Name="TxtCurrentPass" Grid.Row="6" Grid.Column="1" Margin="5" Style="{StaticResource FieldTextBoxStyle}" MaxLength="50"/>
+        <TextBox Name="TxtNewPass"  Grid.Row="7" Grid.Column="1" Margin="5" Style="{StaticResource FieldTextBoxStyle}" MaxLength="50"/>
+        <ComboBox Name="CbPermissions" Grid.Row="8" Grid.Column="1" SelectedIndex="0" Style="{StaticResource FieldComboBoxStyle}">
             <ComboBoxItem Content="0 - Usuario"/>
             <ComboBoxItem Content="1 - Administrador"/>
         </ComboBox>
 
-        <Button Name="BtnAdd" Grid.Row="3" Grid.Column="2" Margin="5" Content="Añadir" Click="BntAddClick" Height="30" Width="60"/>
-        <Button Name="BtnEdit" Grid.Row="4" Grid.Column="2" Margin="5" Content="Editar" Click="BntEditClick" Height="30" Width="60"/>
-        <Button Name="BtnDelete" Grid.Row="5" Grid.Column="2" Margin="5" Content="Eliminar" Click="BntDeleteClick" Height="30" Width="60"/>
+        <Button Name="BtnAdd" Grid.Row="6" Grid.Column="2" Margin="5" Content="{x:Static UI:Translations.btnAdd}" Click="BntAddClick" Height="30" Width="60"/>
+        <Button Name="BtnEdit" Grid.Row="7" Grid.Column="2" Margin="5" Content="{x:Static UI:Translations.btnEdit}" Click="BntEditClick" Height="30" Width="60"/>
+        <Button Name="BtnDelete" Grid.Row="8" Grid.Column="2" Margin="5" Content="{x:Static UI:Translations.btnDelete}" Click="BntDeleteClick" Height="30" Width="60"/>
         
-        <Image Name="ImgProfile" Grid.Row="0" Grid.RowSpan="2" Grid.Column="2" VerticalAlignment="Center" Height="80" Width="80" MouseLeftButtonDown="ImgProfileClick" />
+        <Image Name="ImgProfile" Grid.Row="0" Grid.RowSpan="3" Grid.Column="2" VerticalAlignment="Top" Height="180" Width="180" MouseLeftButtonDown="ImgProfileClick" Stretch="Uniform"/>
     </Grid>
 </UserControl>

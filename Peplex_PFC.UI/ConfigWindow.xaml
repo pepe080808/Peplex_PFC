@@ -4,6 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:panels="clr-namespace:Peplex_PFC.UI.Panels"
+        xmlns:UI="clr-namespace:Peplex_PFC.UI"
         mc:Ignorable="d" Title="MainWindow"
         WindowStyle="None" 
         ShowInTaskbar="False"
@@ -11,9 +12,11 @@
         WindowStartupLocation="CenterScreen"
         SizeToContent="WidthAndHeight"
         PreviewKeyDown="ConfigWindowPreviewKeyDown"
-        Loaded="ConfigWindowLoad">
+        Loaded="ConfigWindowLoad"
+        BorderBrush="Gray"
+        BorderThickness="5">
     
-    <Grid Name="MainGrid"  Width="500" Height="500" Background="{StaticResource LightGrayBrush}">
+    <Grid Name="MainGrid" Width="600" Height="700" Background="{StaticResource LightGrayBrush}">
         <Grid.RowDefinitions>
             <RowDefinition Height="60"/>
             <RowDefinition/>
@@ -26,22 +29,22 @@
                     <ColumnDefinition Width="0.3*"/>
                 </Grid.ColumnDefinitions>
 
-                <Label Grid.Column="0" Margin="10 2 0 2" Foreground="White" FontSize="20" FontFamily="Tahoma" VerticalAlignment="Center" Content="PEPLEX" />
+                <Label Grid.Column="0" Content="{x:Static UI:Translations.lblApplicationTitle}" Style="{StaticResource FieldApplicationTitleStyle}"/>
 
-                <Image Grid.Column="1" Margin="0 2 10 2" Width="50" Height="50" Stretch="Fill" HorizontalAlignment="Right" Source="Resources/logoPePlex.png" />
+                <Image Grid.Column="1" Source="Resources/logoPePlex.png" Style="{StaticResource FieldApplicationIconStyle}"/>
 
             </Grid>
         </Grid>
 
         <Grid Name="GMain" Grid.Row="1" Margin="20">
             <TabControl  Background="{StaticResource LightGrayBrush}">
-                <TabItem Name="TabItemUser" Header="Usuarios">
+                <TabItem Name="TabItemUser" Header="{x:Static UI:Translations.ConfigWindowUserHeader}">
                     <panels:ConfigUserControl x:Name="ControlUser"/>
                 </TabItem>
-                <TabItem Name="TabItemFilm" Header="Films">
+                <TabItem Name="TabItemFilm" Header="{x:Static UI:Translations.ConfigWindowFilmHeader}">
                     <panels:ConfigFilmControl x:Name="ControlFilm"/>
                 </TabItem>
-                <TabItem Name="TabItemSerie" Header="Series">
+                <TabItem Name="TabItemSerie" Header="{x:Static UI:Translations.ConfigWindowSerieHeader}">
                     <panels:ConfigSerieControl x:Name="ControlSerie"/>
                 </TabItem>
             </TabControl>

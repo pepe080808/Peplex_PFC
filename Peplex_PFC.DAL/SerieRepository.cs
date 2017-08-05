@@ -29,6 +29,7 @@ namespace Peplex_PFC.DAL
         {
             using (var cmd = uow.CreateCommand(Queries.SerieUpdate))
             {
+                cmd.Parameters.AddWithValue("@Id", entity.Id);
                 cmd.Parameters.AddWithValue("@Title", entity.Title);
                 cmd.Parameters.AddWithValue("@GenreId01", entity.GenreId01);
                 cmd.Parameters.AddWithValue("@GenreId02", entity.GenreId02);

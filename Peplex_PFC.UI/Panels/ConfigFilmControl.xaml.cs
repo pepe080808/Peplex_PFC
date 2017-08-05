@@ -53,8 +53,13 @@ namespace Peplex_PFC.UI.Panels
                 // Rellenamos el ComboBox con los Title de las películas
                 CbTitle.ItemsSource = Films;
                 CbTitle.DisplayMemberPath = "Title";
-
                 CbTitle.SelectedIndex = 0;
+
+                CbGenre01.ItemsSource = Genre;
+                CbGenre01.DisplayMemberPath = "Name";
+
+                CbGenre02.ItemsSource = Genre;
+                CbGenre02.DisplayMemberPath = "Name";
 
                 AssignData();
             }
@@ -92,12 +97,12 @@ namespace Peplex_PFC.UI.Panels
         {
             if (Validate().Any())
             {
-                MessageBoxWindow.Show(Window.GetWindow(Parent), "AVISO", DialogIcon.Warning, new[] { DialogButton.Accept }, String.Format("Campos obligatorios: {0}", String.Join(",", Validate())));
+                MessageBoxWindow.Show(Window.GetWindow(Parent), Translations.lblWarning, DialogIcon.Warning, new[] { DialogButton.Accept }, String.Format(Translations.ConfigUserControlObligatoryField, String.Join(",", Validate())));
                 return;
             }
 
-            var indexGenreId01 = Genre.FindIndex(g => g.Name.Equals(CbGenre01.SelectedValue.ToString(), StringComparison.CurrentCultureIgnoreCase));
-            var indexGenreId02 = Genre.FindIndex(g => g.Name.Equals(CbGenre02.SelectedValue.ToString(), StringComparison.CurrentCultureIgnoreCase));
+            var indexGenreId01 = Genre.FindIndex(g => g.Name.Equals(((GenreUIO)CbGenre01.SelectedValue).Name.ToString(), StringComparison.CurrentCultureIgnoreCase));
+            var indexGenreId02 = Genre.FindIndex(g => g.Name.Equals(((GenreUIO)CbGenre02.SelectedValue).Name.ToString(), StringComparison.CurrentCultureIgnoreCase));
 
             var editedFilm = new FilmUIO
             {
@@ -117,9 +122,13 @@ namespace Peplex_PFC.UI.Panels
                 Background= PeplexUtils.ConvertBitmapImageToByteArray(_currentBitmapImageBackground)
             };
 
-            CompositionRoot.Instance.Resolve<IFilmServiceProxy>().Update(new ProxyContext(), editedFilm);
+            var result = CompositionRoot.Instance.Resolve<IFilmServiceProxy>().Update(new ProxyContext(), editedFilm);
 
-            MessageBoxWindow.Show(Window.GetWindow(Parent), "INFO", DialogIcon.Info, new[] { DialogButton.Accept }, "Película actualizada con éxito.");
+            if (result)
+            {
+                Films[CbTitle.SelectedIndex] = CompositionRoot.Instance.Resolve<IFilmServiceProxy>().Single(new ProxyContext(), editedFilm.Id);
+                MessageBoxWindow.Show(Window.GetWindow(Parent), Translations.lblInfo, DialogIcon.Info, new[] {DialogButton.Accept}, Translations.ConfigFilmControlUpdateFilmSuccessfully);
+            }
         }
 
         private List<string> Validate()
@@ -127,13 +136,13 @@ namespace Peplex_PFC.UI.Panels
             var result = new List<string>();
 
             if (String.IsNullOrWhiteSpace(TxtNote.Text))
-                result.Add("Nota");
+                result.Add(Translations.lblNote);
             if (String.IsNullOrWhiteSpace(TxtSynopsis.Text))
-                result.Add("Sinópsis");
+                result.Add(Translations.lblSynopsis);
             if (String.IsNullOrWhiteSpace(TxtTrailer.Text))
-                result.Add("Url trailer");
+                result.Add(Translations.lblUrl);
             if (String.IsNullOrWhiteSpace(TxtDuration.Text))
-                result.Add("Duración");
+                result.Add(Translations.lblDuration);
 
             return result;
         }
@@ -142,7 +151,7 @@ namespace Peplex_PFC.UI.Panels
         {
             try
             {
-                var dialog = new OpenFileDialog { Filter = "PNG|*.png JPG|*jpg", Title = "Seleccíone imagen para la carátula", FilterIndex = 1 };
+                var dialog = new OpenFileDialog { Filter = "PNG|*.png|JPG|*jpg", Title = Translations.ConfigControlSelectImageToCover, FilterIndex = 1 };
                 if (dialog.ShowDialog() != true)
                     return;
 
@@ -154,7 +163,7 @@ namespace Peplex_PFC.UI.Panels
             }
             catch (Exception ex)
             {
-                MessageBoxWindow.Show(Window.GetWindow(Parent), "ERROR", DialogIcon.CommError, new[] { DialogButton.Accept }, ex.Message + "\nEl archivo seleccionado no es un tipo de imagen válido");
+                MessageBoxWindow.Show(Window.GetWindow(Parent), Translations.lblError, DialogIcon.CommError, new[] { DialogButton.Accept }, ex.Message + Translations.ConfigControlImageNotValidError);
             }
         }
 
@@ -162,7 +171,7 @@ namespace Peplex_PFC.UI.Panels
         {
             try
             {
-                var dialog = new OpenFileDialog { Filter = "PNG|*.png JPG|*jpg", Title = "Seleccíone imagen de fondo", FilterIndex = 1 };
+                var dialog = new OpenFileDialog { Filter = "PNG|*.png|JPG|*jpg", Title = Translations.ConfigControlSelectImageToBackground, FilterIndex = 1 };
                 if (dialog.ShowDialog() != true)
                     return;
 
@@ -174,7 +183,7 @@ namespace Peplex_PFC.UI.Panels
             }
             catch (Exception ex)
             {
-                MessageBoxWindow.Show(Window.GetWindow(Parent), "ERROR", DialogIcon.CommError, new[] { DialogButton.Accept }, ex.Message + "\nEl archivo seleccionado no es un tipo de imagen válido");
+                MessageBoxWindow.Show(Window.GetWindow(Parent), Translations.lblError, DialogIcon.CommError, new[] { DialogButton.Accept }, ex.Message + Translations.ConfigControlImageNotValidError);
             }
         }
 

@@ -3,7 +3,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:panels="clr-namespace:Peplex_PFC.UI.Panels"
+        xmlns:UI="clr-namespace:Peplex_PFC.UI"
         mc:Ignorable="d" Title="MainWindow"
         WindowStyle="None" 
         ShowInTaskbar="False"
@@ -23,9 +23,9 @@
                         <ColumnDefinition Width="0.3*"/>
                     </Grid.ColumnDefinitions>
 
-                    <Label Grid.Column="0" Margin="10 2 0 2" Foreground="White" FontSize="20" FontFamily="Tahoma" VerticalAlignment="Center" Content="PEPLEX" />
+                    <Label Grid.Column="0" Content="{x:Static UI:Translations.lblApplicationTitle}" Style="{StaticResource FieldApplicationTitleStyle}"/>
 
-                    <Image Grid.Column="1" Margin="0 2 10 2" Width="50" Height="50" Stretch="Fill" HorizontalAlignment="Right" Source="Resources/logoPePlex.png" />
+                    <Image Grid.Column="1" Source="Resources/logoPePlex.png" Style="{StaticResource FieldApplicationIconStyle}"/>
 
                 </Grid>
             </Grid>
@@ -47,9 +47,9 @@
                 <Label Grid.Row="1" Grid.Column="0" Content="Nombre:" Style="{StaticResource FieldLabelStyle}"/>
                 <Label Grid.Row="2" Grid.Column="0" Content="E-mail:" Style="{StaticResource FieldLabelStyle}"/>
 
-                <TextBox Name="TxtNickName" Grid.Row="0" Grid.Column="1" Margin="5" Style="{StaticResource FieldTextBoxStyle}"/>
-                <TextBox Name="TxtName" Grid.Row="1" Grid.Column="1" Margin="5" Style="{StaticResource FieldTextBoxStyle}"/>
-                <TextBox Name="TxtEmail" Grid.Row="2" Grid.Column="1" Margin="5" Style="{StaticResource FieldTextBoxStyle}"/>
+                <TextBox Name="TxtNickName" Grid.Row="0" Grid.Column="1" Margin="5" Style="{StaticResource FieldTextBoxStyle}" MaxLength="50"/>
+                <TextBox Name="TxtName" Grid.Row="1" Grid.Column="1" Margin="5" Style="{StaticResource FieldTextBoxStyle}" MaxLength="50"/>
+                <TextBox Name="TxtEmail" Grid.Row="2" Grid.Column="1" Margin="5" Style="{StaticResource FieldTextBoxStyle}" MaxLength="50"/>
 
                 <Button Name="BtnOk" Grid.Row="1" Grid.Column="2" Margin="5" Content="_Ok" Click="BntOkClick" Height="30" Width="60"/>
                 <Button Name="BtnCancel" Grid.Row="2" Grid.Column="2" Margin="5" Content="_Cancel" IsCancel="True" Height="30" Width="60"/>

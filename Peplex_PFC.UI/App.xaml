@@ -60,6 +60,7 @@
             <Setter Property="FontFamily" Value="Tahoma"/>
             <Setter Property="Width" Value="200"/>
             <Setter Property="Height" Value="30"/>
+            <Setter Property="VerticalScrollBarVisibility" Value="Auto"/>
         </Style>
 
         <Style x:Key="FieldTextBlockStyle" TargetType="{x:Type TextBlock}">
