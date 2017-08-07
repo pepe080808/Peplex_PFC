@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.ServiceModel;
@@ -7,6 +8,7 @@ using Microsoft.Practices.ObjectBuilder2;
 using Peplex_PFC.SL.InterfacesClasses.Classes.DTO;
 using Peplex_PFC.SL.InterfacesClasses.Interfaces;
 using Peplex_PFC.UI.Interfaces;
+using Peplex_PFC.UI.Shared;
 using Peplex_PFC.UI.UIO;
 
 namespace Peplex_PFC.UI.Proxies
@@ -26,10 +28,20 @@ namespace Peplex_PFC.UI.Proxies
 
         public bool Insert(ProxyContext context, SerieUIO entity)
         {
-            using (var proxy = new ServiceProxy<ISerieService>(_channelFactory))
-                proxy.Channel.Insert(_mapUIO2DTO.Map(entity));
+            try
+            {
+                using (var proxy = new ServiceProxy<ISerieService>(_channelFactory))
+                    proxy.Channel.Insert(_mapUIO2DTO.Map(entity));
 
-            return true;
+                return true;
+            }
+            catch (Exception ex)
+            {
+                var msg = String.Format(Translations.msgServiceProxyError, GetCaller(), this.GetType().Name, ex.Message, ex.StackTrace);
+                MessageBoxWindow.Show(null, Translations.lblError, DialogIcon.CommError, new[] {DialogButton.Accept}, msg);
+                return false;
+            }
+
         }
 
         public bool Update(ProxyContext context, SerieUIO entity)

@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using System.ServiceModel;
 using System.ServiceModel.Channels;
-using System.Windows;
 using EmitMapper;
 using Microsoft.Practices.ObjectBuilder2;
 using Peplex_PFC.SL.InterfacesClasses.Classes.DTO;
@@ -10,6 +9,7 @@ using Peplex_PFC.SL.InterfacesClasses.Interfaces;
 using Peplex_PFC.UI.Interfaces;
 using Peplex_PFC.UI.Shared;
 using Peplex_PFC.UI.UIO;
+using Utils;
 
 namespace Peplex_PFC.UI.Proxies
 {
@@ -24,7 +24,7 @@ namespace Peplex_PFC.UI.Proxies
             _channelFactory = new ChannelFactoryFactory<IFilmService>(binding, "Peplex_PFCFilmService").CreateChannelFactory();
         }
 
-        public bool Insert(ProxyContext context, FilmUIO entity)
+        public bool Insert(FilmUIO entity)
         {
             try
             {
@@ -35,12 +35,13 @@ namespace Peplex_PFC.UI.Proxies
             }
             catch (Exception ex)
             {
-                MessageBoxWindow.Show(null, "eo", DialogIcon.CommError, new[] {DialogButton.Accept}, "Error: Insert(); Servicio: Film; Descripción: " + ex.Message);
+                var msg = String.Format(Translations.msgServiceProxyError, PeplexUtils.GetCaller(), this.GetType().Name, ex.Message, ex.StackTrace);
+                MessageBoxWindow.Show(null, Translations.lblError, DialogIcon.CommError, new[] {DialogButton.Accept}, msg);
                 return false;
             }
         }
 
-        public bool Update(ProxyContext context, FilmUIO entity)
+        public bool Update(FilmUIO entity)
         {
             try
             { 
@@ -51,49 +52,87 @@ namespace Peplex_PFC.UI.Proxies
             }
             catch (Exception ex)
             {
-                MessageBoxWindow.Show(null, "eo", DialogIcon.CommError, new[] {DialogButton.Accept}, "Error: Insert(); Servicio: Film; Descripción: " + ex.Message);
+                var msg = String.Format(Translations.msgServiceProxyError, PeplexUtils.GetCaller(), this.GetType().Name, ex.Message, ex.StackTrace);
+                MessageBoxWindow.Show(null, Translations.lblError, DialogIcon.CommError, new[] { DialogButton.Accept }, msg);
                 return false;
             }
         }
 
-        public bool Delete(ProxyContext context, int pk)
+        public bool Delete(int pk)
         {
-            using (var proxy = new ServiceProxy<IFilmService>(_channelFactory))
-                proxy.Channel.Delete(pk);
-
-            return true;
-        }
-
-        public FilmUIO Single(ProxyContext context, int pk)
-        {
-            using (var proxy = new ServiceProxy<IFilmService>(_channelFactory))
+            try
             {
-                var dto = proxy.Channel.Single(pk);
-                if (dto == null)
-                    return null;
+                using (var proxy = new ServiceProxy<IFilmService>(_channelFactory))
+                    proxy.Channel.Delete(pk);
 
-                var uio = _mapDTO2UIO.Map(dto);
-                return uio;
+                return true;
+            }
+            catch (Exception ex)
+            {
+                var msg = String.Format(Translations.msgServiceProxyError, PeplexUtils.GetCaller(), this.GetType().Name, ex.Message, ex.StackTrace);
+                MessageBoxWindow.Show(null, Translations.lblError, DialogIcon.CommError, new[] { DialogButton.Accept }, msg);
+                return false;
             }
         }
 
-        public IEnumerable<FilmUIO> FindAll(ProxyContext context)
+        public FilmUIO Single(int pk)
         {
-            using (var proxy = new ServiceProxy<IFilmService>(_channelFactory))
+            try
             {
-                var uios = new List<FilmUIO>();
-                var dtos = proxy.Channel.FindAll();
+                using (var proxy = new ServiceProxy<IFilmService>(_channelFactory))
+                {
+                    var dto = proxy.Channel.Single(pk);
+                    if (dto == null)
+                        return null;
 
-                dtos.ForEach(dto => uios.Add(_mapDTO2UIO.Map(dto)));
-
-                return uios;
+                    var uio = _mapDTO2UIO.Map(dto);
+                    return uio;
+                }
+            }
+            catch (Exception ex)
+            {
+                var msg = String.Format(Translations.msgServiceProxyError, PeplexUtils.GetCaller(), this.GetType().Name, ex.Message, ex.StackTrace);
+                MessageBoxWindow.Show(null, Translations.lblError, DialogIcon.CommError, new[] { DialogButton.Accept }, msg);
+                return null;
             }
         }
 
-        public int MaxPK(ProxyContext context)
+        public IEnumerable<FilmUIO> FindAll()
         {
-            using (var proxy = new ServiceProxy<IFilmService>(_channelFactory))
-                return proxy.Channel.MaxPK();
+            try
+            { 
+                using (var proxy = new ServiceProxy<IFilmService>(_channelFactory))
+                {
+                    var uios = new List<FilmUIO>();
+                    var dtos = proxy.Channel.FindAll();
+
+                    dtos.ForEach(dto => uios.Add(_mapDTO2UIO.Map(dto)));
+
+                    return uios;
+                }
+            }
+            catch (Exception ex)
+            {
+                var msg = String.Format(Translations.msgServiceProxyError, PeplexUtils.GetCaller(), this.GetType().Name, ex.Message, ex.StackTrace);
+                MessageBoxWindow.Show(null, Translations.lblError, DialogIcon.CommError, new[] { DialogButton.Accept }, msg);
+                return new List<FilmUIO>();
+            }
+        }
+
+        public int MaxPK()
+        {
+            try
+            {
+                using (var proxy = new ServiceProxy<IFilmService>(_channelFactory))
+                    return proxy.Channel.MaxPK();
+            }
+            catch (Exception ex)
+            {
+                var msg = String.Format(Translations.msgServiceProxyError, PeplexUtils.GetCaller(), this.GetType().Name, ex.Message, ex.StackTrace);
+                MessageBoxWindow.Show(null, Translations.lblError, DialogIcon.CommError, new[] {DialogButton.Accept}, msg);
+                return 0;
+            }
+
         }
     }
 }

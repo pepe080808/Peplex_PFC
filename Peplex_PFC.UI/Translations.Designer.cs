@@ -585,6 +585,19 @@ namespace Peplex_PFC.UI {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Error --&gt;
+        ///Método: {0}
+        ///Clase: {1}
+        ///Message: {2}
+        ///StackTrace: {3}.
+        /// </summary>
+        public static string msgServiceProxyError {
+            get {
+                return ResourceManager.GetString("msgServiceProxyError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to ¿Desea reanudar la reproducción?.
         /// </summary>
         public static string MultimediaPlayerWindowResumeTime {

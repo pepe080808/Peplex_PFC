@@ -43,5 +43,10 @@ namespace Utils
         {
             return Membership.GeneratePassword(8, 1);
         }
+
+        public static string GetCaller([System.Runtime.CompilerServices.CallerMemberName] string memberName = "")
+        {
+            return memberName;
+        }
     }
 }

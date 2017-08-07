@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Peplex_PFC.UI.UIO
+﻿namespace Peplex_PFC.UI.UIO
 {
     public class Generic
     {
@@ -17,7 +11,8 @@ namespace Peplex_PFC.UI.UIO
         public enum MultimediaType
         {
             FilmType,
-            SerieType
+            SerieType,
+            EpisodeType
         }
     }
 }
