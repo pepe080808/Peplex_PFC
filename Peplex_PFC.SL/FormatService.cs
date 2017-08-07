@@ -12,7 +12,6 @@ namespace Peplex_PFC.SL
     [ServiceBehavior(InstanceContextMode = InstanceContextMode.PerCall, ConcurrencyMode = ConcurrencyMode.Multiple)]
     public class FormatService : IFormatService
     {
-        //private readonly ServiceFaultHandling _faultHandling = new ServiceFaultHandling();
         private readonly IFormatManager _manager = CompositionRoot.Instance.Resolve<IFormatManager>();
         private readonly ObjectsMapper<FormatBO, FormatDTO> _mapBO2DTO = ObjectMapperManager.DefaultInstance.GetMapper<FormatBO, FormatDTO>();
         private readonly ObjectsMapper<FormatDTO, FormatBO> _mapDTO2BO = ObjectMapperManager.DefaultInstance.GetMapper<FormatDTO, FormatBO>();

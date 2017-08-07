@@ -8,7 +8,6 @@ using System.Windows.Input;
 using System.Windows.Threading;
 using Peplex_PFC.UI.Config;
 using Peplex_PFC.UI.Interfaces;
-using Peplex_PFC.UI.Proxies;
 using Peplex_PFC.UI.UIO;
 using Peplex_PFC.UIO;
 using Utils;
@@ -30,7 +29,7 @@ namespace Peplex_PFC.UI
             switch (e.Key)
             {
                 case Key.Escape:
-                    CompositionRoot.Instance.Resolve<IUserServiceProxy>().Update(new ProxyContext(), PeplexConfig.Instance.CurrentUser);
+                    CompositionRoot.Instance.Resolve<IUserServiceProxy>().Update(PeplexConfig.Instance.CurrentUser);
                     Application.Current.Shutdown();
                     break;
             }
@@ -54,26 +53,16 @@ namespace Peplex_PFC.UI
 
         private void LoadDataOnDoWork(object sender, DoWorkEventArgs e)
         {
-            var proxyContext = new ProxyContext();
 
-            var films = CompositionRoot.Instance.Resolve<IFilmServiceProxy>().FindAll(proxyContext).ToList();
-            var series = CompositionRoot.Instance.Resolve<ISerieServiceProxy>().FindAll(proxyContext).ToList();
+            var films = CompositionRoot.Instance.Resolve<IFilmServiceProxy>().FindAll().ToList();
+            var series = CompositionRoot.Instance.Resolve<ISerieServiceProxy>().FindAll().ToList();
 
-            if (proxyContext.HasErrors)
-                e.Result = proxyContext;
-            else
-                e.Result = new Tuple<List<FilmUIO>,List<SerieUIO>>(films, series);
+            e.Result = new Tuple<List<FilmUIO>,List<SerieUIO>>(films, series);
         }
 
         private void LoadDataRunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
             Dispatcher.BeginInvoke(new Action(() => { /*_wc.Dispose();*/ /*_bussy.Hide();*/ }), DispatcherPriority.ApplicationIdle);
-
-            if (e.Result is ProxyContext)
-            {
-                (e.Result as ProxyContext).ShowErrors(this);
-                return;
-            }
 
             var result = e.Result as Tuple<List<FilmUIO>,List<SerieUIO>>;
 
@@ -111,28 +100,28 @@ namespace Peplex_PFC.UI
                 //if (result != true)
                 //    return;
 
-                if (!String.IsNullOrWhiteSpace(_menu.EnteredOption))
+                if (_menu.EnteredOption != Generic.MenuSlideCommandType.NoneCommand)
                     menuGoto(_menu.EnteredOption);
             }
         }
 
-        private void menuGoto(string command)
+        private void menuGoto(Generic.MenuSlideCommandType command)
         {
             switch (command)
             {
-                case "Film":
-                    var childFilm = new MultimediaInfoWindow { Owner = this, StrTag = "Film"};
+                case Generic.MenuSlideCommandType.FilmCommand:
+                    var childFilm = new MultimediaInfoWindow { Owner = this, MultimediaType = Generic.MultimediaType.FilmType};
                     childFilm.ShowDialog();
                     break;
-                case "Serie":
-                    var childSerie = new MultimediaInfoWindow { Owner = this, StrTag = "Serie" };
+                case Generic.MenuSlideCommandType.SerieCommand:
+                    var childSerie = new MultimediaInfoWindow { Owner = this, MultimediaType =  Generic.MultimediaType.SerieType};
                     childSerie.ShowDialog();
                     break;
-                case "Search":
+                case Generic.MenuSlideCommandType.SearchCommand:
                     var childSearch = new MultimediaSearchWindow { Owner = this };
                     childSearch.ShowDialog();
                     break;
-                case "Config":
+                case Generic.MenuSlideCommandType.ConfigCommand:
                     var childConfig = new ConfigWindow { Owner = this };
                     childConfig.ShowDialog();
                     break;

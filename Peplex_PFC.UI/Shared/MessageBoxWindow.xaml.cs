@@ -4,7 +4,6 @@ using System.Windows.Input;
 
 namespace Peplex_PFC.UI.Shared
 {
-
     public enum DialogIcon
     {
         Info,
@@ -93,20 +92,7 @@ namespace Peplex_PFC.UI.Shared
 
         private void WindowPreviewKeyUp(object sender, KeyEventArgs e)
         {
-            /*if (e.Key == Key.Return)
-            {
-                if (ButtonYes.Visibility == Visibility.Visible)
-                {
-                    ButtonYesClick(null, null);
-                    e.Handled = true;
-                }
-                else if (ButtonAccept.Visibility == Visibility.Visible)
-                {
-                    ButtonAcceptClick(null, null);
-                    e.Handled = true;
-                }
-            }
-            else*/ if (e.Key == Key.Escape)
+            if (e.Key == Key.Escape)
             {
                 if (ButtonCancel.Visibility == Visibility.Visible)
                 {

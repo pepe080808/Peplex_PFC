@@ -12,7 +12,6 @@ namespace Peplex_PFC.SL
     [ServiceBehavior(InstanceContextMode = InstanceContextMode.PerCall, ConcurrencyMode = ConcurrencyMode.Multiple)]
     public class UserService : IUserService
     {
-        //private readonly ServiceFaultHandling _faultHandling = new ServiceFaultHandling();
         private readonly IUserManager _manager = CompositionRoot.Instance.Resolve<IUserManager>();
         private readonly ObjectsMapper<UserBO, UserDTO> _mapBO2DTO = ObjectMapperManager.DefaultInstance.GetMapper<UserBO, UserDTO>();
         private readonly ObjectsMapper<UserDTO, UserBO> _mapDTO2BO = ObjectMapperManager.DefaultInstance.GetMapper<UserDTO, UserBO>();

@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using System.ServiceModel;
 using EmitMapper;
@@ -13,7 +12,6 @@ namespace Peplex_PFC.SL
     [ServiceBehavior(InstanceContextMode = InstanceContextMode.PerCall, ConcurrencyMode = ConcurrencyMode.Multiple)]
     public class EpisodeService : IEpisodeService
     {
-        //private readonly ServiceFaultHandling _faultHandling = new ServiceFaultHandling();
         private readonly IEpisodeManager _manager = CompositionRoot.Instance.Resolve<IEpisodeManager>();
         private readonly ObjectsMapper<EpisodeBO, EpisodeDTO> _mapBO2DTO = ObjectMapperManager.DefaultInstance.GetMapper<EpisodeBO, EpisodeDTO>();
         private readonly ObjectsMapper<EpisodeDTO, EpisodeBO> _mapDTO2BO = ObjectMapperManager.DefaultInstance.GetMapper<EpisodeDTO, EpisodeBO>();

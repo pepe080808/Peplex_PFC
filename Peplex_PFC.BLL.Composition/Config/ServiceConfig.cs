@@ -1,10 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.IO;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using System.Xml;
 
 namespace Peplex_PFC.BLL.Composition.Config
@@ -41,7 +38,6 @@ namespace Peplex_PFC.BLL.Composition.Config
             set { _user = value; }
         }
 
-        //private string _password = "O/7i6qGGAKu7O5UmCQfBpA==";
         private string _password = "pepe1989";
 
         public string Password
@@ -82,11 +78,6 @@ namespace Peplex_PFC.BLL.Composition.Config
         {
             get
             {
-                //const string p4 = "fAs";
-                //const string p3 = "sWoRd";
-                //const string p2 = "aPaS";
-                //const string p1 = "Hi0nS";
-
                 var builder = new SqlConnectionStringBuilder
                 {
                     DataSource = _dataSource,

@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Windows;
 using System.Windows.Input;
 using System.Windows.Media;
 using Peplex_PFC.UI.Config;
@@ -85,9 +84,8 @@ namespace Peplex_PFC.UI
                 PeplexConfig.Instance.CurrentUser.FilmSeen.Add(_film.Id);
 
                 _film.Seen = true;
-                //EyeControl.Value = true;
 
-                var child = new MultimediaWindow { Owner = this, Tag = "Film", Title = _film.Title, Film = _film };
+                var child = new MultimediaWindow { Owner = this, MultimediaType = Generic.MultimediaType.FilmType, Title = _film.Title, Film = _film };
                 child.ShowDialog();
             }
         }

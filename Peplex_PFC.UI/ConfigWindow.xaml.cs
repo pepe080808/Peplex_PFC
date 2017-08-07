@@ -7,7 +7,6 @@ using System.Windows.Input;
 using System.Windows.Threading;
 using Peplex_PFC.UI.Config;
 using Peplex_PFC.UI.Interfaces;
-using Peplex_PFC.UI.Proxies;
 using Peplex_PFC.UI.UIO;
 using Peplex_PFC.UIO;
 using Utils;
@@ -51,7 +50,6 @@ namespace Peplex_PFC.UI
         private void LoadDataOnDoWork(object sender, DoWorkEventArgs e)
         {
             var o = e.Argument as dynamic;
-            var proxyContext = new ProxyContext();
 
             List<FilmUIO> films = null;
             List<SerieUIO> series = null;
@@ -60,27 +58,18 @@ namespace Peplex_PFC.UI
 
             if (o.Permissions == 1)
             {
-                films = CompositionRoot.Instance.Resolve<IFilmServiceProxy>().FindAll(proxyContext).OrderBy(f => f.Title).ToList();
-                series = CompositionRoot.Instance.Resolve<ISerieServiceProxy>().FindAll(proxyContext).OrderBy(s => s.Title).ToList();
-                users = CompositionRoot.Instance.Resolve<IUserServiceProxy>().FindAll(proxyContext).OrderBy(u => u.NickName).ToList();
-                genres = CompositionRoot.Instance.Resolve<IGenreServiceProxy>().FindAll(proxyContext).OrderBy(u => u.Name).ToList();
+                films = CompositionRoot.Instance.Resolve<IFilmServiceProxy>().FindAll().OrderBy(f => f.Title).ToList();
+                series = CompositionRoot.Instance.Resolve<ISerieServiceProxy>().FindAll().OrderBy(s => s.Title).ToList();
+                users = CompositionRoot.Instance.Resolve<IUserServiceProxy>().FindAll().OrderBy(u => u.NickName).ToList();
+                genres = CompositionRoot.Instance.Resolve<IGenreServiceProxy>().FindAll().OrderBy(u => u.Name).ToList();
             }
 
-            if (proxyContext.HasErrors)
-                e.Result = proxyContext;
-            else
-                e.Result = new Tuple<List<FilmUIO>, List<SerieUIO>, List<UserUIO>, List<GenreUIO>>(films, series, users, genres);
+            e.Result = new Tuple<List<FilmUIO>, List<SerieUIO>, List<UserUIO>, List<GenreUIO>>(films, series, users, genres);
         }
 
         private void LoadDataRunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
             Dispatcher.BeginInvoke(new Action(() => { _wc.Dispose(); /*_bussy.Hide();*/ }), DispatcherPriority.ApplicationIdle);
-
-            if (e.Result is ProxyContext)
-            {
-                (e.Result as ProxyContext).ShowErrors(Window.GetWindow(Parent));
-                return;
-            }
 
             var result = e.Result as Tuple<List<FilmUIO>, List<SerieUIO>, List<UserUIO>, List<GenreUIO>>;
 

@@ -8,7 +8,6 @@ using System.Windows.Input;
 using System.Windows.Threading;
 using Peplex_PFC.UI.Interfaces;
 using Peplex_PFC.UI.Panels;
-using Peplex_PFC.UI.Proxies;
 using Peplex_PFC.UI.Shared;
 using Peplex_PFC.UI.UIO;
 using Peplex_PFC.UIO;
@@ -26,7 +25,7 @@ namespace Peplex_PFC.UI
         {
             public int Id { get; set; }
             public string Title { get; set; }
-            public string Tag { get; set; }
+            public Generic.MultimediaType MultimediaType { get; set; }
             public byte[] Cover { get; set; }
         }
 
@@ -90,26 +89,15 @@ namespace Peplex_PFC.UI
 
         private void LoadDataOnDoWork(object sender, DoWorkEventArgs e)
         {
-            var proxyContext = new ProxyContext();
+            var films = CompositionRoot.Instance.Resolve<IFilmServiceProxy>().FindAll().ToList();
+            var series = CompositionRoot.Instance.Resolve<ISerieServiceProxy>().FindAll().ToList();
 
-            var films = CompositionRoot.Instance.Resolve<IFilmServiceProxy>().FindAll(proxyContext).ToList();
-            var series = CompositionRoot.Instance.Resolve<ISerieServiceProxy>().FindAll(proxyContext).ToList();
-
-            if (proxyContext.HasErrors)
-                e.Result = proxyContext;
-            else
-                e.Result = new Tuple<List<FilmUIO>, List<SerieUIO>>(films, series);
+            e.Result = new Tuple<List<FilmUIO>, List<SerieUIO>>(films, series);
         }
 
         private void LoadDataRunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
             Dispatcher.BeginInvoke(new Action(() => { _wc.Dispose(); /*_bussy.Hide();*/ GMain.IsEnabled = true; }), DispatcherPriority.ApplicationIdle);
-
-            if (e.Result is ProxyContext)
-            {
-                (e.Result as ProxyContext).ShowErrors(this);
-                return;
-            }
 
             var result = e.Result as Tuple<List<FilmUIO>,List<SerieUIO>>;
 
@@ -124,7 +112,7 @@ namespace Peplex_PFC.UI
                 {
                     Id = film.Id,
                     Title = film.Title.ToUpper(),
-                    Tag = "Film",
+                    MultimediaType = Generic.MultimediaType.FilmType,
                     Cover = film.Cover
                 });
             }
@@ -135,7 +123,7 @@ namespace Peplex_PFC.UI
                 {
                     Id = serie.Id,
                     Title = serie.Title.ToUpper(),
-                    Tag = "Serie",
+                    MultimediaType= Generic.MultimediaType.SerieType,
                     Cover = serie.Cover
                 });
             }
@@ -226,7 +214,7 @@ namespace Peplex_PFC.UI
                 cover.Id = data.Id;
                 cover.Img = PeplexUtils.ConvertByteArrayToBitmapImage(data.Cover);
                 cover.StrTitle = data.Title ?? "";
-                cover.StrTag = data.Tag;
+                cover.MultimediaType = data.MultimediaType;
                 
 
                 cover.SetValue(Grid.RowProperty, f);

@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.ServiceModel;
 using System.ServiceModel.Channels;
@@ -6,7 +7,9 @@ using Microsoft.Practices.ObjectBuilder2;
 using Peplex_PFC.SL.InterfacesClasses.Classes.DTO;
 using Peplex_PFC.SL.InterfacesClasses.Interfaces;
 using Peplex_PFC.UI.Interfaces;
+using Peplex_PFC.UI.Shared;
 using Peplex_PFC.UI.UIO;
+using Utils;
 
 namespace Peplex_PFC.UI.Proxies
 {
@@ -21,60 +24,114 @@ namespace Peplex_PFC.UI.Proxies
             _channelFactory = new ChannelFactoryFactory<IUserService>(binding, "Peplex_PFCUserService").CreateChannelFactory();
         }
 
-        public bool Insert(ProxyContext context, UserUIO entity)
+        public bool Insert(UserUIO entity)
         {
-            using (var proxy = new ServiceProxy<IUserService>(_channelFactory))
-                proxy.Channel.Insert(_mapUIO2DTO.Map(entity));
-
-            return true;
-        }
-
-        public bool Update(ProxyContext context, UserUIO entity)
-        {
-            using (var proxy = new ServiceProxy<IUserService>(_channelFactory))
-                proxy.Channel.Update(_mapUIO2DTO.Map(entity));
-
-            return true;
-        }
-
-        public bool Delete(ProxyContext context, int pk)
-        {
-            using (var proxy = new ServiceProxy<IUserService>(_channelFactory))
-                proxy.Channel.Delete(pk);
-
-            return true;
-        }
-
-        public UserUIO Single(ProxyContext context, int pk)
-        {
-            using (var proxy = new ServiceProxy<IUserService>(_channelFactory))
+            try
             {
-                var dto = proxy.Channel.Single(pk);
-                if (dto == null)
-                    return null;
+                using (var proxy = new ServiceProxy<IUserService>(_channelFactory))
+                    proxy.Channel.Insert(_mapUIO2DTO.Map(entity));
 
-                var uio = _mapDTO2UIO.Map(dto);
-                return uio;
+                return true;
+            }
+            catch (Exception ex)
+            {
+                var msg = String.Format(Translations.msgServiceProxyError, PeplexUtils.GetCaller(), this.GetType().Name, ex.Message, ex.StackTrace);
+                MessageBoxWindow.Show(null, Translations.lblError, DialogIcon.CommError, new[] { DialogButton.Accept }, msg);
+                return false;
             }
         }
 
-        public IEnumerable<UserUIO> FindAll(ProxyContext context)
+        public bool Update(UserUIO entity)
         {
-            using (var proxy = new ServiceProxy<IUserService>(_channelFactory))
+            try
             {
-                var uios = new List<UserUIO>();
-                var dtos = proxy.Channel.FindAll();
+                using (var proxy = new ServiceProxy<IUserService>(_channelFactory))
+                    proxy.Channel.Update(_mapUIO2DTO.Map(entity));
 
-                dtos.ForEach(dto => uios.Add(_mapDTO2UIO.Map(dto)));
-
-                return uios;
+                return true;
+            }
+            catch (Exception ex)
+            {
+                var msg = String.Format(Translations.msgServiceProxyError, PeplexUtils.GetCaller(), this.GetType().Name, ex.Message, ex.StackTrace);
+                MessageBoxWindow.Show(null, Translations.lblError, DialogIcon.CommError, new[] { DialogButton.Accept }, msg);
+                return false;
             }
         }
 
-        public int MaxPK(ProxyContext context)
+        public bool Delete(int pk)
         {
-            using (var proxy = new ServiceProxy<IUserService>(_channelFactory))
-                return proxy.Channel.MaxPK();
+            try
+            {
+                using (var proxy = new ServiceProxy<IUserService>(_channelFactory))
+                    proxy.Channel.Delete(pk);
+
+                return true;
+            }
+            catch (Exception ex)
+            {
+                var msg = String.Format(Translations.msgServiceProxyError, PeplexUtils.GetCaller(), this.GetType().Name, ex.Message, ex.StackTrace);
+                MessageBoxWindow.Show(null, Translations.lblError, DialogIcon.CommError, new[] { DialogButton.Accept }, msg);
+                return false;
+            }
+        }
+
+        public UserUIO Single(int pk)
+        {
+            try
+            {
+                using (var proxy = new ServiceProxy<IUserService>(_channelFactory))
+                {
+                    var dto = proxy.Channel.Single(pk);
+                    if (dto == null)
+                        return null;
+
+                    var uio = _mapDTO2UIO.Map(dto);
+                    return uio;
+                }
+            }
+            catch (Exception ex)
+            {
+                var msg = String.Format(Translations.msgServiceProxyError, PeplexUtils.GetCaller(), this.GetType().Name, ex.Message, ex.StackTrace);
+                MessageBoxWindow.Show(null, Translations.lblError, DialogIcon.CommError, new[] { DialogButton.Accept }, msg);
+                return null;
+            }
+        }
+
+        public IEnumerable<UserUIO> FindAll()
+        {
+            try
+            {
+                using (var proxy = new ServiceProxy<IUserService>(_channelFactory))
+                {
+                    var uios = new List<UserUIO>();
+                    var dtos = proxy.Channel.FindAll();
+
+                    dtos.ForEach(dto => uios.Add(_mapDTO2UIO.Map(dto)));
+
+                    return uios;
+                }
+            }
+            catch (Exception ex)
+            {
+                var msg = String.Format(Translations.msgServiceProxyError, PeplexUtils.GetCaller(), this.GetType().Name, ex.Message, ex.StackTrace);
+                MessageBoxWindow.Show(null, Translations.lblError, DialogIcon.CommError, new[] { DialogButton.Accept }, msg);
+                return new List<UserUIO>();
+            }
+        }
+
+        public int MaxPK()
+        {
+            try
+            {
+                using (var proxy = new ServiceProxy<IUserService>(_channelFactory))
+                    return proxy.Channel.MaxPK();
+            }
+            catch (Exception ex)
+            {
+                var msg = String.Format(Translations.msgServiceProxyError, PeplexUtils.GetCaller(), this.GetType().Name, ex.Message, ex.StackTrace);
+                MessageBoxWindow.Show(null, Translations.lblError, DialogIcon.CommError, new[] { DialogButton.Accept }, msg);
+                return 0;
+            }
         }
     }
 }

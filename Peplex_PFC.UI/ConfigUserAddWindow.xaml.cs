@@ -10,7 +10,6 @@ using System.Windows.Media.Imaging;
 using System.Windows.Threading;
 using Peplex_PFC.UI.Config;
 using Peplex_PFC.UI.Interfaces;
-using Peplex_PFC.UI.Proxies;
 using Peplex_PFC.UI.Shared;
 using Peplex_PFC.UIO;
 using Utils;
@@ -81,17 +80,10 @@ namespace Peplex_PFC.UI
                 correos.IsBodyHtml = true;
                 correos.To.Add(o.User.Email);
 
-                /*if (rutaEjecutable.Equals("") == false)
-                {
-                    System.Net.Mail.Attachment archivo = new System.Net.Mail.Attachment(rutaEjecutable);
-                    correos.Attachments.Add(archivo);
-                }*/
-
                 correos.From = new MailAddress(PeplexConfig.Instance.AdminEmail);
                 envios.Credentials = new NetworkCredential(PeplexConfig.Instance.AdminEmail, PeplexConfig.Instance.AdminEmailPass);
 
                 //Datos importantes no modificables para tener acceso a las cuentas
-
                 envios.Host = "smtp.live.com";
                 envios.Port = 587;
                 envios.EnableSsl = true;
@@ -114,13 +106,13 @@ namespace Peplex_PFC.UI
 
             if (result)
             {
-                CompositionRoot.Instance.Resolve<IUserServiceProxy>().Insert(new ProxyContext(), NewUser);
-                MessageBoxWindow.Show(this, "INFO", DialogIcon.Info, new[] { DialogButton.Accept }, "Alta de nuevo usuario realizada con éxito.");
+                CompositionRoot.Instance.Resolve<IUserServiceProxy>().Insert(NewUser);
+                MessageBoxWindow.Show(this, Translations.lblInfo, DialogIcon.Info, new[] { DialogButton.Accept }, Translations.UserAddSuccessfully);
                 DialogResult = true;
             }
             else
             {
-                MessageBoxWindow.Show(this, "ERROR", DialogIcon.CommError, new[] { DialogButton.Accept }, "Error al dar de alta al nuevo usuario o no se puedo enviar el correo.");
+                MessageBoxWindow.Show(this, Translations.lblError, DialogIcon.CommError, new[] { DialogButton.Accept }, Translations.UserAddError);
                 DialogResult = false;
             }
         }

@@ -695,5 +695,23 @@ namespace Peplex_PFC.UI {
                 return ResourceManager.GetString("splashWindowUpdatingData", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Error al dar de alta al nuevo usuario o no se puedo enviar el correo..
+        /// </summary>
+        public static string UserAddError {
+            get {
+                return ResourceManager.GetString("UserAddError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Alta de nuevo usuario realizada con éxito..
+        /// </summary>
+        public static string UserAddSuccessfully {
+            get {
+                return ResourceManager.GetString("UserAddSuccessfully", resourceCulture);
+            }
+        }
     }
 }

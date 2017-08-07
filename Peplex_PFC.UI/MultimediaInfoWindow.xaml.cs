@@ -8,7 +8,6 @@ using System.Windows.Input;
 using System.Windows.Threading;
 using Peplex_PFC.UI.Config;
 using Peplex_PFC.UI.Interfaces;
-using Peplex_PFC.UI.Proxies;
 using Peplex_PFC.UI.UIO;
 using Peplex_PFC.UIO;
 using Utils;
@@ -20,11 +19,11 @@ namespace Peplex_PFC.UI
         private bool _loadData;
         private WaitCursor _wc;
 
-        private string _strTag;
-        public string StrTag
+        private Generic.MultimediaType  _multimediaType;
+        public Generic.MultimediaType MultimediaType
         {
-            get { return _strTag; }
-            set { _strTag = value; }
+            get { return _multimediaType; }
+            set { _multimediaType = value; }
         }
 
         public MultimediaInfoWindow()
@@ -38,12 +37,12 @@ namespace Peplex_PFC.UI
             if (!_loadData)
             {
                 _loadData = true;
-                switch (StrTag)
+                switch (MultimediaType)
                 {
-                    case "Film":
+                    case Generic.MultimediaType.FilmType:
                         LoadDataFilms();
                         break;
-                    case "Serie":
+                    case Generic.MultimediaType.SerieType:
                         LoadDataSeries();
                         break;
                 }
@@ -68,25 +67,14 @@ namespace Peplex_PFC.UI
 
         private void LoadDataFilmsOnDoWork(object sender, DoWorkEventArgs e)
         {
-            var proxyContext = new ProxyContext();
+            var films = CompositionRoot.Instance.Resolve<IFilmServiceProxy>().FindAll().ToList();
 
-            var films = CompositionRoot.Instance.Resolve<IFilmServiceProxy>().FindAll(proxyContext).ToList();
-
-            if (proxyContext.HasErrors)
-                e.Result = proxyContext;
-            else
-                e.Result = new List<FilmUIO>(films);
+            e.Result = new List<FilmUIO>(films);
         }
 
         private void LoadDataFilmsRunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
             Dispatcher.BeginInvoke(new Action(() => { _wc.Dispose(); /*_bussy.Hide();*/ }), DispatcherPriority.ApplicationIdle);
-
-            if (e.Result is ProxyContext)
-            {
-                (e.Result as ProxyContext).ShowErrors(this);
-                return;
-            }
 
             var result = e.Result as List<FilmUIO>;
 
@@ -115,25 +103,14 @@ namespace Peplex_PFC.UI
 
         private void LoadDataSeriesOnDoWork(object sender, DoWorkEventArgs e)
         {
-            var proxyContext = new ProxyContext();
+            var series = CompositionRoot.Instance.Resolve<ISerieServiceProxy>().FindAll().ToList();
 
-            var series = CompositionRoot.Instance.Resolve<ISerieServiceProxy>().FindAll(proxyContext).ToList();
-
-            if (proxyContext.HasErrors)
-                e.Result = proxyContext;
-            else
-                e.Result = new List<SerieUIO>(series);
+            e.Result = new List<SerieUIO>(series);
         }
 
         private void LoadDataSeriesRunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
             Dispatcher.BeginInvoke(new Action(() => { _wc.Dispose(); /*_bussy.Hide();*/ }), DispatcherPriority.ApplicationIdle);
-
-            if (e.Result is ProxyContext)
-            {
-                (e.Result as ProxyContext).ShowErrors(this);
-                return;
-            }
 
             var result = e.Result as List<SerieUIO>;
 
@@ -160,16 +137,16 @@ namespace Peplex_PFC.UI
         {
             var btn = (Button)sender;
 
-            switch (StrTag)
+            switch (MultimediaType)
             {
-                case "Film":
+                case Generic.MultimediaType.FilmType:
                     var currentdataFilm = (FilmUIO)btn.DataContext;
 
                     var childFilm = new FilmWindow { Film = currentdataFilm };
                     childFilm.ShowDialog();
 
                     break;
-                case "Serie":
+                case Generic.MultimediaType.SerieType:
                     var currentdataSerie = (SerieUIO)btn.DataContext;
 
                     var childSerie = new SerieWindow { Serie = currentdataSerie };
@@ -183,9 +160,9 @@ namespace Peplex_PFC.UI
         {
             var btn = (Button)sender;
 
-            switch (StrTag)
+            switch (MultimediaType)
             {
-                case "Film":
+                case Generic.MultimediaType.FilmType:
                     var currentdataFilm = (FilmUIO)btn.DataContext;
 
                     if (currentdataFilm.Seen)
@@ -196,7 +173,7 @@ namespace Peplex_PFC.UI
                     currentdataFilm.Seen = !currentdataFilm.Seen;
 
                     break;
-                case "Serie":
+                case Generic.MultimediaType.SerieType:
                     var currentdataSerie = (SerieUIO)btn.DataContext;
 
                     if (currentdataSerie.Seen)

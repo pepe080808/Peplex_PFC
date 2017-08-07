@@ -4,6 +4,7 @@ using System.Windows;
 using System.Windows.Input;
 using System.Windows.Media.Animation;
 using Peplex_PFC.UI.Config;
+using Peplex_PFC.UI.UIO;
 using Utils;
 
 namespace Peplex_PFC.UI
@@ -12,16 +13,15 @@ namespace Peplex_PFC.UI
     {
         private bool _closing;
 
-        public string EnteredOption { get; set; }
+        public Generic.MenuSlideCommandType EnteredOption { get; set; }
 
-        private static readonly Dictionary<Key, string> CommandKey = new Dictionary<Key, string>
+        private static readonly Dictionary<Key, Generic.MenuSlideCommandType> CommandKey = new Dictionary<Key, Generic.MenuSlideCommandType>
         {
-            { Key.M, "Multimedia" },
-            { Key.S, "Serie" },
-            { Key.F, "Film" },
-            { Key.C, "Config" },
-            { Key.P, "Profile" },
-            { Key.Escape, "ESC" }
+            { Key.S, Generic.MenuSlideCommandType.SerieCommand },
+            { Key.F, Generic.MenuSlideCommandType.FilmCommand },
+            { Key.C, Generic.MenuSlideCommandType.ConfigCommand },
+            { Key.P, Generic.MenuSlideCommandType.ProfileCommand },
+            { Key.Escape, Generic.MenuSlideCommandType.EscCommand }
         };
 
 
@@ -53,12 +53,12 @@ namespace Peplex_PFC.UI
             }
         }
 
-        private void ProcessCommand(string command)
+        private void ProcessCommand(Generic.MenuSlideCommandType command)
         {
             EnteredOption = command;
             switch (command)
             {
-                case "ESC":
+                case Generic.MenuSlideCommandType.EscCommand:
                     {
                         if (_closing)
                             break;
@@ -83,7 +83,22 @@ namespace Peplex_PFC.UI
 
         private void MenuMouseLeftDown(object sender, MouseButtonEventArgs e)
         {
-            ProcessCommand(sender.GetType().GetProperty("Tag").GetValue(sender).ToString());
+            var tag = sender.GetType().GetProperty("Tag").GetValue(sender).ToString();
+            switch (tag)
+            {
+                case "Film":
+                    ProcessCommand(Generic.MenuSlideCommandType.FilmCommand);
+                    break;
+                case "Serie":
+                    ProcessCommand(Generic.MenuSlideCommandType.SerieCommand);
+                    break;
+                case "Search":
+                    ProcessCommand(Generic.MenuSlideCommandType.SearchCommand);
+                    break;
+                case "Config":
+                    ProcessCommand(Generic.MenuSlideCommandType.ConfigCommand);
+                    break;
+            }
         }
 
         private void PadWindowLoaded(object sender, RoutedEventArgs e)

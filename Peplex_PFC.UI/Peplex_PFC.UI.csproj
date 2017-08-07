@@ -175,7 +175,6 @@
     <Compile Include="Proxies\FormatServiceProxy.cs" />
     <Compile Include="Proxies\GenreServiceProxy.cs" />
     <Compile Include="Proxies\PrerequisitesCheckServiceProxy.cs" />
-    <Compile Include="Proxies\ProxyLogging.cs" />
     <Compile Include="Proxies\SerieServiceProxy.cs" />
     <Compile Include="Proxies\ServiceProxy.cs" />
     <Compile Include="Proxies\UserServiceProxy.cs" />
@@ -187,7 +186,6 @@
       <DependentUpon>MessageBoxWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Shared\WebBrowserExtensions.cs" />
-    <Compile Include="Shared\WindowExtensions.cs" />
     <Compile Include="SplashWindow.xaml.cs">
       <DependentUpon>SplashWindow.xaml</DependentUpon>
     </Compile>

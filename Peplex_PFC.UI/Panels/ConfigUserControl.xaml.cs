@@ -8,7 +8,6 @@ using System.Windows.Media.Imaging;
 using Microsoft.Win32;
 using Peplex_PFC.UI.Config;
 using Peplex_PFC.UI.Interfaces;
-using Peplex_PFC.UI.Proxies;
 using Peplex_PFC.UI.Shared;
 using Peplex_PFC.UIO;
 using Utils;
@@ -123,15 +122,18 @@ namespace Peplex_PFC.UI.Panels
                 Photo = PeplexUtils.ConvertBitmapImageToByteArray(_currentBitmapImage)
             };
 
-            CompositionRoot.Instance.Resolve<IUserServiceProxy>().Update(new ProxyContext(), editedUser);
+            var result = CompositionRoot.Instance.Resolve<IUserServiceProxy>().Update(editedUser);
 
-            // Si hemos actualizado el usuario actual, modificamos su foto de perfil
-            if (PeplexConfig.Instance.CurrentUser.Id == editedUser.Id)
-                PeplexConfig.Instance.CurrentUser.Photo = editedUser.Photo;
+            if (result)
+            {
+                // Si hemos actualizado el usuario actual, modificamos su foto de perfil
+                if (PeplexConfig.Instance.CurrentUser.Id == editedUser.Id)
+                    PeplexConfig.Instance.CurrentUser.Photo = editedUser.Photo;
 
-            Users[CbNickName.SelectedIndex] = editedUser;
+                Users[CbNickName.SelectedIndex] = editedUser;
 
-            MessageBoxWindow.Show(Window.GetWindow(Parent), Translations.lblInfo, DialogIcon.Info, new[] { DialogButton.Accept }, Translations.cUserUpdateSuccessfully);
+                MessageBoxWindow.Show(Window.GetWindow(Parent), Translations.lblInfo, DialogIcon.Info, new[] {DialogButton.Accept}, Translations.cUserUpdateSuccessfully);
+            }
         }
 
         private List<string> Validate()

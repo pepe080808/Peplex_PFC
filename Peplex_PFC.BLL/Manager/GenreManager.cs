@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 using Peplex_PFC.BLL.InterfacesClasses.Classes.BO;
 using Peplex_PFC.BLL.InterfacesClasses.Interfaces;
 

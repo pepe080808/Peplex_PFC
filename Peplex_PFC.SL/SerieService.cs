@@ -13,7 +13,6 @@ namespace Peplex_PFC.SL
     [ServiceBehavior(InstanceContextMode = InstanceContextMode.PerCall, ConcurrencyMode = ConcurrencyMode.Multiple)]
     public class SerieService : ISerieService
     {
-        //private readonly ServiceFaultHandling _faultHandling = new ServiceFaultHandling();
         private readonly ISerieManager _manager = CompositionRoot.Instance.Resolve<ISerieManager>();
         private readonly ObjectsMapper<SerieBO, SerieDTO> _mapBO2DTO = ObjectMapperManager.DefaultInstance.GetMapper<SerieBO, SerieDTO>();
         private readonly ObjectsMapper<SerieDTO, SerieBO> _mapDTO2BO = ObjectMapperManager.DefaultInstance.GetMapper<SerieDTO, SerieBO>();

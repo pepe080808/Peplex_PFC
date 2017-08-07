@@ -63,21 +63,6 @@ namespace Peplex_PFC.UIO
             Container.RegisterType<PrerequisitesCheckServiceProxy>(new InjectionConstructor(new object[] { _binding }));
         }
 
-        //private void MessageGZipAndEncyptionEncoderOnTrafficEvent(MessageGZipAndEncyptionEncoderTrafficEventType eventType, string uri, int bytesUncompressed, int bytesCompressed, string staticInfo)
-        //{
-        //    var uriElements = uri.Split('/');
-
-        //    Logging.Instance.Log(new LoggingEvent
-        //    {
-        //        Source = LoggingEventSource.ServiceGeneric,
-        //        Message = uriElements[uriElements.Length - 2],
-        //        Tag1 = uriElements[uriElements.Length - 1],
-        //        Tag2 = bytesUncompressed.ToString("n0"),
-        //        Tag3 = bytesCompressed.ToString("n0"),
-        //        Level = LoggingLevel.Verbose
-        //    });
-        //}
-
         public T Resolve<T>()
         {
             return Container.Resolve<T>();

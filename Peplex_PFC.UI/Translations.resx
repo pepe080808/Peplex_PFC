@@ -333,4 +333,10 @@ Clase: {1}
 Message: {2}
 StackTrace: {3}</value>
   </data>
+  <data name="UserAddSuccessfully" xml:space="preserve">
+    <value>Alta de nuevo usuario realizada con éxito.</value>
+  </data>
+  <data name="UserAddError" xml:space="preserve">
+    <value>Error al dar de alta al nuevo usuario o no se puedo enviar el correo.</value>
+  </data>
 </root>

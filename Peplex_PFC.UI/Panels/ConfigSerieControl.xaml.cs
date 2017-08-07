@@ -7,7 +7,6 @@ using System.Windows.Input;
 using System.Windows.Media.Imaging;
 using Microsoft.Win32;
 using Peplex_PFC.UI.Interfaces;
-using Peplex_PFC.UI.Proxies;
 using Peplex_PFC.UI.Shared;
 using Peplex_PFC.UI.UIO;
 using Peplex_PFC.UIO;
@@ -117,10 +116,13 @@ namespace Peplex_PFC.UI.Panels
                 Background = PeplexUtils.ConvertBitmapImageToByteArray(_currentBitmapImageBackground)
             };
 
-            CompositionRoot.Instance.Resolve<ISerieServiceProxy>().Update(new ProxyContext(), editedSerie);
+            var result = CompositionRoot.Instance.Resolve<ISerieServiceProxy>().Update(editedSerie);
 
-            Series[CbTitle.SelectedIndex] = CompositionRoot.Instance.Resolve<ISerieServiceProxy>().Single(new ProxyContext(), editedSerie.Id);
-            MessageBoxWindow.Show(Window.GetWindow(Parent), Translations.lblInfo, DialogIcon.Info, new[] { DialogButton.Accept }, Translations.ConfigFilmControlUpdateSerieSuccessfully);
+            if (result)
+            {
+                Series[CbTitle.SelectedIndex] = CompositionRoot.Instance.Resolve<ISerieServiceProxy>().Single(editedSerie.Id);
+                MessageBoxWindow.Show(Window.GetWindow(Parent), Translations.lblInfo, DialogIcon.Info, new[] {DialogButton.Accept}, Translations.ConfigFilmControlUpdateSerieSuccessfully);
+            }
         }
 
         private List<string> Validate()

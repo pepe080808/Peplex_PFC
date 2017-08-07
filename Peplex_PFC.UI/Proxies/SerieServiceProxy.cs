@@ -10,6 +10,7 @@ using Peplex_PFC.SL.InterfacesClasses.Interfaces;
 using Peplex_PFC.UI.Interfaces;
 using Peplex_PFC.UI.Shared;
 using Peplex_PFC.UI.UIO;
+using Utils;
 
 namespace Peplex_PFC.UI.Proxies
 {
@@ -26,7 +27,7 @@ namespace Peplex_PFC.UI.Proxies
             _channelFactory = new ChannelFactoryFactory<ISerieService>(binding, "Peplex_PFCSerieService").CreateChannelFactory();
         }
 
-        public bool Insert(ProxyContext context, SerieUIO entity)
+        public bool Insert(SerieUIO entity)
         {
             try
             {
@@ -37,66 +38,111 @@ namespace Peplex_PFC.UI.Proxies
             }
             catch (Exception ex)
             {
-                var msg = String.Format(Translations.msgServiceProxyError, GetCaller(), this.GetType().Name, ex.Message, ex.StackTrace);
+                var msg = String.Format(Translations.msgServiceProxyError, PeplexUtils.GetCaller(), this.GetType().Name, ex.Message, ex.StackTrace);
                 MessageBoxWindow.Show(null, Translations.lblError, DialogIcon.CommError, new[] {DialogButton.Accept}, msg);
                 return false;
             }
 
         }
 
-        public bool Update(ProxyContext context, SerieUIO entity)
+        public bool Update(SerieUIO entity)
         {
-            using (var proxy = new ServiceProxy<ISerieService>(_channelFactory))
-                proxy.Channel.Update(_mapUIO2DTO.Map(entity));
-
-            return true;
-        }
-
-        public bool Delete(ProxyContext context, int pk)
-        {
-            using (var proxy = new ServiceProxy<ISerieService>(_channelFactory))
-                proxy.Channel.Delete(pk);
-
-            return true;
-        }
-
-        public SerieUIO Single(ProxyContext context, int pk)
-        {
-            using (var proxy = new ServiceProxy<ISerieService>(_channelFactory))
+            try
             {
-                var dto = proxy.Channel.Single(pk);
-                if (dto == null)
-                    return null;
+                using (var proxy = new ServiceProxy<ISerieService>(_channelFactory))
+                    proxy.Channel.Update(_mapUIO2DTO.Map(entity));
 
-                var uio = _mapDTO2UIO.Map(dto);
-
-                dto.Episodes.ForEach(d => uio.Episodes.Add(_mapEpDTO2UIO.Map(d)));
-
-                return uio;
+                return true;
+            }
+            catch (Exception ex)
+            {
+                var msg = String.Format(Translations.msgServiceProxyError, PeplexUtils.GetCaller(), this.GetType().Name, ex.Message, ex.StackTrace);
+                MessageBoxWindow.Show(null, Translations.lblError, DialogIcon.CommError, new[] { DialogButton.Accept }, msg);
+                return false;
             }
         }
 
-        public IEnumerable<SerieUIO> FindAll(ProxyContext context)
+        public bool Delete(int pk)
         {
-            using (var proxy = new ServiceProxy<ISerieService>(_channelFactory))
-            {
-                var uios = new List<SerieUIO>();
-                var dtos = proxy.Channel.FindAll();
+            try
+            { 
+                using (var proxy = new ServiceProxy<ISerieService>(_channelFactory))
+                    proxy.Channel.Delete(pk);
 
-                dtos.ForEach(dto =>
+                return true;
+            }
+            catch (Exception ex)
+            {
+                var msg = String.Format(Translations.msgServiceProxyError, PeplexUtils.GetCaller(), this.GetType().Name, ex.Message, ex.StackTrace);
+                MessageBoxWindow.Show(null, Translations.lblError, DialogIcon.CommError, new[] { DialogButton.Accept }, msg);
+                return false;
+            }
+        }
+
+        public SerieUIO Single(int pk)
+        {
+            try
+            {
+                using (var proxy = new ServiceProxy<ISerieService>(_channelFactory))
                 {
-                    uios.Add(_mapDTO2UIO.Map(dto));
-                    dto.Episodes.ForEach(d => uios.Last().Episodes.Add(_mapEpDTO2UIO.Map(d)));
-                });
+                    var dto = proxy.Channel.Single(pk);
+                    if (dto == null)
+                        return null;
 
-                return uios;
+                    var uio = _mapDTO2UIO.Map(dto);
+
+                    dto.Episodes.ForEach(d => uio.Episodes.Add(_mapEpDTO2UIO.Map(d)));
+
+                    return uio;
+                }
+            }
+            catch (Exception ex)
+            {
+                var msg = String.Format(Translations.msgServiceProxyError, PeplexUtils.GetCaller(), this.GetType().Name, ex.Message, ex.StackTrace);
+                MessageBoxWindow.Show(null, Translations.lblError, DialogIcon.CommError, new[] { DialogButton.Accept }, msg);
+                return null;
             }
         }
 
-        public int MaxPK(ProxyContext context)
+        public IEnumerable<SerieUIO> FindAll()
         {
-            using (var proxy = new ServiceProxy<ISerieService>(_channelFactory))
-                return proxy.Channel.MaxPK();
+            try
+            {
+                using (var proxy = new ServiceProxy<ISerieService>(_channelFactory))
+                {
+                    var uios = new List<SerieUIO>();
+                    var dtos = proxy.Channel.FindAll();
+
+                    dtos.ForEach(dto =>
+                    {
+                        uios.Add(_mapDTO2UIO.Map(dto));
+                        dto.Episodes.ForEach(d => uios.Last().Episodes.Add(_mapEpDTO2UIO.Map(d)));
+                    });
+
+                    return uios;
+                }
+            }
+            catch (Exception ex)
+            {
+                var msg = String.Format(Translations.msgServiceProxyError, PeplexUtils.GetCaller(), this.GetType().Name, ex.Message, ex.StackTrace);
+                MessageBoxWindow.Show(null, Translations.lblError, DialogIcon.CommError, new[] { DialogButton.Accept }, msg);
+                return new List<SerieUIO>();
+            }
+        }
+
+        public int MaxPK()
+        {
+            try
+            {
+                using (var proxy = new ServiceProxy<ISerieService>(_channelFactory))
+                    return proxy.Channel.MaxPK();
+            }
+            catch (Exception ex)
+            {
+                var msg = String.Format(Translations.msgServiceProxyError, PeplexUtils.GetCaller(), this.GetType().Name, ex.Message, ex.StackTrace);
+                MessageBoxWindow.Show(null, Translations.lblError, DialogIcon.CommError, new[] { DialogButton.Accept }, msg);
+                return 0;
+            }
         }
     }
 }

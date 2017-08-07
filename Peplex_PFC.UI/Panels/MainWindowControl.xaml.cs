@@ -63,7 +63,7 @@ namespace Peplex_PFC.UI.Panels
                     ((CoverControl)currentControl).Id = film.Id;
                     ((CoverControl) currentControl).Img = PeplexUtils.ConvertByteArrayToBitmapImage(film.Cover);
                     ((CoverControl) currentControl).StrTitle = film.Title ?? "";
-                    ((CoverControl)currentControl).StrTag = "Film";
+                    ((CoverControl)currentControl).MultimediaType = Generic.MultimediaType.FilmType;
                 }
             }
         }
@@ -85,7 +85,7 @@ namespace Peplex_PFC.UI.Panels
                     ((CoverControl)currentControl).Id = serie.Id;
                     ((CoverControl)currentControl).Img = PeplexUtils.ConvertByteArrayToBitmapImage(serie.Cover);
                     ((CoverControl)currentControl).StrTitle = serie.Title ?? "";
-                    ((CoverControl)currentControl).StrTag = "Serie";
+                    ((CoverControl)currentControl).MultimediaType = Generic.MultimediaType.SerieType;
                 }
             }
         }

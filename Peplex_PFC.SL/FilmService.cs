@@ -12,7 +12,6 @@ namespace Peplex_PFC.SL
     [ServiceBehavior(InstanceContextMode = InstanceContextMode.PerCall, ConcurrencyMode = ConcurrencyMode.Multiple)]
     public class FilmService : IFilmService
     {
-        //private readonly ServiceFaultHandling _faultHandling = new ServiceFaultHandling();
         private readonly IFilmManager _manager = CompositionRoot.Instance.Resolve<IFilmManager>();
         private readonly ObjectsMapper<FilmBO, FilmDTO> _mapBO2DTO = ObjectMapperManager.DefaultInstance.GetMapper<FilmBO, FilmDTO>();
         private readonly ObjectsMapper<FilmDTO, FilmBO> _mapDTO2BO = ObjectMapperManager.DefaultInstance.GetMapper<FilmDTO, FilmBO>();

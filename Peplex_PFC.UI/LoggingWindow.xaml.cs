@@ -11,7 +11,6 @@ using System.Windows.Media.Imaging;
 using System.Windows.Threading;
 using Peplex_PFC.UI.Config;
 using Peplex_PFC.UI.Interfaces;
-using Peplex_PFC.UI.Proxies;
 using Peplex_PFC.UI.Shared;
 using Peplex_PFC.UI.UIO;
 using Peplex_PFC.UIO;
@@ -54,27 +53,14 @@ namespace Peplex_PFC.UI
 
         private void LoadDataUsersOnDoWork(object sender, DoWorkEventArgs e)
         {
-            var proxyContext = new ProxyContext();
+            var users = CompositionRoot.Instance.Resolve<IUserServiceProxy>().FindAll().ToList();
 
-            var users = CompositionRoot.Instance.Resolve<IUserServiceProxy>().FindAll(proxyContext).ToList();
-
-            if (proxyContext.HasErrors)
-                e.Result = proxyContext;
-            else
-            {
-                e.Result = users;
-            }
+            e.Result = users;
         }
 
         private void LoadDataUsersRunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
             Dispatcher.BeginInvoke(new Action(() => { _wc.Dispose(); /*_bussy.Hide();*/ GInfo.IsEnabled = true; TxtUser.Focus(); }), DispatcherPriority.ApplicationIdle);
-
-            if (e.Result is ProxyContext)
-            {
-                (e.Result as ProxyContext).ShowErrors(this);
-                return;
-            }
 
             var result = e.Result as List<UserUIO>;
 
@@ -124,25 +110,15 @@ namespace Peplex_PFC.UI
         private void LoadDataOnDoWork(object sender, DoWorkEventArgs e)
         {
             var o = e.Argument as dynamic;
-            var proxyContext = new ProxyContext();
 
-            var user = CompositionRoot.Instance.Resolve<IUserServiceProxy>().Single(proxyContext, o.UserId);
+            var user = CompositionRoot.Instance.Resolve<IUserServiceProxy>().Single(o.UserId);
 
-            if (proxyContext.HasErrors)
-                e.Result = proxyContext;
-            else
-                e.Result = user;
+            e.Result = user;
         }
 
         private void LoadDataRunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
             Dispatcher.BeginInvoke(new Action(() => { _wc.Dispose(); /*_bussy.Hide();*/ }), DispatcherPriority.ApplicationIdle);
-
-            if (e.Result is ProxyContext)
-            {
-                (e.Result as ProxyContext).ShowErrors(this);
-                return;
-            }
 
             var result = e.Result as UserUIO;
 
@@ -227,7 +203,7 @@ namespace Peplex_PFC.UI
 
                 o.User.Password = newPassword;
 
-                CompositionRoot.Instance.Resolve<IUserServiceProxy>().Update(new ProxyContext(), o.User);
+                CompositionRoot.Instance.Resolve<IUserServiceProxy>().Update(o.User);
 
                 e.Result = true;
             }

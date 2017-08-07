@@ -34,18 +34,18 @@ namespace Peplex_PFC.UI
             set { _title = value; }
         }
 
-        private string _tag;
-        public string Tag
+        private Generic.MultimediaType _multimediaType;
+        public Generic.MultimediaType MultimediaType
         {
-            get { return _tag; }
-            set { _tag = value; }
+            get { return _multimediaType; }
+            set { _multimediaType = value; }
         }
 
         private string CompleteName
         {
             get
             {
-                return Tag == "Episode" ? 
+                return MultimediaType ==  Generic.MultimediaType.EpisodeType ? 
                     String.Format("{0}x{1} - {2}.{3}", _episode.Season, _episode.Number.ToString("d2"), _episode.Name, _episode.FormatName) :
                     String.Format("{0} - {1}.{2}", _film.Title, _film.Subtitle, _film.FormatName); ;
             }
@@ -60,7 +60,7 @@ namespace Peplex_PFC.UI
         {
             get
             {
-                return Tag == "Episode" ? 
+                return MultimediaType == Generic.MultimediaType.EpisodeType ? 
                     String.Format("{0}/{1}/{2}/{3}/T{4}/{5}", PeplexConfig.Instance.RootMainLocal, PeplexConfig.Instance.RootVideosLocal, PeplexConfig.Instance.RootSeriesLocal, _title, _episode.Season, CompleteName) :
                     String.Format("{0}/{1}/{2}/{3}", PeplexConfig.Instance.RootMainLocal, PeplexConfig.Instance.RootVideosLocal, PeplexConfig.Instance.RootFilmsLocal, CompleteName);
             }
@@ -70,13 +70,13 @@ namespace Peplex_PFC.UI
         {
             get
             {
-                return Tag == "Episode" ? 
+                return MultimediaType == Generic.MultimediaType.EpisodeType ? 
                     (PeplexConfig.Instance.CurrentUser.EpisodeTime.ContainsKey(KeyResumeTime) ? PeplexConfig.Instance.CurrentUser.EpisodeTime[KeyResumeTime] : 0) :
                     (PeplexConfig.Instance.CurrentUser.FilmTime.ContainsKey(_film.Id) ? PeplexConfig.Instance.CurrentUser.FilmTime[_film.Id] : 0);
             }
             set
             {
-                if (Tag == "Episode")
+                if (MultimediaType == Generic.MultimediaType.EpisodeType)
                 {
                     if (PeplexConfig.Instance.CurrentUser.EpisodeTime.ContainsKey(KeyResumeTime))
                         PeplexConfig.Instance.CurrentUser.EpisodeTime[KeyResumeTime] = value;
@@ -237,7 +237,7 @@ namespace Peplex_PFC.UI
 
         private void DeleteResumeTime()
         {
-            if (Tag == "Episode")
+            if (MultimediaType == Generic.MultimediaType.EpisodeType)
             {
                 if (PeplexConfig.Instance.CurrentUser.EpisodeTime.ContainsKey(KeyResumeTime))
                     PeplexConfig.Instance.CurrentUser.EpisodeTime.Remove(KeyResumeTime);
@@ -251,7 +251,7 @@ namespace Peplex_PFC.UI
 
         private bool ExistsResumeTime()
         {
-            return  (Tag == "Episode" && PeplexConfig.Instance.CurrentUser.EpisodeTime.ContainsKey(KeyResumeTime)) || (Tag != "Episode" && PeplexConfig.Instance.CurrentUser.FilmTime.ContainsKey(_film.Id));
+            return  (MultimediaType == Generic.MultimediaType.EpisodeType && PeplexConfig.Instance.CurrentUser.EpisodeTime.ContainsKey(KeyResumeTime)) || (MultimediaType != Generic.MultimediaType.EpisodeType && PeplexConfig.Instance.CurrentUser.FilmTime.ContainsKey(_film.Id));
         }
 
         private void ChangePosition()

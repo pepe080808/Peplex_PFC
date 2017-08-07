@@ -49,8 +49,6 @@ namespace Peplex_PFC.SL
                 // Add tcp endpoint
                 var tcpEndpoint = new ServiceEndpoint(contractDesc, binding, new EndpointAddress(new Uri(String.Format("net.tcp://locahost:{0}/{1}", servicePort, service.ServiceName))));
 
-                //((ServiceAuthenticationBehavior)serviceHost.Description.Behaviors[typeof(ServiceAuthenticationBehavior)]).ServiceAuthenticationManager = new RegularServiceHelper();
-
                 serviceHost.AddServiceEndpoint(tcpEndpoint);
 
                 serviceHost.Open();
@@ -70,7 +68,6 @@ namespace Peplex_PFC.SL
         public static void BuildEndpointsRest(ServiceEndpointDescriptor[] endpointDescriptors, int servicePort, string sslCertificateCommonName)
         {
             var custom = new CustomBinding(new WebHttpBinding(WebHttpSecurityMode.Transport));
-            //custom.Elements[0] = new GZipRestMessageEncodingBindingElement(custom.Elements[0] as WebMessageEncodingBindingElement);
             (custom.Elements[1] as TransportBindingElement).MaxReceivedMessageSize = int.MaxValue;
 
             foreach (var service in endpointDescriptors)
@@ -78,8 +75,6 @@ namespace Peplex_PFC.SL
                 var baseAddress = String.Format("https://localhost:{0}/{1}", servicePort, service.ServiceName);
                 var host = new ServiceHost(service.ServiceType, new Uri(baseAddress));
                 host.AddServiceEndpoint(service.InterfaceType, custom, "").Behaviors.Add(new WebHttpBehavior());
-                //host.Description.Behaviors.Add(new GZipRestMesssageBehaviourExtension());
-                //host.Description.Behaviors.Add(new JsonMesssageBehaviourExtension());
                 host.Open();
             }
         }

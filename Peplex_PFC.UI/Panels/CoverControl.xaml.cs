@@ -1,18 +1,18 @@
 ﻿using System.Windows;
 using System.Windows.Media.Imaging;
 using Peplex_PFC.UI.Interfaces;
-using Peplex_PFC.UI.Proxies;
+using Peplex_PFC.UI.UIO;
 using Peplex_PFC.UIO;
 
 namespace Peplex_PFC.UI.Panels
 {
     public partial class CoverControl
     {
-        private string _strTag;
-        public string StrTag
+        private Generic.MultimediaType _multimediaType;
+        public Generic.MultimediaType MultimediaType
         {
-            get { return _strTag; }
-            set { _strTag = value; UpdateTitle(); }
+            get { return _multimediaType; }
+            set { _multimediaType = value; UpdateTitle(); }
         }
 
         private string _strTitle ;
@@ -55,15 +55,15 @@ namespace Peplex_PFC.UI.Panels
 
         private void ImgCoverPreviewMouseLeftButtonDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
         {
-            switch (StrTag)
+            switch (_multimediaType)
             {
-                case "Film":
-                    var film = CompositionRoot.Instance.Resolve<IFilmServiceProxy>().Single(new ProxyContext(), Id);
+                case Generic.MultimediaType.FilmType:
+                    var film = CompositionRoot.Instance.Resolve<IFilmServiceProxy>().Single(Id);
                     var childFilm = new FilmWindow { Owner = Window.GetWindow(Parent), Film = film};
                     childFilm.ShowDialog();
                     break;
-                case "Serie":
-                    var serie= CompositionRoot.Instance.Resolve<ISerieServiceProxy>().Single(new ProxyContext(), Id);
+                case Generic.MultimediaType.SerieType:
+                    var serie= CompositionRoot.Instance.Resolve<ISerieServiceProxy>().Single(Id);
                     var childSerie = new SerieWindow { Owner = Window.GetWindow(Parent), Serie = serie };
                     childSerie.ShowDialog();
                     break;

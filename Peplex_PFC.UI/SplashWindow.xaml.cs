@@ -91,7 +91,7 @@ namespace Peplex_PFC.UI
                 {
                     try
                     {
-                        preReqService.IsAlive(new ProxyContext());
+                        preReqService.IsAlive();
                         isAlive = true;
                         break;
                     }
@@ -114,7 +114,7 @@ namespace Peplex_PFC.UI
             {
                 worker.ReportProgress(0, Translations.splashWindowUpdatingData);
 
-                var updated = preReqService.UpdateDataBase(new ProxyContext());
+                var updated = preReqService.UpdateDataBase();
                 if (!updated)
                 {
                     e.Result = new StartupResult { ResultCode = StartupResultCode.CheckUpdatedata };

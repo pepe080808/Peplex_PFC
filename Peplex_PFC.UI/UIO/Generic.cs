@@ -14,5 +14,16 @@
             SerieType,
             EpisodeType
         }
+
+        public enum MenuSlideCommandType
+        {
+            FilmCommand,
+            SerieCommand,
+            ConfigCommand,
+            SearchCommand,
+            ProfileCommand,
+            EscCommand,
+            NoneCommand
+        }
     }
 }

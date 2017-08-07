@@ -12,7 +12,6 @@ namespace Peplex_PFC.SL
     [ServiceBehavior(InstanceContextMode = InstanceContextMode.PerCall, ConcurrencyMode = ConcurrencyMode.Multiple)]
     public class GenreService : IGenreService
     {
-        //private readonly ServiceFaultHandling _faultHandling = new ServiceFaultHandling();
         private readonly IGenreManager _manager = CompositionRoot.Instance.Resolve<IGenreManager>();
         private readonly ObjectsMapper<GenreBO, GenreDTO> _mapBO2DTO = ObjectMapperManager.DefaultInstance.GetMapper<GenreBO, GenreDTO>();
         private readonly ObjectsMapper<GenreDTO, GenreBO> _mapDTO2BO = ObjectMapperManager.DefaultInstance.GetMapper<GenreDTO, GenreBO>();
