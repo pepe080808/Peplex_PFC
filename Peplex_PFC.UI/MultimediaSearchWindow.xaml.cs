@@ -2,10 +2,12 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Threading;
+using Peplex_PFC.UI.Annotations;
 using Peplex_PFC.UI.Interfaces;
 using Peplex_PFC.UI.Panels;
 using Peplex_PFC.UI.Shared;
@@ -17,6 +19,34 @@ namespace Peplex_PFC.UI
 {
     public partial class MultimediaSearchWindow
     {
+        public class CheckListCustom : UserInterfaceObject
+        {
+            private int _id { get; set; }
+            private string _label { get; set; }
+            private bool _checked { get; set; }
+
+            public int Id
+            {
+                get { return _id; }
+                set { _id = value; SendPropertyChanged(); }
+            }
+
+            public string Label
+            {
+                get { return _label; }
+                set { _label = value; SendPropertyChanged(); }
+            }
+
+            public bool Checked
+            {
+                get { return _checked; }
+                set { _checked = value; SendPropertyChanged(); }
+            }
+        }
+
+        public IList<CheckListCustom> Genres { get; set; } = new List<CheckListCustom>();
+        public List<int> GenresIds { get { return Genres.Where(g => g.Checked).Select(g => g.Id).ToList(); } } 
+
         public const int MAX_COLUMN = 6;
         private bool _loadData;
         private WaitCursor _wc;
@@ -27,6 +57,8 @@ namespace Peplex_PFC.UI
             public string Title { get; set; }
             public Generic.MultimediaType MultimediaType { get; set; }
             public byte[] Cover { get; set; }
+            public int GenreId01 { get; set; }
+            public int GenreId02 { get; set; }
         }
 
         private List<MultimediaData> _filterData { get; set; }
@@ -54,7 +86,6 @@ namespace Peplex_PFC.UI
             _allData = new List<MultimediaData>();
             InitializeComponent();
         }
-
 
         private void MultimediaSearchActivated(object sender, EventArgs e)
         {
@@ -91,15 +122,16 @@ namespace Peplex_PFC.UI
         {
             var films = CompositionRoot.Instance.Resolve<IFilmServiceProxy>().FindAll().ToList();
             var series = CompositionRoot.Instance.Resolve<ISerieServiceProxy>().FindAll().ToList();
+            var genres = CompositionRoot.Instance.Resolve<IGenreServiceProxy>().FindAll().ToList();
 
-            e.Result = new Tuple<List<FilmUIO>, List<SerieUIO>>(films, series);
+            e.Result = new Tuple<List<FilmUIO>, List<SerieUIO>, List<GenreUIO>>(films, series, genres);
         }
 
         private void LoadDataRunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
             Dispatcher.BeginInvoke(new Action(() => { _wc.Dispose(); /*_bussy.Hide();*/ GMain.IsEnabled = true; }), DispatcherPriority.ApplicationIdle);
 
-            var result = e.Result as Tuple<List<FilmUIO>,List<SerieUIO>>;
+            var result = e.Result as Tuple<List<FilmUIO>, List<SerieUIO>, List<GenreUIO>>;
 
             if (result == null)
                 return;
@@ -113,7 +145,9 @@ namespace Peplex_PFC.UI
                     Id = film.Id,
                     Title = film.Title.ToUpper(),
                     MultimediaType = Generic.MultimediaType.FilmType,
-                    Cover = film.Cover
+                    Cover = film.Cover,
+                    GenreId01 = film.GenreId01,
+                    GenreId02 = film.GenreId02
                 });
             }
 
@@ -124,9 +158,16 @@ namespace Peplex_PFC.UI
                     Id = serie.Id,
                     Title = serie.Title.ToUpper(),
                     MultimediaType= Generic.MultimediaType.SerieType,
-                    Cover = serie.Cover
+                    Cover = serie.Cover,
+                    GenreId01 = serie.GenreId01,
+                    GenreId02 = serie.GenreId02
                 });
             }
+
+            DataContext = this;
+
+            foreach (var elem in result.Item3)
+                Genres.Add(new CheckListCustom { Id = elem.Id , Label = elem.Name, Checked = true});
 
             FilterData("asc", "ALL", "Title");
         }
@@ -165,16 +206,16 @@ namespace Peplex_PFC.UI
                 case "X":
                 case "Y":
                 case "Z":
-                    _allData.ForEach(d => {if(d.Title.StartsWith(filter, StringComparison.CurrentCultureIgnoreCase)) _filterData.Add(d);});
+                    _allData.ForEach(d => {if(d.Title.StartsWith(filter, StringComparison.CurrentCultureIgnoreCase) && BelongsGenre(d)) _filterData.Add(d);});
                     break;
                 case "ALL":
                     _allData.ForEach(d => _filterData.Add(d));
                     break;
                 case "0-9":
-                    _allData.ForEach(d => { if (d.Title.StartsWith("0") || d.Title.StartsWith("1") || d.Title.StartsWith("2") || d.Title.StartsWith("3") || d.Title.StartsWith("4") || d.Title.StartsWith("5") || d.Title.StartsWith("6") || d.Title.StartsWith("7") || d.Title.StartsWith("8") || d.Title.StartsWith("9")) _filterData.Add(d); });
+                    _allData.ForEach(d => { if (d.Title.StartsWith("0") || d.Title.StartsWith("1") || d.Title.StartsWith("2") || d.Title.StartsWith("3") || d.Title.StartsWith("4") || d.Title.StartsWith("5") || d.Title.StartsWith("6") || d.Title.StartsWith("7") || d.Title.StartsWith("8") || d.Title.StartsWith("9") && BelongsGenre(d)) _filterData.Add(d); });
                     break;
                 default:
-                    _allData.ForEach(d => { if (d.Title.Contains(filter.ToUpper())) _filterData.Add(d); });
+                    _allData.ForEach(d => { if (d.Title.Contains(filter.ToUpper()) && BelongsGenre(d)) _filterData.Add(d); });
                     break;
             }
 
@@ -189,6 +230,11 @@ namespace Peplex_PFC.UI
             _filterData = new List<MultimediaData>(_filterData.MultipleSort(lstTupleOrderBy).ToList());
 
             UpdateInfo();
+        }
+
+        private bool BelongsGenre(MultimediaData data)
+        {
+            return GenresIds.Contains(data.GenreId01) || GenresIds.Contains(data.GenreId02);
         }
 
         private void UpdateInfo()
@@ -250,6 +296,18 @@ namespace Peplex_PFC.UI
         {
             var textBlock = (TextBlock) sender;
             FilterData(SortType, textBlock.Text, Sort);
+        }
+
+        private void BtnAllClick(object sender, RoutedEventArgs e)
+        {
+            foreach (var elem in Genres)
+                elem.Checked = true;
+        }
+
+        private void BtnNoneClick(object sender, RoutedEventArgs e)
+        {
+            foreach (var elem in Genres)
+                elem.Checked = false;
         }
     }
 }

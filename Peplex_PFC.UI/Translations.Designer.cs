@@ -70,6 +70,15 @@ namespace Peplex_PFC.UI {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Todos.
+        /// </summary>
+        public static string btnAll {
+            get {
+                return ResourceManager.GetString("btnAll", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to _Eliminar.
         /// </summary>
         public static string btnDelete {
@@ -84,6 +93,15 @@ namespace Peplex_PFC.UI {
         public static string btnEdit {
             get {
                 return ResourceManager.GetString("btnEdit", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ninguno.
+        /// </summary>
+        public static string btnNone {
+            get {
+                return ResourceManager.GetString("btnNone", resourceCulture);
             }
         }
         

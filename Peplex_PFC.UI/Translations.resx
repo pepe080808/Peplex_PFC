@@ -339,4 +339,10 @@ StackTrace: {3}</value>
   <data name="UserAddError" xml:space="preserve">
     <value>Error al dar de alta al nuevo usuario o no se puedo enviar el correo.</value>
   </data>
+  <data name="btnAll" xml:space="preserve">
+    <value>Todos</value>
+  </data>
+  <data name="btnNone" xml:space="preserve">
+    <value>Ninguno</value>
+  </data>
 </root>

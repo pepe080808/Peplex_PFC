@@ -169,6 +169,7 @@
     <Compile Include="Panels\StopControl.xaml.cs">
       <DependentUpon>StopControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Properties\Annotations.cs" />
     <Compile Include="Proxies\ChannelFactoryFactory.cs" />
     <Compile Include="Proxies\EpisodeServiceProxy.cs" />
     <Compile Include="Proxies\FilmServiceProxy.cs" />

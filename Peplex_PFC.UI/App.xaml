@@ -96,7 +96,14 @@
             <Setter Property="FontFamily" Value="Tahoma"/>
             <Setter Property="Margin" Value="0 2"/>
         </Style>
-        
+
+        <Style x:Key="FieldLabelCheckListButtonStyle" TargetType="{x:Type CheckBox}">
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="FontSize" Value="12" />
+            <Setter Property="FontFamily" Value="Tahoma"/>
+            <Setter Property="Margin" Value="0 2"/>
+        </Style>
+
         <Style x:Key="FieldPasswordBoxStyle" TargetType="{x:Type PasswordBox}">
             <Setter Property="HorizontalAlignment" Value="Left"/>
             <Setter Property="VerticalAlignment" Value="Center"/>

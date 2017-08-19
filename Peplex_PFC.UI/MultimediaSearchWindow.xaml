@@ -56,6 +56,7 @@
                         <RowDefinition Height="50"/>
                         <RowDefinition/>
                         <RowDefinition/>
+                        <RowDefinition/>
                         <RowDefinition Height="10"/>
                         <RowDefinition Height="30"/>
                     </Grid.RowDefinitions>
@@ -113,7 +114,45 @@
                         <TextBlock Name="TxtAll" Text="ALL" TextDecorations="Underline" Grid.Row="4" Grid.Column="3" Style="{StaticResource FieldTextBlockStyle}" MouseLeftButtonDown="TextBlockClick"/>
                     </Grid>
 
-                    <StackPanel Grid.Row="2" Margin="10">
+                    <Grid Grid.Row="2">
+                        <Grid.RowDefinitions>
+                            <RowDefinition/>
+                            <RowDefinition Height="10"/>
+                            <RowDefinition Height="30"/>
+                        </Grid.RowDefinitions>
+
+                        <ListBox Grid.Row="0"  ItemsSource="{Binding Genres}" SelectionMode="Multiple" Height="125" Background="Transparent">
+                            <ListBox.ItemContainerStyle>
+                                <Style TargetType="ListBoxItem">
+                                    <Setter Property="IsSelected" Value="{Binding Checked, Mode=TwoWay}" />
+                                    <Setter Property="IsSelected" Value="False"/>
+                                    <Style.Triggers>
+                                        <Trigger Property="IsMouseOver" Value="True">
+                                            <Setter Property="Background" Value="Transparent"/>
+                                            <Setter Property="BorderBrush" Value="{StaticResource LightGreenBrush}"/>
+                                        </Trigger>
+                                        <Trigger Property="IsSelected" Value="True">
+                                            <Setter Property="Background" Value="Transparent"/>
+                                            <Setter Property="BorderBrush" Value="{StaticResource LightGreenBrush}"/>
+                                        </Trigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </ListBox.ItemContainerStyle>
+                            <ListBox.ItemTemplate>
+                                <DataTemplate>
+                                    <CheckBox IsChecked="{Binding Checked, Mode=TwoWay}" Content="{Binding Label}" Style="{StaticResource FieldLabelCheckListButtonStyle}"/>
+                                </DataTemplate>
+                            </ListBox.ItemTemplate>
+                        </ListBox>
+
+                        <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Center">
+                            <Button Name="BtnAll" HorizontalAlignment="Right" Width="80" Height="30" Content="{x:Static UI:Translations.btnAll}" Click="BtnAllClick"/>
+                            <Button Name="BtnNone" HorizontalAlignment="Right" Width="80" Height="30" Content="{x:Static UI:Translations.btnNone}" Click="BtnNoneClick"/>
+                        </StackPanel>
+
+                    </Grid>
+
+                    <StackPanel Grid.Row="3" Margin="10">
                         <Label Content="{x:Static UI:Translations.MultimediaSearchWindowLblSortBy}" Style="{StaticResource FieldLabelStyle}" HorizontalAlignment="Left" Margin="0 5"/>
                         <RadioButton Name="SortTitle" GroupName="Sort" Content="{x:Static UI:Translations.MultimediaSearchWindowLblSortByTitle}" IsChecked="True" Style="{StaticResource FieldLabelRadioButtonStyle}"/>
                         <RadioButton Name="SortPremiereDate" GroupName="Sort" Content="{x:Static UI:Translations.MultimediaSearchWindowLblSortByPremiereDate}" Style="{StaticResource FieldLabelRadioButtonStyle}"/>
@@ -124,7 +163,7 @@
                         <RadioButton Name="SortTypeDesc"  GroupName="SortType" Content="Descendente" Style="{StaticResource FieldLabelRadioButtonStyle}"/>
                     </StackPanel>
 
-                    <Button Name="BtnOk" Grid.Row="4" HorizontalAlignment="Right" Width="80" Height="30" Content="{x:Static UI:Translations.btnOk}" Click="BtnOkClick"/>
+                    <Button Name="BtnOk" Grid.Row="5" HorizontalAlignment="Right" Width="80" Height="30" Content="{x:Static UI:Translations.btnOk}" Click="BtnOkClick"/>
                 </Grid>
             </Grid>
         </Grid>
