@@ -106,9 +106,11 @@
                         <RowDefinition Height="2.5*"/>
                     </Grid.RowDefinitions>
 
-                    <Label Name="LblTitle" Grid.Row="0" Margin="10 2 0 2" Background="Transparent" Foreground="White" FontSize="32" FontFamily="Tahoma" VerticalAlignment="Center" Content="Title"/>
-                    <Label Name="LblSubtitle" Grid.Row="1" Margin="10 2 0 2" Background="Transparent" Foreground="White" FontSize="28" FontFamily="Tahoma" VerticalAlignment="Center" Content="Subtitle"/>
-                    <TextBlock Grid.Row="2" Name="TxtSynopsis" Margin="10 2 0 2" Background="Transparent" Foreground="White" FontSize="23" FontFamily="Tahoma" VerticalAlignment="Top" Text="Synopsis" ScrollViewer.VerticalScrollBarVisibility="Auto"/>
+                    <Label Name="LblTitle" Grid.Row="0" Margin="10 2 5 2" Background="Transparent" Foreground="White" FontSize="32" FontFamily="Tahoma" VerticalAlignment="Center" Content="Title"/>
+                    <!--<Label Name="LblSubtitle" Grid.Row="1" Margin="10 2 5 2" Background="Transparent" Foreground="White" FontSize="28" FontFamily="Tahoma" VerticalAlignment="Center" Content="Subtitle"/>-->
+                    <ScrollViewer Grid.Row="2" Style="{StaticResource MyScrollViewer}" >
+                        <TextBlock  Name="TxtSynopsis" Margin="10 2 5 2" Background="Transparent" Foreground="White" FontSize="23" FontFamily="Tahoma" VerticalAlignment="Top" Text="Synopsis" TextWrapping="Wrap"/>
+                    </ScrollViewer>
                 </Grid>
 
                 <DataGrid x:Name="dgEpisode" Grid.Row="2" Grid.RowSpan="2" Grid.Column="1" Margin="160,20" Style="{StaticResource FieldDataGrid}" Background="Transparent" RowHeight="50">

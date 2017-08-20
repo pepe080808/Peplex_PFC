@@ -1,52 +1,57 @@
 ﻿using System.Collections.Generic;
-using System.Linq;
+using Peplex_PFC.BLL.InterfacesClasses.Classes.BO;
 using Peplex_PFC.BLL.InterfacesClasses.Interfaces;
-using Peplex_PFC.SL.InterfacesClasses.Classes.DTO;
 
 namespace Peplex_PFC.BLL.Manager
 {
     public class ExternalPlatformManager : IExternalPlatformManager
     {
-        private readonly IFilmRepository _filmRepository;
-        private readonly ISerieRepository _serieRepository;
-        private readonly IEpisodeRepository _episodeRepository;
-        private readonly IUserRepository _userRepository;
+        private readonly IFilmManager _filmManager;
+        private readonly ISerieManager _serieManager;
+        private readonly IUserManager _userManager;
+        private readonly IGenreManager _genreManager;
 
-        public ExternalPlatformManager(IFilmRepository filmRepository, ISerieRepository serieRepository, IEpisodeRepository episodeRepository, IUserRepository userRepository)
+        public ExternalPlatformManager(IFilmManager filmManager, ISerieManager serieManager, IUserManager userManager, IGenreManager genreManager)
         {
-            _filmRepository = filmRepository;
-            _serieRepository = serieRepository;
-            _episodeRepository = episodeRepository;
-            _userRepository = userRepository;
+            _filmManager = filmManager;
+            _serieManager = serieManager;
+            _userManager = userManager;
+            _genreManager = genreManager;
         }
 
-        public List<ExternalPlatformFilm> GetFilms(IUnitOfWork unitOfWork)
+        public List<FilmBO> GetFilms(IUnitOfWork unitOfWork)
         {
-            var result = new List<ExternalPlatformFilm>();
-            var bos = _filmRepository.FindAll(unitOfWork);
-            return result;
+            return _filmManager.FindAll(unitOfWork);
         }
 
-        public List<ExternalPlatformSerie> GetSeries(IUnitOfWork unitOfWork)
+        public FilmBO GetFilm(IUnitOfWork unitOfWork, int filmId)
         {
-            var result = new List<ExternalPlatformSerie>();
-            var bos = _serieRepository.FindAll(unitOfWork);
-            return result;
+            return _filmManager.Single(unitOfWork, filmId);
         }
 
-        public List<ExternalPlatformEpisode> GetEpisodes(IUnitOfWork unitOfWork, int serieId)
+        public List<SerieBO> GetSeries(IUnitOfWork unitOfWork)
         {
-            var result = new List<ExternalPlatformEpisode>();
-            var bos = _episodeRepository.FindAll(unitOfWork).Where(e => e.SerieId == serieId);
-            return result;
+            return _serieManager.FindAll(unitOfWork);
         }
 
-        public List<ExternalPlatformUser> GetUsers(IUnitOfWork unitOfWork)
+        public SerieBO GetSerie(IUnitOfWork unitOfWork, int serieId)
         {
-            var result = new List<ExternalPlatformUser>();
-            var bos = _userRepository.FindAll(unitOfWork);
-            return result;
+            return _serieManager.Single(unitOfWork, serieId);
         }
 
+        public List<UserBO> GetUsers(IUnitOfWork unitOfWork)
+        {
+            return _userManager.FindAll(unitOfWork);
+        }
+
+        public UserBO GetUser(IUnitOfWork unitOfWork, int userId)
+        {
+            return _userManager.Single(unitOfWork, userId);
+        }
+
+        public List<GenreBO> GetGenres(IUnitOfWork unitOfWork)
+        {
+            return _genreManager.FindAll(unitOfWork);
+        }
     }
 }

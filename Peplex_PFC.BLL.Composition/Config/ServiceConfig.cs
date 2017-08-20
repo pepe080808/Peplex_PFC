@@ -53,7 +53,7 @@ namespace Peplex_PFC.BLL.Composition.Config
             set { _serviceLayerPort = value; }
         }
 
-        private string _serviceAddress;
+        private string _serviceAddress = "peplexpfc.ddns.net";
         public string ServiceAddress
         {
             get { return _serviceAddress; }

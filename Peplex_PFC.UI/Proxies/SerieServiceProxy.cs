@@ -116,7 +116,7 @@ namespace Peplex_PFC.UI.Proxies
                     dtos.ForEach(dto =>
                     {
                         uios.Add(_mapDTO2UIO.Map(dto));
-                        dto.Episodes.ForEach(d => uios.Last().Episodes.Add(_mapEpDTO2UIO.Map(d)));
+                        //dto.Episodes.ForEach(d => uios.Last().Episodes.Add(_mapEpDTO2UIO.Map(d)));
                     });
 
                     return uios;

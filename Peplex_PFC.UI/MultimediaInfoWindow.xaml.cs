@@ -140,16 +140,20 @@ namespace Peplex_PFC.UI
             switch (MultimediaType)
             {
                 case Generic.MultimediaType.FilmType:
-                    var currentdataFilm = (FilmUIO)btn.DataContext;
+                    var dataFilm = (FilmUIO)btn.DataContext;
 
-                    var childFilm = new FilmWindow { Film = currentdataFilm };
+                    var currentDataFilm = CompositionRoot.Instance.Resolve<IFilmServiceProxy>().Single(dataFilm.Id);
+
+                    var childFilm = new FilmWindow { Film = currentDataFilm };
                     childFilm.ShowDialog();
 
                     break;
                 case Generic.MultimediaType.SerieType:
-                    var currentdataSerie = (SerieUIO)btn.DataContext;
+                    var dataSerie = (SerieUIO)btn.DataContext;
 
-                    var childSerie = new SerieWindow { Serie = currentdataSerie };
+                    var currentDataSerie = CompositionRoot.Instance.Resolve<ISerieServiceProxy>().Single(dataSerie.Id);
+
+                    var childSerie = new SerieWindow { Serie = currentDataSerie };
                     childSerie.ShowDialog();
 
                     break;

@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Runtime.Serialization;
 
 namespace Peplex_PFC.SL.InterfacesClasses.Classes.DTO
@@ -24,11 +25,11 @@ namespace Peplex_PFC.SL.InterfacesClasses.Classes.DTO
         }
     }
 
-    [DataContract]
+    [DataContract]  
     public class ExternalPlatformFilm
     {
         [DataMember]
-        public string Id { get; set; }
+        public int Id { get; set; }
 
         [DataMember]
         public string Title { get; set; }
@@ -40,15 +41,33 @@ namespace Peplex_PFC.SL.InterfacesClasses.Classes.DTO
         public string Synopsis { get; set; }
 
         [DataMember]
-        public decimal Note{ get; set; }
+        public decimal Note { get; set; }
 
         [DataMember]
-        public string Url { get; set; }
+        public string TrailerURL { get; set; }
 
         [DataMember]
         public string Base64Background { get; set; }
 
         [DataMember]
         public string Base64Cover { get; set; }
+
+        [DataMember]
+        public string FormatName { get; set; }
+
+        [DataMember]
+        public string GenreName01 { get; set; }
+
+        [DataMember]
+        public string GenreName02 { get; set; }
+
+        [DataMember]
+        public int DurationMin { get; set; }
+
+        [DataMember]
+        public string DownloadDate { get; set; }
+
+        [DataMember]
+        public string PremiereDate { get; set; }
     }
 }

@@ -31,6 +31,9 @@ namespace Peplex_PFC.SL
                 Console.WriteLine("{0:hh:mm:ss:fff} - SetupRegularEndpoints - Start", DateTime.Now);
                 ServiceLayer.SetupRegularEndpoints();
                 Console.WriteLine("{0:hh:mm:ss:fff} - SetupRegularEndpoints - End", DateTime.Now);
+                Console.WriteLine("{0:hh:mm:ss:fff} - SetupRestEndpoints - Start", DateTime.Now);
+                ServiceLayer.SetupRestEndpoints();
+                Console.WriteLine("{0:hh:mm:ss:fff} - SetupRestEndpoints - End", DateTime.Now);
             }
 
             public void Stop()

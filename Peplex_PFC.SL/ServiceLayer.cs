@@ -1,7 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Reflection;
+using System.Security.Cryptography.X509Certificates;
 using System.ServiceModel;
 using System.ServiceModel.Channels;
 using System.ServiceModel.Description;
@@ -47,7 +50,8 @@ namespace Peplex_PFC.SL
                 var serviceHost = new ServiceHost(service.ServiceType);
 
                 // Add tcp endpoint
-                var tcpEndpoint = new ServiceEndpoint(contractDesc, binding, new EndpointAddress(new Uri(String.Format("net.tcp://locahost:{0}/{1}", servicePort, service.ServiceName))));
+                //var tcpEndpoint = new ServiceEndpoint(contractDesc, binding, new EndpointAddress(new Uri(String.Format("net.tcp://localhost:{0}/{1}", servicePort, service.ServiceName))));
+                var tcpEndpoint = new ServiceEndpoint(contractDesc, binding, new EndpointAddress(new Uri(String.Format("net.tcp://{2}:{0}/{1}", servicePort, service.ServiceName, ServiceConfig.Instance.ServiceAddress))));
 
                 serviceHost.AddServiceEndpoint(tcpEndpoint);
 
@@ -73,9 +77,55 @@ namespace Peplex_PFC.SL
             foreach (var service in endpointDescriptors)
             {
                 var baseAddress = String.Format("https://localhost:{0}/{1}", servicePort, service.ServiceName);
+                //var baseAddress = String.Format("https://{2}:{0}/{1}", servicePort, service.ServiceName, ServiceConfig.Instance.ServiceAddress);
                 var host = new ServiceHost(service.ServiceType, new Uri(baseAddress));
                 host.AddServiceEndpoint(service.InterfaceType, custom, "").Behaviors.Add(new WebHttpBehavior());
                 host.Open();
+
+                var storex = new X509Store(StoreName.My, StoreLocation.LocalMachine);
+                try
+                {
+                    storex.Open(OpenFlags.ReadOnly);
+
+                    var certificatesx = storex.Certificates.Find(X509FindType.FindBySubjectName, sslCertificateCommonName, false);
+
+                    if (certificatesx.Count == 0)
+                        throw new Exception(String.Format("Certificate {0} not found", sslCertificateCommonName));
+
+                    // Netsh http delete sslcert ipport=0.0.0.0:<port>
+                    var unbindPortToCertificate = new Process
+                    {
+                        StartInfo =
+                        {
+                            FileName = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.SystemX86), "netsh.exe"),
+                            Arguments = string.Format("Netsh http delete sslcert ipport=0.0.0.0:{0}", servicePort),
+                            UseShellExecute = false,
+                            CreateNoWindow = true
+                        }
+                    };
+
+                    unbindPortToCertificate.Start();
+                    unbindPortToCertificate.WaitForExit();
+
+                    // netsh http add sslcert ipport=0.0.0.0:<port> certhash={<thumbprint>} appid={<some GUID>} clientcertnegotiation=enable
+                    var bindPortToCertificate = new Process
+                    {
+                        StartInfo =
+                        {
+                            FileName = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.SystemX86), "netsh.exe"),
+                            Arguments = string.Format("http add sslcert ipport=0.0.0.0:{0} certhash={1} appid={{{2}}} clientcertnegotiation=enable", servicePort, certificatesx[0].Thumbprint, Assembly.GetExecutingAssembly().GetType().GUID),
+                            UseShellExecute = false,
+                            CreateNoWindow = true
+                        }
+                    };
+
+                    bindPortToCertificate.Start();
+                    bindPortToCertificate.WaitForExit();
+                }
+                finally
+                {
+                    storex.Close();
+                }
             }
         }
 

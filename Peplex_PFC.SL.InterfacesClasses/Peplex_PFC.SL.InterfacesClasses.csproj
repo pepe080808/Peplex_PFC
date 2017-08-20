@@ -46,6 +46,7 @@
     <Compile Include="Classes\DTO\EpisodeDTO.cs" />
     <Compile Include="Classes\DTO\ExternalPlatformEpisodeCollection.cs" />
     <Compile Include="Classes\DTO\ExternalPlatformFilmCollection.cs" />
+    <Compile Include="Classes\DTO\ExternalPlatformGenreCollection.cs" />
     <Compile Include="Classes\DTO\ExternalPlatformSerieCollection.cs" />
     <Compile Include="Classes\DTO\ExternalPlatformUserCollection.cs" />
     <Compile Include="Classes\DTO\FilmDTO.cs" />

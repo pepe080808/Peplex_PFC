@@ -40,6 +40,6 @@ namespace Peplex_PFC.SL.InterfacesClasses.Classes.DTO
         public string Name { get; set; }
 
         [DataMember]
-        public string Url { get; set; }
+        public string FormatName { get; set; }
     }
 }

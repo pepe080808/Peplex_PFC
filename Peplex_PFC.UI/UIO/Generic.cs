@@ -17,13 +17,13 @@
 
         public enum MenuSlideCommandType
         {
+            NoneCommand,
             FilmCommand,
             SerieCommand,
             ConfigCommand,
             SearchCommand,
             ProfileCommand,
-            EscCommand,
-            NoneCommand
+            EscCommand
         }
     }
 }

@@ -51,14 +51,11 @@ namespace Peplex_PFC.BLL.Manager
         {
             var result = _repository.FindAll(unitOfWork);
             var genres = _genreManager.FindAll(unitOfWork);
-            var episodes = _episodeManager.FindAll(unitOfWork);
 
             foreach (var r in result)
             {
                 r.GenreName01 = genres.First(g => g.Id == r.GenreId01).Name;
                 r.GenreName02 = genres.First(g => g.Id == r.GenreId02).Name;
-
-                episodes.Where(e => e.SerieId == r.Id).ToList().ForEach(e => r.Episodes.Add(e));
             }
 
             return result;

@@ -47,7 +47,7 @@
                     <ColumnDefinition Width="0.3*"/>
                 </Grid.ColumnDefinitions>
 
-                <ScrollViewer Grid.Column="0" VerticalScrollBarVisibility="Auto">
+                <ScrollViewer Grid.Column="0" Style="{StaticResource MyScrollViewer}" >
                     <Grid Name="GSearchResult" d:DesignHeight="285" d:DesignWidth="640"/>
                 </ScrollViewer>
 
@@ -55,7 +55,7 @@
                     <Grid.RowDefinitions>
                         <RowDefinition Height="50"/>
                         <RowDefinition/>
-                        <RowDefinition/>
+                        <RowDefinition Height="Auto"/>
                         <RowDefinition/>
                         <RowDefinition Height="10"/>
                         <RowDefinition Height="30"/>
@@ -121,7 +121,7 @@
                             <RowDefinition Height="30"/>
                         </Grid.RowDefinitions>
 
-                        <ListBox Grid.Row="0"  ItemsSource="{Binding Genres}" SelectionMode="Multiple" Height="125" Background="Transparent">
+                        <ListBox Grid.Row="0"  ItemsSource="{Binding Genres}" SelectionMode="Multiple" Height="80" Background="Transparent">
                             <ListBox.ItemContainerStyle>
                                 <Style TargetType="ListBoxItem">
                                     <Setter Property="IsSelected" Value="{Binding Checked, Mode=TwoWay}" />

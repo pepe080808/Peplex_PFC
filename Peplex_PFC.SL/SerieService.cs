@@ -72,7 +72,7 @@ namespace Peplex_PFC.SL
                 bos.ForEach(bo =>
                 {
                     dtos.Add(_mapBO2DTO.Map(bo));
-                    bo.Episodes.ForEach(b => dtos.Last().Episodes.Add(_mapEpBO2DTO.Map(b)));
+                    //bo.Episodes.ForEach(b => dtos.Last().Episodes.Add(_mapEpBO2DTO.Map(b)));
                 });
 
                 return dtos;
