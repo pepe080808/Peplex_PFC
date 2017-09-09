@@ -47,10 +47,10 @@ namespace Peplex_PFC.SL.InterfacesClasses.Classes.DTO
         public string TrailerURL { get; set; }
 
         [DataMember]
-        public string Base64Background { get; set; }
+        public string StrBackground { get; set; }
 
         [DataMember]
-        public string Base64Cover { get; set; }
+        public string StrCover { get; set; }
 
         [DataMember]
         public string FormatName { get; set; }

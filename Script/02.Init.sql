@@ -151,7 +151,7 @@ CREATE TABLE EpisodeSeen (
 	
 	CONSTRAINT PK_EpisodeSeen PRIMARY KEY(UserId, SerieId, Season, Number),
 	CONSTRAINT FK_EpisodeSeen_UserId FOREIGN KEY(UserId) REFERENCES UserInfo(Id) ON DELETE CASCADE,
-	CONSTRAINT FK_EpisodeSeen_SerieId FOREIGN KEY(SerieId) REFERENCES Serie(Id) ON DELETE CASCADE
+	CONSTRAINT FK_EpisodeSeen_EpisodeId FOREIGN KEY(SerieId, Season, Number) REFERENCES Episode(SerieId, Season, Number) ON DELETE CASCADE
 )
 
 GO
@@ -177,5 +177,5 @@ CREATE TABLE UserEpisodeTime (
 	
 	CONSTRAINT PK_UserEpisodeTime PRIMARY KEY(UserId, SerieId, Season, Number),
 	CONSTRAINT FK_UserEpisodeTime_UserId FOREIGN KEY(UserId) REFERENCES UserInfo(Id) ON DELETE CASCADE,
-	CONSTRAINT FK_UserEpisodeTime_FilmId FOREIGN KEY(SerieId) REFERENCES Serie(Id) ON DELETE CASCADE
+	CONSTRAINT FK_UserEpisodeTime_EpisodeId FOREIGN KEY(SerieId, Season, Number) REFERENCES Episode(SerieId, Season, Number) ON DELETE CASCADE
 )

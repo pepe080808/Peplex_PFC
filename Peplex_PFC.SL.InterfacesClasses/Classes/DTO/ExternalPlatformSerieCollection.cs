@@ -42,10 +42,10 @@ namespace Peplex_PFC.SL.InterfacesClasses.Classes.DTO
         public decimal Note { get; set; }
 
         [DataMember]
-        public string Base64Background { get; set; }
+        public string StrBackground { get; set; }
 
         [DataMember]
-        public string Base64Cover { get; set; }
+        public string StrCover { get; set; }
 
         [DataMember]
         public string GenreName01 { get; set; }

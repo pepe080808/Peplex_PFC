@@ -48,7 +48,7 @@ namespace Peplex_PFC.UI
 
             CalculateNoteStar();
 
-            var strMusic = PeplexConfig.Instance.RootMainLocal + PeplexConfig.Instance.RootMusicLocal + Serie.Title + ".mp3";
+            var strMusic = "http://" + PeplexConfig.Instance.ServiceAddress + "/" + PeplexConfig.Instance.RootMusicLocal + Serie.Title.Replace(" ", "%20") + ".mp3";
             MeMusic.Source = new Uri(strMusic);
             MeMusic.Play();
 

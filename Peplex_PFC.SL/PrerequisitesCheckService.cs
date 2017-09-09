@@ -36,18 +36,22 @@ namespace Peplex_PFC.SL
                     //if (DataBaseCreated())
                     //    LblMsg.Content = "LA BD ESTÁ CREADA";
 
+                    Console.WriteLine("\nESTA ACTIVADO EL MODO ACTUALIZAR CATÁLGO.");
+                    Console.WriteLine("BORRANDO PELÍCULAS NO ENCONTRADAS EN LA BIBLIOTECA...");
                     //Borramos series y películas de la BD que no estén en los directorios correspondientes
-                    //Console.WriteLine("BORRANDO PELÍCULAS NO ENCONTRADAS EN LA BIBLIOTECA...");
+                    Console.WriteLine("BORRANDO PELÍCULAS NO ENCONTRADAS EN LA BIBLIOTECA...");
                     DeleteFilms();
-                    //Console.WriteLine("BORRANDO SERIES NO ENCONTRADAS EN LA BIBLIOTECA...");
+                    Console.WriteLine("BORRANDO SERIES NO ENCONTRADAS EN LA BIBLIOTECA...");
                     DeleteSeries();
-                    //Console.WriteLine("BORRANDO CAPÍTULOS NO ENCONTRADAS EN LA BIBLIOTECA...");
+                    Console.WriteLine("BORRANDO CAPÍTULOS NO ENCONTRADAS EN LA BIBLIOTECA...");
                     DeleteEpisodes();
                     //Insertamos series y películas a la BD que sean nuevas en los direcotorios correspondientes
-                    //Console.WriteLine("INSERTANDO PELÍCULAS NUEVAS EN LA BIBLIOTECA...");
+                    Console.WriteLine("INSERTANDO PELÍCULAS NUEVAS EN LA BIBLIOTECA...");
                     InsertFilms();
-                    //Console.WriteLine("INSERTANDO SERIES Y CAPÍTULOS NUEVOS EN LA BIBLIOTECA...");
+                    Console.WriteLine("INSERTANDO SERIES Y CAPÍTULOS NUEVOS EN LA BIBLIOTECA...");
                     InsertSeries();
+                    Console.WriteLine("\nHA FINALIZADO LA ACTUALIZACIÓN DEL CONTENIDO MULTIMEDIA.");
+
                 }
 
                 return true;

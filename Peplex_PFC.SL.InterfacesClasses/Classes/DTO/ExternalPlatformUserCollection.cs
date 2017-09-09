@@ -43,7 +43,7 @@ namespace Peplex_PFC.SL.InterfacesClasses.Classes.DTO
         public string Password { get; set; }
 
         [DataMember]
-        public string Base64Photo { get; set; }
+        public string StrPhoto { get; set; }
 
         [DataMember]
         public List<int> FilmSeen { get; set; }

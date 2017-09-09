@@ -4,6 +4,7 @@ using Peplex_PFC.BLL.Composition;
 using Peplex_PFC.BLL.InterfacesClasses.Interfaces;
 using Peplex_PFC.SL.InterfacesClasses.Classes.DTO;
 using Peplex_PFC.SL.InterfacesClasses.Interfaces;
+using Utils;
 
 namespace Peplex_PFC.SL
 {
@@ -32,7 +33,7 @@ namespace Peplex_PFC.SL
                             GenreName01 = f.GenreName01,
                             GenreName02 = f.GenreName02,
                             DownloadDate = f.DownloadDate.ToString(DATE_FORMAT),
-                            Base64Cover = Convert.ToBase64String(f.Cover)
+                            StrCover = PeplexUtils.ConvertByteArrayToStringCommaSepareted(f.Cover)
                         };
 
                         result.Films.Add(film);
@@ -85,8 +86,8 @@ namespace Peplex_PFC.SL
                         DurationMin = f.DurationMin,
                         GenreName01 = f.GenreName01,
                         GenreName02 = f.GenreName02,
-                        Base64Cover = Convert.ToBase64String(f.Cover),
-                        Base64Background = Convert.ToBase64String(f.Background)
+                        StrCover = PeplexUtils.ConvertByteArrayToStringCommaSepareted(f.Cover),
+                        StrBackground = PeplexUtils.ConvertByteArrayToStringCommaSepareted(f.Background)
                     };
 
                     result.Films.Add(film);
@@ -130,7 +131,7 @@ namespace Peplex_PFC.SL
                             GenreName01 = s.GenreName01,
                             GenreName02 = s.GenreName02,
                             DownloadDate = s.DownloadDate.ToString(DATE_FORMAT),
-                            Base64Cover = Convert.ToBase64String(s.Cover)
+                            StrCover = PeplexUtils.ConvertByteArrayToStringCommaSepareted(s.Cover)
                         };
 
                         result.Series.Add(serie);
@@ -180,8 +181,8 @@ namespace Peplex_PFC.SL
                         DurationMin = s.DurationMin,
                         GenreName01 = s.GenreName01,
                         GenreName02 = s.GenreName02,
-                        Base64Cover = Convert.ToBase64String(s.Cover),
-                        Base64Background = Convert.ToBase64String(s.Background)
+                        StrCover = PeplexUtils.ConvertByteArrayToStringCommaSepareted(s.Cover),
+                        StrBackground = PeplexUtils.ConvertByteArrayToStringCommaSepareted(s.Background)
                     };
 
                     foreach (var ep in s.Episodes)
@@ -278,7 +279,7 @@ namespace Peplex_PFC.SL
                         Password = u.Password,
                         Name = u.Name,
                         Email = u.Email,
-                        Base64Photo = Convert.ToBase64String(u.Photo)
+                        StrPhoto = PeplexUtils.ConvertByteArrayToStringCommaSepareted(u.Photo)
                     };
 
                     user.FilmSeen.AddRange(u.FilmSeen);

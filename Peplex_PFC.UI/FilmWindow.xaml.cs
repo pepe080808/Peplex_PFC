@@ -50,7 +50,7 @@ namespace Peplex_PFC.UI
 
             CalculateNoteStar();
 
-            var strMusic = PeplexConfig.Instance.RootMainLocal + PeplexConfig.Instance.RootMusicLocal + Film.Title + ".mp3";
+            var strMusic = "http://" + PeplexConfig.Instance.ServiceAddress + "/" + PeplexConfig.Instance.RootMusicLocal + Film.Title.Replace(" ", "%20") + ".mp3";
             MeMusic.Source = new Uri(strMusic);
             MeMusic.Play();
 
@@ -84,6 +84,10 @@ namespace Peplex_PFC.UI
                 PeplexConfig.Instance.CurrentUser.FilmSeen.Add(_film.Id);
 
                 _film.Seen = true;
+
+                MeMusic.Stop();
+                MeMusic.Tag = "Stop";
+                SoundControl.Value = false;
 
                 var child = new MultimediaWindow { Owner = this, MultimediaType = Generic.MultimediaType.FilmType, Title = _film.Title, Film = _film };
                 child.ShowDialog();

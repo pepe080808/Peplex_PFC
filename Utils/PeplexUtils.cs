@@ -1,4 +1,7 @@
-﻿using System.IO;
+﻿using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
 using System.Web.Security;
 using System.Windows.Media.Imaging;
 
@@ -47,6 +50,13 @@ namespace Utils
         public static string GetCaller([System.Runtime.CompilerServices.CallerMemberName] string memberName = "")
         {
             return memberName;
+        }
+
+        public static string ConvertByteArrayToStringCommaSepareted(byte[] array)
+        {
+            var result = new List<string>();
+            array.ToList().ForEach(a => result.Add(a.ToString()));
+            return String.Join(";", result);
         }
     }
 }
