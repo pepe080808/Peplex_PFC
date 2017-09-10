@@ -114,12 +114,12 @@ namespace Peplex_PFC.UI
             {
                 worker.ReportProgress(0, Translations.splashWindowUpdatingData);
 
-                var updated = preReqService.UpdateDataBase();
-                if (!updated)
-                {
-                    e.Result = new StartupResult { ResultCode = StartupResultCode.CheckUpdatedata };
-                    return;
-                }
+                //var updated = preReqService.UpdateDataBase();
+                //if (!updated)
+                //{
+                //    e.Result = new StartupResult { ResultCode = StartupResultCode.CheckUpdatedata };
+                //    return;
+                //}
             }
 
             e.Result = new StartupResult { ResultCode = StartupResultCode.Success };

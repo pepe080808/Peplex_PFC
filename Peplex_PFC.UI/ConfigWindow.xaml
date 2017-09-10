@@ -6,14 +6,14 @@
         xmlns:panels="clr-namespace:Peplex_PFC.UI.Panels"
         xmlns:UI="clr-namespace:Peplex_PFC.UI"
         mc:Ignorable="d" Title="MainWindow"
-        WindowStyle="None" 
-        ShowInTaskbar="False"
-        ResizeMode="NoResize"
         WindowStartupLocation="CenterScreen"
+        WindowStyle="None" 
+        ResizeMode="NoResize" 
         SizeToContent="WidthAndHeight"
+        WindowState="Normal"
         PreviewKeyDown="ConfigWindowPreviewKeyDown"
         Loaded="ConfigWindowLoad"
-        BorderBrush="Gray"
+        BorderBrush="{StaticResource DarkGrayBrush}"
         BorderThickness="5">
     
     <Grid Name="MainGrid" Width="600" Height="700" Background="{StaticResource LightGrayBrush}">

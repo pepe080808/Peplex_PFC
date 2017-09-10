@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Peplex_PFC.BLL.Composition.Config;
+using System;
 using Topshelf;
 
 namespace Peplex_PFC.SL
@@ -8,6 +9,8 @@ namespace Peplex_PFC.SL
         private static void Main()
         {
             Console.SetWindowSize(Console.WindowWidth, Console.WindowHeight/2);
+
+            ServiceLayer.InitialLoad(ServiceConfig.Instance.UpdateDB);
 
             HostFactory.Run(x =>
             {

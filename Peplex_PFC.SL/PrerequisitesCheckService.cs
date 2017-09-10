@@ -51,6 +51,7 @@ namespace Peplex_PFC.SL
                     Console.WriteLine("INSERTANDO SERIES Y CAPÍTULOS NUEVOS EN LA BIBLIOTECA...");
                     InsertSeries();
                     Console.WriteLine("\nHA FINALIZADO LA ACTUALIZACIÓN DEL CONTENIDO MULTIMEDIA.");
+                    Console.ReadKey();
 
                 }
 
