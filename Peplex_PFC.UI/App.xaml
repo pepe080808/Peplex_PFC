@@ -13,7 +13,7 @@
         <SolidColorBrush x:Key="LightGreenBrush" Color="#FF00BB00"/>
         <SolidColorBrush x:Key="DarkGreenBrush" Color="#FF004000"/>
         <SolidColorBrush x:Key="LightYellowBrush" Color="#FFBBBB20"/>
-        <SolidColorBrush x:Key="BlackTransparentBrush" Color="Black" Opacity="0.5"/>
+        <SolidColorBrush x:Key="BlackTransparentBrush" Color="Black" Opacity="0.75"/>
 
         <Style x:Key="FieldLabelStyle" TargetType="{x:Type Label}">
             <Setter Property="HorizontalAlignment" Value="Right"/>
@@ -73,6 +73,23 @@
             <Setter Property="Cursor" Value="Hand"/>
         </Style>
 
+        <Style x:Key="FieldTextBlockNoteStyle" TargetType="{x:Type TextBlock}">
+            <Setter Property="VerticalAlignment" Value="Top"/>
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="Foreground">
+                <Setter.Value>
+                    <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                        <GradientStop Color="{StaticResource DarkGreenColor}" Offset="0.0" />
+                        <GradientStop Color="{StaticResource LightGreenColor}" Offset="1.0" />
+                    </LinearGradientBrush>
+                </Setter.Value>
+            </Setter>
+            <Setter Property="FontSize" Value="20" />
+            <Setter Property="FontFamily" Value="Tahoma"/>
+            <Setter Property="Margin" Value="10 7 5 2"/>
+            <Setter Property="TextWrapping" Value="Wrap"/>
+        </Style>
+        
         <Style x:Key="FieldTextBlockMediaPlayerStyle" TargetType="{x:Type TextBlock}">
             <Setter Property="HorizontalAlignment" Value="Left"/>
             <Setter Property="VerticalAlignment" Value="Center"/>
@@ -157,7 +174,7 @@
         <Style TargetType="{x:Type DataGridColumnHeader}">
             <Setter Property="VerticalContentAlignment" Value="Center" />
             <Setter Property="Height" Value="35" />
-            <Setter Property="SeparatorBrush" Value="DarkSlateGray" />
+            <Setter Property="SeparatorBrush" Value="{StaticResource LightGrayBrush}" />
             <Setter Property="FontWeight" Value="Black" />
             <Setter Property="Foreground" Value="White" />
             <Setter Property="FontFamily" Value="Tahoma" />
@@ -171,8 +188,8 @@
                             <Border x:Name="columnHeaderBorder" BorderThickness="1" Padding="3,0,3,0">
                                 <Border.BorderBrush>
                                     <LinearGradientBrush StartPoint="0.5,0" EndPoint="0.5,1">
-                                        <GradientStop Offset="0" Color="{StaticResource LightGrayColor}" />
-                                        <GradientStop Offset="1" Color="{StaticResource DarkGrayColor}" />
+                                        <GradientStop Offset="0" Color="{StaticResource LightGreenColor}" />
+                                        <GradientStop Offset="1" Color="{StaticResource DarkGreenColor}" />
                                     </LinearGradientBrush>
                                 </Border.BorderBrush>
                                 <Border.Background>
@@ -181,6 +198,12 @@
                                         <GradientStop Offset="1" Color="{StaticResource DarkGreenColor}" />
                                     </LinearGradientBrush>
                                 </Border.Background>
+                                <!--<Border.BorderBrush>
+                                    <SolidColorBrush Color="{StaticResource DarkGrayColor}"/>
+                                </Border.BorderBrush>
+                                <Border.Background>
+                                    <SolidColorBrush Color="{StaticResource DarkGrayColor}"/>
+                                </Border.Background>-->
                                 <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
                             </Border>
                         </Grid>
@@ -191,7 +214,7 @@
 
         <!-- Customize Column Row -->
         <Style TargetType="{x:Type DataGridRow}">
-            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="Background" Value="{StaticResource LightGrayBrush}"/>
             <Setter Property="Foreground" Value="White"/>
             <Setter Property="FontFamily" Value="Tahoma"/>
             <Setter Property="FontSize" Value="15"/>

@@ -48,7 +48,7 @@ namespace Peplex_PFC.UI
 
             CalculateNoteStar();
 
-            var strMusic = "http://" + PeplexConfig.Instance.ServiceAddress + "/" + PeplexConfig.Instance.RootMusicLocal + Serie.Title.Replace(" ", "%20") + ".mp3";
+            var strMusic = (PeplexConfig.Instance.RootLocal ? "" : "http://") + (PeplexConfig.Instance.RootLocal ? PeplexConfig.Instance.RootMainLocal : PeplexConfig.Instance.ServiceAddress) + "/" + PeplexConfig.Instance.RootMusicLocal + Serie.Title.Replace(" ", PeplexConfig.Instance.RootLocal ? " " : "%20") + ".mp3";
             MeMusic.Source = new Uri(strMusic);
             MeMusic.Play();
 
@@ -62,20 +62,23 @@ namespace Peplex_PFC.UI
         private void CalculateNoteStar()
         {
             var note = Serie.Note;
-            for (var i = 0; i < 5; i++)
-            {
-                var control = FindName(String.Format("NoteStar{0}", (i + 1)));
-                if (control != null)
-                {
-                    var noteStar = (NoteControl)control;
-                    if (note >= 2)
-                        noteStar.Value = 2;
-                    else
-                        noteStar.Value = note;
-                }
 
-                note -= 2;
-            }
+            TxtNote.Text = note.ToString("00.#");
+
+            for (var i = 0; i < 5; i++)
+                {
+                    var control = FindName(String.Format("NoteStar{0}", (i + 1)));
+                    if (control != null)
+                    {
+                        var noteStar = (NoteControl) control;
+                        if (note >= 2)
+                            noteStar.Value = 2;
+                        else
+                            noteStar.Value = note;
+                    }
+
+                    note -= 2;
+                }
         }
 
         private void CheckSeenEpisode()

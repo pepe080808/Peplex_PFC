@@ -345,4 +345,10 @@ StackTrace: {3}</value>
   <data name="btnNone" xml:space="preserve">
     <value>Ninguno</value>
   </data>
+  <data name="MultimediaSearchWindowLblSortByDownloadDate" xml:space="preserve">
+    <value>Fecha de descarga</value>
+  </data>
+  <data name="ConfigUserControlNotaField" xml:space="preserve">
+    <value>El valor del campo nota no puede ser mayor que 10</value>
+  </data>
 </root>

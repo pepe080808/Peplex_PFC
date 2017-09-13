@@ -266,7 +266,7 @@ namespace Peplex_PFC.SL
                                 FormatId = newFormat.ToList()[0].Id,
                                 GenreId01 = 1,
                                 GenreId02 = 1,
-                                PremiereDate = DateTime.MinValue,
+                                PremiereDate = DateTime.Now,
                                 DownloadDate = DateTime.Now,
                                 Cover = cover,
                                 Background = background
@@ -444,8 +444,6 @@ namespace Peplex_PFC.SL
                         };
 
                         CompositionRoot.Instance.Resolve<IEpisodeManager>().Insert(uow, newEpisode);
-
-                        // TODO: DISPARAR TRIGGER PARA ACTAUZLAIR AL FECHA DOWLOAD DE LA SERIE
                     }
 
                 }

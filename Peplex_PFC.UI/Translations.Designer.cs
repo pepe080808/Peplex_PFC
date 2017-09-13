@@ -179,6 +179,15 @@ namespace Peplex_PFC.UI {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to El valor del campo nota no puede ser mayor que 10.
+        /// </summary>
+        public static string ConfigUserControlNotaField {
+            get {
+                return ResourceManager.GetString("ConfigUserControlNotaField", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Los dos campos para la contraseña deben estar rellenos si desea modificarla..
         /// </summary>
         public static string ConfigUserControlObligatoryBothPasswordField {
@@ -630,6 +639,15 @@ namespace Peplex_PFC.UI {
         public static string MultimediaSearchWindowLblSortBy {
             get {
                 return ResourceManager.GetString("MultimediaSearchWindowLblSortBy", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Fecha de descarga.
+        /// </summary>
+        public static string MultimediaSearchWindowLblSortByDownloadDate {
+            get {
+                return ResourceManager.GetString("MultimediaSearchWindowLblSortByDownloadDate", resourceCulture);
             }
         }
         

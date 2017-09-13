@@ -12,7 +12,7 @@ namespace Peplex_PFC.UI.Shared
             string page =
             "<!DOCTYPE html PUBLIC \" -//W3C//DTD XHTML 1.0 Transitional//EN\" \"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd\" >\r\n"
             + @"<!-- saved from url=(0022)http://www.youtube.com -->" + "\r\n"
-            + "<html><body scroll=\"no\" leftmargin=\"0px\" topmargin=\"0px\" marginwidth=\"0px\" marginheight=\"0px\" >" + "\r\n"
+            + "<html><body scroll=\"no\" leftmargin=\"0px\" topmargin=\"00px\" marginwidth=\"0px\" marginheight=\"0px\" >" + "\r\n"
                 + GetYouTubeScript(id, webBrowser.Width, webBrowser.Height)
                 + "</body></html>\r\n";
 

@@ -59,6 +59,9 @@ namespace Peplex_PFC.UI
             public byte[] Cover { get; set; }
             public int GenreId01 { get; set; }
             public int GenreId02 { get; set; }
+            public decimal Note { get; set; }
+            public DateTime PremiereDate { get; set; }
+            public DateTime DownloadDate { get; set; }
         }
 
         private List<MultimediaData> _filterData { get; set; }
@@ -74,6 +77,8 @@ namespace Peplex_PFC.UI
                     return "PremiereDate";
                 if (SortNote.IsChecked == true)
                     return "Note";
+                if (SortDownloadDate.IsChecked == true)
+                    return "DownloadDate";
                 return "Title";
             }
         }
@@ -147,7 +152,10 @@ namespace Peplex_PFC.UI
                     MultimediaType = Generic.MultimediaType.FilmType,
                     Cover = film.Cover,
                     GenreId01 = film.GenreId01,
-                    GenreId02 = film.GenreId02
+                    GenreId02 = film.GenreId02,
+                    Note = film.Note,
+                    PremiereDate = film.PremiereDate,
+                    DownloadDate = film.DownloadDate
                 });
             }
 
@@ -160,7 +168,10 @@ namespace Peplex_PFC.UI
                     MultimediaType= Generic.MultimediaType.SerieType,
                     Cover = serie.Cover,
                     GenreId01 = serie.GenreId01,
-                    GenreId02 = serie.GenreId02
+                    GenreId02 = serie.GenreId02,
+                    Note = serie.Note,
+                    PremiereDate = serie.PremiereDate,
+                    DownloadDate = serie.DownloadDate
                 });
             }
 

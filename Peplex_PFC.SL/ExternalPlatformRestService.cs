@@ -33,7 +33,8 @@ namespace Peplex_PFC.SL
                             GenreName01 = f.GenreName01,
                             GenreName02 = f.GenreName02,
                             DownloadDate = f.DownloadDate.ToString(DATE_FORMAT),
-                            StrCover = PeplexUtils.ConvertByteArrayToStringCommaSepareted(f.Cover)
+                            //StrCover = PeplexUtils.ConvertByteArrayToStringCommaSepareted(f.Cover)
+                            StrCover = Convert.ToBase64String(f.Cover)
                         };
 
                         result.Films.Add(film);
@@ -86,8 +87,10 @@ namespace Peplex_PFC.SL
                         DurationMin = f.DurationMin,
                         GenreName01 = f.GenreName01,
                         GenreName02 = f.GenreName02,
-                        StrCover = PeplexUtils.ConvertByteArrayToStringCommaSepareted(f.Cover),
-                        StrBackground = PeplexUtils.ConvertByteArrayToStringCommaSepareted(f.Background)
+                        //StrCover = PeplexUtils.ConvertByteArrayToStringCommaSepareted(f.Cover),
+                        //StrBackground = PeplexUtils.ConvertByteArrayToStringCommaSepareted(f.Background)
+                        StrCover = Convert.ToBase64String(f.Cover),
+                        StrBackground = Convert.ToBase64String(f.Background)
                     };
 
                     result.Films.Add(film);

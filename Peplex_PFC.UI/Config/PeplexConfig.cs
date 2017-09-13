@@ -30,6 +30,13 @@ namespace Peplex_PFC.UI.Config
             set { _externalPlatformRestApiPort = value; }
         }
 
+        private bool _rootLocal;
+        public bool RootLocal
+        {
+            get { return _rootLocal; }
+            set { _rootLocal = value; }
+        }
+
         private string _rootMainLocal;
         public string RootMainLocal
         {
@@ -142,6 +149,7 @@ namespace Peplex_PFC.UI.Config
                 writer.WriteElementString("serviceLayerPort", _serviceLayerPort.ToString());
                 writer.WriteElementString("externalPlatformRestApiPort", _externalPlatformRestApiPort.ToString());
 
+                writer.WriteElementString("rootLocal", _rootLocal ? "1" : "0");
                 writer.WriteElementString("rootMainLocal", _rootMainLocal);
                 writer.WriteElementString("rootVideosLocal", _rootVideosLocal);
                 writer.WriteElementString("rootImageLocal", _rootImageLocal);
@@ -185,6 +193,10 @@ namespace Peplex_PFC.UI.Config
                     node = document.SelectSingleNode("/configuration/externalPlatformRestApiPort");
                     if (node != null && !String.IsNullOrEmpty(node.InnerText))
                         _externalPlatformRestApiPort = Convert.ToInt32(node.InnerText);
+
+                    node = document.SelectSingleNode("/configuration/rootLocal");
+                    if (node != null)
+                        _rootLocal = node.InnerText == "1";
 
                     node = document.SelectSingleNode("/configuration/rootMainLocal");
                     if (node != null)

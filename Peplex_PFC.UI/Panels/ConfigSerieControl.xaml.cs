@@ -98,6 +98,12 @@ namespace Peplex_PFC.UI.Panels
                 return;
             }
 
+            if (Convert.ToDecimal(TxtNote.Text) > 10)
+            {
+                MessageBoxWindow.Show(Window.GetWindow(Parent), Translations.lblWarning, DialogIcon.Warning, new[] { DialogButton.Accept }, Translations.ConfigUserControlNotaField);
+                return;
+            }
+
             var indexGenreId01 = Genre.FindIndex(g => g.Name.Equals(((GenreUIO)CbGenre01.SelectedValue).Name.ToString(), StringComparison.CurrentCultureIgnoreCase));
             var indexGenreId02 = Genre.FindIndex(g => g.Name.Equals(((GenreUIO)CbGenre02.SelectedValue).Name.ToString(), StringComparison.CurrentCultureIgnoreCase));
 

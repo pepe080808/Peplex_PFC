@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
 using Peplex_PFC.UI.Config;
@@ -50,7 +52,7 @@ namespace Peplex_PFC.UI
 
             CalculateNoteStar();
 
-            var strMusic = "http://" + PeplexConfig.Instance.ServiceAddress + "/" + PeplexConfig.Instance.RootMusicLocal + Film.Title.Replace(" ", "%20") + ".mp3";
+            var strMusic = (PeplexConfig.Instance.RootLocal ? "" : "http://") + (PeplexConfig.Instance.RootLocal ? PeplexConfig.Instance.RootMainLocal : PeplexConfig.Instance.ServiceAddress) + "/" + PeplexConfig.Instance.RootMusicLocal + Film.Title.Replace(" ", PeplexConfig.Instance.RootLocal ? " " : "%20") + ".mp3";
             MeMusic.Source = new Uri(strMusic);
             MeMusic.Play();
 

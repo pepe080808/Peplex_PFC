@@ -46,8 +46,8 @@ namespace Peplex_PFC.UI
             get
             {
                 return MultimediaType ==  Generic.MultimediaType.EpisodeType ? 
-                    String.Format("{0}x{1}%20-%20{2}.{3}", _episode.Season, _episode.Number.ToString("d2"), _episode.Name.Replace(" ", "%20"), _episode.FormatName) :
-                    String.Format("{0}%20-%20{1}.{2}", _film.Title.Replace(" ", "%20"), _film.Subtitle.Replace(" ", "%20"), _film.FormatName); ;
+                    String.Format("{0}x{1} - {2}.{3}", _episode.Season, _episode.Number.ToString("d2"), _episode.Name, _episode.FormatName).Replace(" ", PeplexConfig.Instance.RootLocal ? " " : "%20") :
+                    String.Format("{0} - {1}.{2}", _film.Title, _film.Subtitle, _film.FormatName).Replace(" ", PeplexConfig.Instance.RootLocal ? " " : "%20");
             }
         }
 
@@ -61,8 +61,8 @@ namespace Peplex_PFC.UI
             get
             {
                 return MultimediaType == Generic.MultimediaType.EpisodeType ? 
-                    String.Format("http://{0}/{1}{2}{3}/T{4}/{5}", PeplexConfig.Instance.ServiceAddress, PeplexConfig.Instance.RootVideosLocal, PeplexConfig.Instance.RootSeriesLocal, _title.Replace(" ", "%20"), _episode.Season, CompleteName) :
-                    String.Format("http://{0}/{1}{2}{3}", PeplexConfig.Instance.ServiceAddress, PeplexConfig.Instance.RootVideosLocal, PeplexConfig.Instance.RootFilmsLocal, CompleteName);
+                    String.Format("{6}{0}/{1}{2}{3}/T{4}/{5}", (PeplexConfig.Instance.RootLocal ? PeplexConfig.Instance.RootMainLocal : PeplexConfig.Instance.ServiceAddress), PeplexConfig.Instance.RootVideosLocal, PeplexConfig.Instance.RootSeriesLocal, _title.Replace(" ", PeplexConfig.Instance.RootLocal ? " " : "%20"), _episode.Season, CompleteName, PeplexConfig.Instance.RootLocal ?  "" : "http://") :
+                    String.Format("{4}{0}/{1}{2}{3}", (PeplexConfig.Instance.RootLocal ? PeplexConfig.Instance.RootMainLocal : PeplexConfig.Instance.ServiceAddress), PeplexConfig.Instance.RootVideosLocal, PeplexConfig.Instance.RootFilmsLocal, CompleteName, PeplexConfig.Instance.RootLocal ? "" : "http://");
             }
         }
 
@@ -151,6 +151,8 @@ namespace Peplex_PFC.UI
             // the beginning.
             GetAndSaveResumeTime();
             MediaPlayer.Stop();
+
+            timelineSlider.Value = 0;
         }
 
         // Change the volume of the media.

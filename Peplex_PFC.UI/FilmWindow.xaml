@@ -11,13 +11,12 @@
         AllowsTransparency="False"
         ShowInTaskbar="False"
         WindowState="Maximized"
-        SizeToContent="WidthAndHeight"
         PreviewKeyDown="FilmWindowPreviewKeyDown"
         Closed="FilmWindowClosed"
         Closing="FilmWindowClosing">
 
-    <Viewbox Stretch="Fill">
-        <Grid Name="MainGrid"  Width="1200" Height="640">
+    <!--<Viewbox Stretch="Fill">-->
+    <Grid Name="MainGrid">
             <Grid.RowDefinitions>
                 <RowDefinition Height="60"/>
                 <RowDefinition/>
@@ -72,11 +71,11 @@
                             <ColumnDefinition/>
                         </Grid.ColumnDefinitions>
 
-                        <panels:NoteControl x:Name="NoteStar1" Grid.Column="0"/>
-                        <panels:NoteControl x:Name="NoteStar2" Grid.Column="1"/>
-                        <panels:NoteControl x:Name="NoteStar3" Grid.Column="2"/>
-                        <panels:NoteControl x:Name="NoteStar4" Grid.Column="3"/>
-                        <panels:NoteControl x:Name="NoteStar5" Grid.Column="4"/>
+                        <panels:NoteControl x:Name="NoteStar1" Grid.Column="0" Margin="10"/>
+                        <panels:NoteControl x:Name="NoteStar2" Grid.Column="1" Margin="10"/>
+                        <panels:NoteControl x:Name="NoteStar3" Grid.Column="2" Margin="10"/>
+                        <panels:NoteControl x:Name="NoteStar4" Grid.Column="3" Margin="10"/>
+                        <panels:NoteControl x:Name="NoteStar5" Grid.Column="4" Margin="10"/>
                     </Grid>
 
                     <Grid Grid.Row="0" Grid.Column="1">
@@ -91,7 +90,9 @@
                         <panels:SoundControl x:Name="SoundControl" Grid.Row="1" PreviewMouseLeftButtonDown="SoundControlClick"/>
                         <MediaElement Name="MeMusic" Grid.Row="2" Visibility="Collapsed" LoadedBehavior="Manual"  Tag="Play"/>
                     </Grid>
-                </Grid>
+
+                <TextBlock Grid.Row="1" Grid.Column="1" Name="TxtNote" Text="9,9" Style="{StaticResource FieldTextBlockNoteStyle}"/>
+            </Grid>
 
                 <Grid Name="GInfo" Grid.Row="0" Grid.RowSpan="2" Grid.Column="1" Margin="0 10 0 0">
                     <Grid.RowDefinitions>
@@ -107,10 +108,10 @@
                     </ScrollViewer>
                 </Grid>
 
-                <WebBrowser x:Name="Wbtrailer" Grid.Row="2" Grid.RowSpan="2" Grid.Column="1" Margin="0" Width="360" Height="240"/>
+                <WebBrowser x:Name="Wbtrailer" Grid.Row="2" Grid.RowSpan="2" Grid.Column="1" Width="360" Height="240"/>
 
             </Grid>
 
         </Grid>
-    </Viewbox>
+    <!--</Viewbox>-->
 </Window>
