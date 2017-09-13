@@ -10,6 +10,7 @@ namespace Peplex_PFC.UI.UIO
         private string _email;
         private string _password;
         private byte[] _photo;
+        private byte[] _photoOpt;
         private int _permissions;
 
         public int Id
@@ -46,6 +47,12 @@ namespace Peplex_PFC.UI.UIO
         {
             get { return _photo; }
             set { _photo = value; SendPropertyChanged(); }
+        }
+
+        public byte[] PhotoOpt
+        {
+            get { return _photoOpt; }
+            set { _photoOpt = value; SendPropertyChanged(); }
         }
 
         public int Permissions

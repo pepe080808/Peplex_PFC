@@ -59,5 +59,11 @@ namespace Peplex_PFC.SL.InterfacesClasses.Classes.DTO
 
         [DataMember]
         public byte[] Cover { get; set; }
+
+        [DataMember]
+        public byte[] BackgroundOpt { get; set; }
+
+        [DataMember]
+        public byte[] CoverOpt { get; set; }
     }
 }

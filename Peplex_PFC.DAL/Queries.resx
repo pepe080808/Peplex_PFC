@@ -149,8 +149,8 @@ WHERE SerieId = @SerieId AND Season = @Season AND Number = @Number</value>
     <value>SELECT * FROM Film</value>
   </data>
   <data name="FilmInsert" xml:space="preserve">
-    <value>INSERT INTO Film (Title, Subtitle, FormatId, GenreId01, GenreId02, Synopsis, DurationMin, DownloadDate, PremiereDate, TrailerURL, Note, Cover, Background)
-VALUES(@Title, @Subtitle, @FormatId, @GenreId01, @GenreId02, @Synopsis, @DurationMin, @DownloadDate, @PremiereDate, @TrailerURL, @Note, @Cover, @Background);
+    <value>INSERT INTO Film (Title, Subtitle, FormatId, GenreId01, GenreId02, Synopsis, DurationMin, DownloadDate, PremiereDate, TrailerURL, Note, Cover, Background, CoverOpt, BackgroundOpt)
+VALUES(@Title, @Subtitle, @FormatId, @GenreId01, @GenreId02, @Synopsis, @DurationMin, @DownloadDate, @PremiereDate, @TrailerURL, @Note, @Cover, @Background, @CoverOpt, @BackgroundOpt);
 SELECT @@IDENTITY;</value>
   </data>
   <data name="FilmMaxPk" xml:space="preserve">
@@ -163,7 +163,7 @@ WHERE Id = @Id</value>
   </data>
   <data name="FilmUpdate" xml:space="preserve">
     <value>UPDATE Film
-SET Title = @Title, Subtitle = @Subtitle, FormatId = @FormatId,  GenreId01 = @GenreId01, GenreId02 = @GenreId02, TrailerURL = @TrailerURL, Synopsis = @Synopsis, DurationMin = @DurationMin, DownloadDate = @DownloadDate, PremiereDate = @PremiereDate, Note = @Note, Cover = @Cover, Background = @Background
+SET Title = @Title, Subtitle = @Subtitle, FormatId = @FormatId,  GenreId01 = @GenreId01, GenreId02 = @GenreId02, TrailerURL = @TrailerURL, Synopsis = @Synopsis, DurationMin = @DurationMin, DownloadDate = @DownloadDate, PremiereDate = @PremiereDate, Note = @Note, Cover = @Cover, Background = @Background, CoverOpt = @CoverOpt, BackgroundOpt = @BackgroundOpt
 WHERE Id = @Id</value>
   </data>
   <data name="FormatDelete" xml:space="preserve">
@@ -225,8 +225,8 @@ WHERE Id = @Id</value>
     <value>SELECT * FROM Serie</value>
   </data>
   <data name="SerieInsert" xml:space="preserve">
-    <value>INSERT INTO Serie (Title, GenreId01, GenreId02, Synopsis, DurationMin, DownloadDate, PremiereDate, Note, Cover, Background)
-VALUES(@Title, @GenreId01, @GenreId02, @Synopsis, @DurationMin, @DownloadDate, @PremiereDate, @Note, @Cover, @Background);
+    <value>INSERT INTO Serie (Title, GenreId01, GenreId02, Synopsis, DurationMin, DownloadDate, PremiereDate, Note, Cover, Background, CoverOpt, BackgroundOpt)
+VALUES(@Title, @GenreId01, @GenreId02, @Synopsis, @DurationMin, @DownloadDate, @PremiereDate, @Note, @Cover, @Background, @CoverOpt, @BackgroundOpt);
 SELECT @@IDENTITY;</value>
   </data>
   <data name="SerieMaxPk" xml:space="preserve">
@@ -239,7 +239,7 @@ WHERE Id = @Id</value>
   </data>
   <data name="SerieUpdate" xml:space="preserve">
     <value>UPDATE Serie
-SET Title = @Title, GenreId01 = @GenreId01, GenreId02 = @GenreId02, Synopsis = @Synopsis, DurationMin = @DurationMin, DownloadDate = @DownloadDate, PremiereDate = @PremiereDate, Note = @Note, Cover = @Cover, Background = @Background
+SET Title = @Title, GenreId01 = @GenreId01, GenreId02 = @GenreId02, Synopsis = @Synopsis, DurationMin = @DurationMin, DownloadDate = @DownloadDate, PremiereDate = @PremiereDate, Note = @Note, Cover = @Cover, Background = @Background, CoverOpt = @CoverOpt, BackgroundOpt = @BackgroundOpt
 WHERE Id = @Id
 </value>
   </data>
@@ -265,8 +265,8 @@ WHERE Id = @Id
     <value>SELECT * FROM SerieSeen WHERE UserId = @Id</value>
   </data>
   <data name="UserInsert" xml:space="preserve">
-    <value>INSERT INTO UserInfo (Name, NickName, Password, Email, Bitmap, Permissions)
-VALUES (@Name, @NickName, @Password, @Email, @Bitmap, @Permissions);
+    <value>INSERT INTO UserInfo (Name, NickName, Password, Email, Bitmap, Permissions, BitmapOpt)
+VALUES (@Name, @NickName, @Password, @Email, @Bitmap, @Permissions, @BitmapOpt);
 SELECT @@IDENTITY;
 </value>
   </data>
@@ -300,7 +300,7 @@ WHERE Id = @Id</value>
   </data>
   <data name="UserUpdate" xml:space="preserve">
     <value>UPDATE UserInfo
-SET Name = @Name, NickName = @NickName, Email = @Email, Password = @Password, Bitmap = @Bitmap, Permissions = @Permissions
+SET Name = @Name, NickName = @NickName, Email = @Email, Password = @Password, Bitmap = @Bitmap, Permissions = @Permissions, BitmapOpt = @BitmapOpt
 WHERE Id = @Id
 </value>
   </data>

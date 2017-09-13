@@ -11,6 +11,7 @@ namespace Peplex_PFC.BLL.InterfacesClasses.Classes.BO
         public string Email { get; set; }
         public string Password { get; set; }
         public byte[] Photo { get; set; }
+        public byte[] PhotoOpt { get; set; }
         public int Permissions { get; set; }
 
         public List<int> FilmSeen { get; set; }

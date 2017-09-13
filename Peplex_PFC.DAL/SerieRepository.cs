@@ -21,6 +21,8 @@ namespace Peplex_PFC.DAL
                 cmd.Parameters.AddWithValue("@Note", entity.Note);
                 cmd.Parameters.AddWithValue("@Cover", entity.Cover);
                 cmd.Parameters.AddWithValue("@Background", entity.Background);
+                cmd.Parameters.AddWithValue("@CoverOpt", entity.CoverOpt);
+                cmd.Parameters.AddWithValue("@BackgroundOpt", entity.BackgroundOpt);
                 return Convert.ToInt32(cmd.ExecuteScalar());
             }
         }
@@ -40,6 +42,8 @@ namespace Peplex_PFC.DAL
                 cmd.Parameters.AddWithValue("@Note", entity.Note);
                 cmd.Parameters.AddWithValue("@Cover", entity.Cover);
                 cmd.Parameters.AddWithValue("@Background", entity.Background);
+                cmd.Parameters.AddWithValue("@CoverOpt", entity.CoverOpt);
+                cmd.Parameters.AddWithValue("@BackgroundOpt", entity.BackgroundOpt);
                 return Convert.ToInt32(cmd.ExecuteScalar());
             }
         }
@@ -77,6 +81,8 @@ namespace Peplex_PFC.DAL
                         Note = Convert.ToDecimal(rdr["Note"]),
                         Cover = rdr["Cover"] == DBNull.Value ? null : (byte[])rdr["Cover"],
                         Background = rdr["Background"] == DBNull.Value ? null : (byte[])rdr["Background"],
+                        CoverOpt = rdr["CoverOpt"] == DBNull.Value ? null : (byte[])rdr["CoverOpt"],
+                        BackgroundOpt = rdr["BackgroundOpt"] == DBNull.Value ? null : (byte[])rdr["BackgroundOpt"],
                     };
                 }
             }
@@ -111,6 +117,8 @@ namespace Peplex_PFC.DAL
                             Note = Convert.ToDecimal(rdr["Note"]),
                             Cover = rdr["Cover"] == DBNull.Value ? null : (byte[])rdr["Cover"],
                             Background = rdr["Background"] == DBNull.Value ? null : (byte[])rdr["Background"],
+                            CoverOpt = rdr["CoverOpt"] == DBNull.Value ? null : (byte[])rdr["CoverOpt"],
+                            BackgroundOpt = rdr["BackgroundOpt"] == DBNull.Value ? null : (byte[])rdr["BackgroundOpt"],
                         });
                     }
                 }

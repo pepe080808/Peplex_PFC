@@ -258,6 +258,8 @@ namespace Peplex_PFC.SL
                             var newFormat = formats.Where(f => f.Name.Equals(formato, StringComparison.CurrentCultureIgnoreCase));
                             var cover = File.ReadAllBytes(ServiceConfig.Instance.RootMainLocal + ServiceConfig.Instance.RootImageLocal + titulo + " - Cover.jpg");
                             var background = File.ReadAllBytes(ServiceConfig.Instance.RootMainLocal + ServiceConfig.Instance.RootImageLocal + titulo + " - Background.jpg");
+                            var coverOpt = File.ReadAllBytes(ServiceConfig.Instance.RootMainLocal + ServiceConfig.Instance.RootImageLocal + titulo + " - Cover - Opt.jpg");
+                            var backgroundOpt = File.ReadAllBytes(ServiceConfig.Instance.RootMainLocal + ServiceConfig.Instance.RootImageLocal + titulo + " - Background - Opt.jpg");
 
                             var newFilm = new FilmBO
                             {
@@ -269,7 +271,9 @@ namespace Peplex_PFC.SL
                                 PremiereDate = DateTime.Now,
                                 DownloadDate = DateTime.Now,
                                 Cover = cover,
-                                Background = background
+                                Background = background,
+                                CoverOpt = coverOpt,
+                                BackgroundOpt = backgroundOpt
                             };
 
                             CompositionRoot.Instance.Resolve<IFilmManager>().Insert(uow, newFilm);
@@ -280,6 +284,8 @@ namespace Peplex_PFC.SL
                         var newFormat = formats.Where(f => f.Name.Equals(formato, StringComparison.CurrentCultureIgnoreCase));
                         var cover = File.ReadAllBytes(ServiceConfig.Instance.RootMainLocal + ServiceConfig.Instance.RootImageLocal + titulo + " - Cover.jpg");
                         var background = File.ReadAllBytes(ServiceConfig.Instance.RootMainLocal + ServiceConfig.Instance.RootImageLocal + titulo + " - Background.jpg");
+                        var coverOpt = File.ReadAllBytes(ServiceConfig.Instance.RootMainLocal + ServiceConfig.Instance.RootImageLocal + titulo + " - Cover - Opt.jpg");
+                        var backgroundOpt = File.ReadAllBytes(ServiceConfig.Instance.RootMainLocal + ServiceConfig.Instance.RootImageLocal + titulo + " - Background - Opt.jpg");
 
                         var newFilm = new FilmBO
                         {
@@ -291,7 +297,9 @@ namespace Peplex_PFC.SL
                             PremiereDate = DateTime.Now,
                             DownloadDate = DateTime.Now,
                             Cover = cover,
-                            Background = background
+                            Background = background,
+                            CoverOpt = coverOpt,
+                            BackgroundOpt = backgroundOpt
                         };
 
                         CompositionRoot.Instance.Resolve<IFilmManager>().Insert(uow, newFilm);
@@ -348,6 +356,8 @@ namespace Peplex_PFC.SL
                     {
                         var cover = File.ReadAllBytes(ServiceConfig.Instance.RootMainLocal + ServiceConfig.Instance.RootImageLocal + d.Name + " - Cover.jpg");
                         var background = File.ReadAllBytes(ServiceConfig.Instance.RootMainLocal + ServiceConfig.Instance.RootImageLocal + d.Name + " - Background.jpg");
+                        var coverOpt = File.ReadAllBytes(ServiceConfig.Instance.RootMainLocal + ServiceConfig.Instance.RootImageLocal + d.Name + " - Cover - Opt.jpg");
+                        var backgroundOpt = File.ReadAllBytes(ServiceConfig.Instance.RootMainLocal + ServiceConfig.Instance.RootImageLocal + d.Name + " - Background - Opt.jpg");
 
                         var newSerie = new SerieBO
                         {
@@ -357,7 +367,9 @@ namespace Peplex_PFC.SL
                             PremiereDate = DateTime.Now,
                             DownloadDate = DateTime.Now,
                             Cover = cover,
-                            Background = background
+                            Background = background,
+                            CoverOpt = coverOpt,
+                            BackgroundOpt= backgroundOpt
                         };
 
                         serieId = CompositionRoot.Instance.Resolve<ISerieManager>().Insert(uow, newSerie);

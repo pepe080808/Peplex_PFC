@@ -25,6 +25,9 @@ namespace Peplex_PFC.SL.InterfacesClasses.Classes.DTO
         public byte[] Photo { get; set; }
 
         [DataMember]
+        public byte[] PhotoOpt { get; set; }
+
+        [DataMember]
         public int Permissions { get; set; }
 
         [DataMember]

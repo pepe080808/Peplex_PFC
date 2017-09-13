@@ -22,6 +22,8 @@ namespace Peplex_PFC.UI.UIO
         private decimal _note;
         private byte[] _background;
         private byte[] _cover;
+        private byte[] _backgroundOpt;
+        private byte[] _coverOpt;
         private bool _seen;
 
         public int Id
@@ -130,6 +132,18 @@ namespace Peplex_PFC.UI.UIO
         {
             get { return _cover; }
             set { _cover = value; SendPropertyChanged(); }
+        }
+
+        public byte[] BackgroundOpt
+        {
+            get { return _backgroundOpt; }
+            set { _backgroundOpt = value; SendPropertyChanged(); }
+        }
+
+        public byte[] CoverOpt
+        {
+            get { return _coverOpt; }
+            set { _coverOpt = value; SendPropertyChanged(); }
         }
 
         public bool Seen

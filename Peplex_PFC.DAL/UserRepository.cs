@@ -20,6 +20,7 @@ namespace Peplex_PFC.DAL
                 cmd.Parameters.AddWithValue("@NickName", entity.NickName);
                 cmd.Parameters.AddWithValue("@Password", entity.Password);
                 cmd.Parameters.AddWithValue("@Bitmap", entity.Photo);
+                cmd.Parameters.AddWithValue("@BitmapOpt", entity.PhotoOpt);
                 cmd.Parameters.AddWithValue("@Permissions", entity.Permissions);
                 cmd.ExecuteNonQuery();
             }
@@ -35,6 +36,7 @@ namespace Peplex_PFC.DAL
                 cmd.Parameters.AddWithValue("@NickName", entity.NickName);
                 cmd.Parameters.AddWithValue("@Password", entity.Password);
                 cmd.Parameters.AddWithValue("@Bitmap", entity.Photo);
+                cmd.Parameters.AddWithValue("@BitmapOpt", entity.PhotoOpt);
                 cmd.Parameters.AddWithValue("@Permissions", entity.Permissions);
                 cmd.ExecuteNonQuery();
             }
@@ -75,7 +77,8 @@ namespace Peplex_PFC.DAL
                             NickName = rdr["NickName"].ToString(),
                             Password = rdr["Password"].ToString(),
                             Photo = rdr["Bitmap"] == DBNull.Value ? null : (byte[]) rdr["Bitmap"],
-                            Permissions = Convert.ToInt32(rdr["Permissions"])
+                            Permissions = Convert.ToInt32(rdr["Permissions"]),
+                            PhotoOpt = rdr["BitmapOpt"] == DBNull.Value ? null : (byte[])rdr["BitmapOpt"]
                         };
                     }
                 }
@@ -111,7 +114,8 @@ namespace Peplex_PFC.DAL
                             NickName = rdr["NickName"].ToString(),
                             Password = rdr["Password"].ToString(),
                             Photo = rdr["Bitmap"] == DBNull.Value ? null : (byte[])rdr["Bitmap"],
-                            Permissions = Convert.ToInt32(rdr["Permissions"])
+                            Permissions = Convert.ToInt32(rdr["Permissions"]),
+                            PhotoOpt = rdr["BitmapOpt"] == DBNull.Value ? null : (byte[])rdr["BitmapOpt"]
                         });
                     }
                 }

@@ -58,6 +58,8 @@ CREATE TABLE Film (
     Note 			DECIMAL (4,2) DEFAULT 5.0,
 	Cover			VARBINARY(MAX),
 	Background		VARBINARY(MAX),
+	CoverOpt		VARBINARY(MAX),
+	Backgroundopt	VARBINARY(MAX),
 	
 	CONSTRAINT PK_Film PRIMARY KEY(Id),
 	CONSTRAINT FK_Film_FormatId FOREIGN KEY(FormatId) REFERENCES Format(Id),
@@ -79,6 +81,8 @@ CREATE TABLE Serie (
     Note 			DECIMAL (4,2)  DEFAULT 5.0,
 	Cover			VARBINARY(MAX),
 	Background		VARBINARY(MAX),
+	CoverOpt		VARBINARY(MAX),
+	Backgroundopt	VARBINARY(MAX),
 	
 	CONSTRAINT PK_Serie PRIMARY KEY(Id),
 	CONSTRAINT FK_Serie_GenreId01 FOREIGN KEY(GenreId01) REFERENCES Genre(Id),
@@ -109,6 +113,7 @@ CREATE TABLE UserInfo (
 	Email			NVARCHAR (50) NOT NULL,
 	Password		NVARCHAR (50) NOT NULL,
 	Bitmap			VARBINARY(MAX),
+	BitmapOpt		VARBINARY(MAX),
 	Permissions		INT DEFAULT 0,
 
 	CONSTRAINT PK_UserInfo PRIMARY KEY(Id)

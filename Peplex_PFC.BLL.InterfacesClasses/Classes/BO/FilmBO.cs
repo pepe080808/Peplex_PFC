@@ -23,5 +23,7 @@ namespace Peplex_PFC.BLL.InterfacesClasses.Classes.BO
         public decimal Note { get; set; }
         public byte[] Background { get; set; }
         public byte[] Cover { get; set; }
+        public byte[] BackgroundOpt { get; set; }
+        public byte[] CoverOpt { get; set; }
     }
 }
