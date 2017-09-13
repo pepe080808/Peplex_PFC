@@ -20,7 +20,7 @@ namespace Peplex_PFC.DAL
                 cmd.Parameters.AddWithValue("@NickName", entity.NickName);
                 cmd.Parameters.AddWithValue("@Password", entity.Password);
                 cmd.Parameters.AddWithValue("@Bitmap", entity.Photo);
-                cmd.Parameters.AddWithValue("@BitmapOpt", entity.PhotoOpt);
+                cmd.Parameters.AddWithValue("@BitmapOpt", entity.Photo);
                 cmd.Parameters.AddWithValue("@Permissions", entity.Permissions);
                 cmd.ExecuteNonQuery();
             }
@@ -36,7 +36,7 @@ namespace Peplex_PFC.DAL
                 cmd.Parameters.AddWithValue("@NickName", entity.NickName);
                 cmd.Parameters.AddWithValue("@Password", entity.Password);
                 cmd.Parameters.AddWithValue("@Bitmap", entity.Photo);
-                cmd.Parameters.AddWithValue("@BitmapOpt", entity.PhotoOpt);
+                cmd.Parameters.AddWithValue("@BitmapOpt", entity.Photo);
                 cmd.Parameters.AddWithValue("@Permissions", entity.Permissions);
                 cmd.ExecuteNonQuery();
             }

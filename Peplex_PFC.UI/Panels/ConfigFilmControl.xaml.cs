@@ -60,13 +60,15 @@ namespace Peplex_PFC.UI.Panels
                 CbGenre02.ItemsSource = Genre;
                 CbGenre02.DisplayMemberPath = "Name";
 
-                AssignData();
+                if (CbTitle.SelectedIndex != -1)
+                    AssignData();
             }
         }
 
         private void CbTitleSelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            AssignData();
+            if(CbTitle.SelectedIndex != -1)
+                AssignData();
 
         }
 
@@ -89,7 +91,8 @@ namespace Peplex_PFC.UI.Panels
 
         private void BntEditClick(object sender, RoutedEventArgs e)
         {
-            UpdateData();
+            if (CbTitle.SelectedIndex != -1)
+                UpdateData();
         }
 
         private void UpdateData()

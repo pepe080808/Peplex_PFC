@@ -36,7 +36,7 @@ namespace Peplex_PFC.SL
                             GenreName02 = f.GenreName02,
                             DownloadDate = f.DownloadDate.ToString(DATE_FORMAT),
                             //StrCover = PeplexUtils.ConvertByteArrayToStringCommaSepareted(f.Cover)
-                            StrCover = Convert.ToBase64String(f.Cover)
+                            StrCover = Convert.ToBase64String(f.CoverOpt)
                         };
 
                         result.Films.Add(film);
@@ -91,8 +91,8 @@ namespace Peplex_PFC.SL
                         GenreName02 = f.GenreName02,
                         //StrCover = PeplexUtils.ConvertByteArrayToStringCommaSepareted(f.Cover),
                         //StrBackground = PeplexUtils.ConvertByteArrayToStringCommaSepareted(f.Background)
-                        StrCover = Convert.ToBase64String(f.Cover),
-                        StrBackground = Convert.ToBase64String(f.Background)
+                        StrCover = Convert.ToBase64String(f.CoverOpt),
+                        StrBackground = Convert.ToBase64String(f.BackgroundOpt)
                     };
 
                     result.Films.Add(film);
@@ -137,7 +137,7 @@ namespace Peplex_PFC.SL
                             GenreName02 = s.GenreName02,
                             DownloadDate = s.DownloadDate.ToString(DATE_FORMAT),
                             //StrCover = PeplexUtils.ConvertByteArrayToStringCommaSepareted(s.Cover)
-                            StrCover = Convert.ToBase64String(s.Cover)
+                            StrCover = Convert.ToBase64String(s.CoverOpt)
                         };
 
                         result.Series.Add(serie);
@@ -189,8 +189,8 @@ namespace Peplex_PFC.SL
                         GenreName02 = s.GenreName02,
                         //StrCover = PeplexUtils.ConvertByteArrayToStringCommaSepareted(s.Cover),
                         //StrBackground = PeplexUtils.ConvertByteArrayToStringCommaSepareted(s.Background)
-                        StrCover = Convert.ToBase64String(s.Cover),
-                        StrBackground = Convert.ToBase64String(s.Background)
+                        StrCover = Convert.ToBase64String(s.CoverOpt),
+                        StrBackground = Convert.ToBase64String(s.BackgroundOpt)
                     };
 
                     foreach (var ep in s.Episodes)
