@@ -5,6 +5,8 @@ using Peplex_PFC.BLL.InterfacesClasses.Interfaces;
 using Peplex_PFC.SL.InterfacesClasses.Classes.DTO;
 using Peplex_PFC.SL.InterfacesClasses.Interfaces;
 using Utils;
+using System.Text;
+using System.IO;
 
 namespace Peplex_PFC.SL
 {
@@ -134,7 +136,8 @@ namespace Peplex_PFC.SL
                             GenreName01 = s.GenreName01,
                             GenreName02 = s.GenreName02,
                             DownloadDate = s.DownloadDate.ToString(DATE_FORMAT),
-                            StrCover = PeplexUtils.ConvertByteArrayToStringCommaSepareted(s.Cover)
+                            //StrCover = PeplexUtils.ConvertByteArrayToStringCommaSepareted(s.Cover)
+                            StrCover = Convert.ToBase64String(s.Cover)
                         };
 
                         result.Series.Add(serie);
@@ -184,8 +187,10 @@ namespace Peplex_PFC.SL
                         DurationMin = s.DurationMin,
                         GenreName01 = s.GenreName01,
                         GenreName02 = s.GenreName02,
-                        StrCover = PeplexUtils.ConvertByteArrayToStringCommaSepareted(s.Cover),
-                        StrBackground = PeplexUtils.ConvertByteArrayToStringCommaSepareted(s.Background)
+                        //StrCover = PeplexUtils.ConvertByteArrayToStringCommaSepareted(s.Cover),
+                        //StrBackground = PeplexUtils.ConvertByteArrayToStringCommaSepareted(s.Background)
+                        StrCover = Convert.ToBase64String(s.Cover),
+                        StrBackground = Convert.ToBase64String(s.Background)
                     };
 
                     foreach (var ep in s.Episodes)
@@ -282,7 +287,8 @@ namespace Peplex_PFC.SL
                         Password = u.Password,
                         Name = u.Name,
                         Email = u.Email,
-                        StrPhoto = PeplexUtils.ConvertByteArrayToStringCommaSepareted(u.Photo)
+                        //StrPhoto = PeplexUtils.ConvertByteArrayToStringCommaSepareted(u.Photo)
+                        StrPhoto = Convert.ToBase64String(u.Photo)
                     };
 
                     user.FilmSeen.AddRange(u.FilmSeen);

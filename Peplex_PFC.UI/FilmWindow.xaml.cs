@@ -62,6 +62,9 @@ namespace Peplex_PFC.UI
         private void CalculateNoteStar()
         {
             var note = Film.Note;
+
+            TxtNote.Text = note.ToString("0.#");
+
             for (var i = 0; i < 5; i++)
             {
                 var control = FindName(String.Format("NoteStar{0}", (i + 1)));

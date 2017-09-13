@@ -63,7 +63,7 @@ namespace Peplex_PFC.UI
         {
             var note = Serie.Note;
 
-            TxtNote.Text = note.ToString("00.#");
+            TxtNote.Text = note.ToString("0.#");
 
             for (var i = 0; i < 5; i++)
                 {
