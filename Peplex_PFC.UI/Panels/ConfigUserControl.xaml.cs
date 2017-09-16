@@ -115,7 +115,7 @@ namespace Peplex_PFC.UI.Panels
             {
                 Id = Users[CbNickName.SelectedIndex].Id,
                 NickName = Users[CbNickName.SelectedIndex].NickName,
-                Name = TxtEmail.Text,
+                Name = TxtName.Text,
                 Email = TxtEmail.Text,
                 Password = String.IsNullOrWhiteSpace(newPassword) ? Users[CbNickName.SelectedIndex].Password : newPassword,
                 Permissions = CbPermissions.SelectedIndex,
