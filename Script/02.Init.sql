@@ -59,7 +59,7 @@ CREATE TABLE Film (
 	Cover			VARBINARY(MAX),
 	Background		VARBINARY(MAX),
 	CoverOpt		VARBINARY(MAX),
-	Backgroundopt	VARBINARY(MAX),
+	BackgroundOpt	VARBINARY(MAX),
 	
 	CONSTRAINT PK_Film PRIMARY KEY(Id),
 	CONSTRAINT FK_Film_FormatId FOREIGN KEY(FormatId) REFERENCES Format(Id),
@@ -82,7 +82,7 @@ CREATE TABLE Serie (
 	Cover			VARBINARY(MAX),
 	Background		VARBINARY(MAX),
 	CoverOpt		VARBINARY(MAX),
-	Backgroundopt	VARBINARY(MAX),
+	BackgroundOpt	VARBINARY(MAX),
 	
 	CONSTRAINT PK_Serie PRIMARY KEY(Id),
 	CONSTRAINT FK_Serie_GenreId01 FOREIGN KEY(GenreId01) REFERENCES Genre(Id),
