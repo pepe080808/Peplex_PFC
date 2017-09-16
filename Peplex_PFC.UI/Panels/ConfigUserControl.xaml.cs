@@ -82,6 +82,8 @@ namespace Peplex_PFC.UI.Panels
             if (result == true)
             {
                 Users.Add(child.NewUser);
+                CbNickName.ItemsSource = null;
+                CbNickName.ItemsSource = Users;
                 var index = Users.FindIndex(u => u.NickName == child.NewUser.NickName);
                 CbNickName.SelectedIndex = index;
             }
@@ -154,10 +156,12 @@ namespace Peplex_PFC.UI.Panels
                 MessageBoxWindow.Show(Window.GetWindow(Parent), Translations.lblWarning, DialogIcon.Warning, new[] { DialogButton.Accept }, Translations.ConfigUserControlDelteUserError);
             else
             {
+                CompositionRoot.Instance.Resolve<IUserServiceProxy>().Delete(Users[CbNickName.SelectedIndex].Id);
                 Users.RemoveAt(CbNickName.SelectedIndex);
-                CbNickName.Items.RemoveAt(CbNickName.SelectedIndex  );
-                var index = Users.FindIndex(u => u.NickName == PeplexConfig.Instance.CurrentUser.NickName);
-                CbNickName.SelectedIndex = index;
+                //CbNickName.Items.RemoveAt(CbNickName.SelectedIndex  );
+                //var index = Users.FindIndex(u => u.NickName == PeplexConfig.Instance.CurrentUser.NickName);
+                //CbNickName.SelectedIndex = index;
+                UpdateUI();
             }
         }
 
