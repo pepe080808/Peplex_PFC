@@ -122,7 +122,9 @@ namespace Peplex_PFC.UI.Panels
                 PremiereDate = TxtPremierDate.SelectedDate ?? Series[CbTitle.SelectedIndex].PremiereDate,
                 DurationMin = Convert.ToInt32(TxtDuration.Text),
                 Cover = PeplexUtils.ConvertBitmapImageToByteArray(_currentBitmapImageCover),
-                Background = PeplexUtils.ConvertBitmapImageToByteArray(_currentBitmapImageBackground)
+                Background = PeplexUtils.ConvertBitmapImageToByteArray(_currentBitmapImageBackground),
+                CoverOpt = Series[CbTitle.SelectedIndex].CoverOpt,
+                BackgroundOpt = Series[CbTitle.SelectedIndex].BackgroundOpt
             };
 
             var result = CompositionRoot.Instance.Resolve<ISerieServiceProxy>().Update(editedSerie);
