@@ -44,7 +44,7 @@
 
             <Grid Name="GMain" Grid.Row="1" Margin="20">
 
-                <DataGrid x:Name="dgMultimedia" Style="{StaticResource FieldDataGrid}">
+                <DataGrid x:Name="dgMultimedia" Style="{StaticResource FieldDataGrid}" RowDetailsVisibilityMode="Collapsed">
                     
                     <DataGrid.CellStyle>
                         <Style TargetType="DataGridCell">

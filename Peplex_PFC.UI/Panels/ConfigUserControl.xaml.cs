@@ -17,6 +17,8 @@ namespace Peplex_PFC.UI.Panels
 {
     public partial class ConfigUserControl
     {
+        private bool _delete;
+
         private List<UserUIO> _users;
 
         public List<UserUIO> Users
@@ -55,10 +57,12 @@ namespace Peplex_PFC.UI.Panels
             }
         }
  
-
        private void CbNickNameSelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
         {
-            AssignData();
+            if(!_delete)
+                AssignData();
+
+           _delete = false;
         }
 
         private void AssignData()
@@ -158,9 +162,11 @@ namespace Peplex_PFC.UI.Panels
             {
                 CompositionRoot.Instance.Resolve<IUserServiceProxy>().Delete(Users[CbNickName.SelectedIndex].Id);
                 Users.RemoveAt(CbNickName.SelectedIndex);
-                //CbNickName.Items.RemoveAt(CbNickName.SelectedIndex  );
-                //var index = Users.FindIndex(u => u.NickName == PeplexConfig.Instance.CurrentUser.NickName);
-                //CbNickName.SelectedIndex = index;
+                _delete = true;
+                CbNickName.ItemsSource = null;
+                CbNickName.ItemsSource = Users;
+                var index = Users.FindIndex(u => u.NickName == PeplexConfig.Instance.CurrentUser.NickName);
+                CbNickName.SelectedIndex = index;
                 UpdateUI();
             }
         }
@@ -184,7 +190,5 @@ namespace Peplex_PFC.UI.Panels
                 MessageBoxWindow.Show(Window.GetWindow(Parent), Translations.lblError, DialogIcon.CommError, new[] { DialogButton.Accept }, ex.Message + Translations.ConfigControlImageNotValidError);
             }
         }
-
-       
-    }
+       }
 }
