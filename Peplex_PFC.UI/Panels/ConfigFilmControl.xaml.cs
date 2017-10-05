@@ -123,7 +123,7 @@ namespace Peplex_PFC.UI.Panels
                 GenreId02 = Genre[indexGenreId02].Id,
                 FormatId = Films[CbTitle.SelectedIndex].FormatId,
                 TrailerURL = TxtTrailer.Text,
-                DownloadDate = Films[CbTitle.SelectedIndex].PremiereDate,
+                DownloadDate = Films[CbTitle.SelectedIndex].DownloadDate,
                 PremiereDate = TxtPremierDate.SelectedDate ?? Films[CbTitle.SelectedIndex].PremiereDate,
                 DurationMin = Convert.ToInt32(TxtDuration.Text),
                 Cover = PeplexUtils.ConvertBitmapImageToByteArray(_currentBitmapImageCover),

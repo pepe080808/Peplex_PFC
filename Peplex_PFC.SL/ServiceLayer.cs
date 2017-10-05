@@ -14,6 +14,7 @@ using Peplex_PFC.BLL.InterfacesClasses.Classes.BO;
 using Peplex_PFC.BLL.InterfacesClasses.Interfaces;
 using Peplex_PFC.SL.InterfacesClasses.Interfaces;
 using Utils;
+using System.Data.OleDb;
 
 namespace Peplex_PFC.SL
 {
@@ -160,6 +161,8 @@ namespace Peplex_PFC.SL
                     InsertFilms();
                     Console.WriteLine("INSERTANDO SERIES Y CAPÍTULOS NUEVOS EN LA BIBLIOTECA...");
                     InsertSeries();
+                    Console.WriteLine("ACTUALIZANDO DATOS CONTENIDO MULTIMEDIA...");
+                    ImportData();
                     Console.WriteLine("\nHA FINALIZADO LA ACTUALIZACIÓN DEL CONTENIDO MULTIMEDIA.");
                     Console.WriteLine("PULSE CUALQUIER TECLA PARA ARRANCAR LOS SERVICIOS");
                     Console.ReadKey();
@@ -464,6 +467,104 @@ namespace Peplex_PFC.SL
 
         #endregion
 
+        #region Importar datos XML
+        public static void ImportData()
+        {
+            string PathFile = @"..\..\PeplexData.xlsx";
+
+            #region Obtain Data Excel
+            List<string[]> lstValues = new List<string[]>();
+
+            const string connectionString = @"Provider=Microsoft.ACE.OLEDB.12.0;Data Source={0};Extended Properties='Excel 12.0;HDR={1};IMEX=1'";
+
+            using (var conn = new OleDbConnection(String.Format(connectionString, PathFile, "YES")))
+            {
+                conn.Open();
+
+                var dt = conn.GetOleDbSchemaTable(OleDbSchemaGuid.Tables, null);
+                var row = dt.Rows[0];
+                var sheetName = Convert.ToString(row["TABLE_NAME"]);
+
+                using (var cmd = new OleDbCommand("SELECT * FROM [" + sheetName + "]", conn))
+                using (var rdr = cmd.ExecuteReader())
+                {
+                    while (rdr.Read())
+                    {
+                        var values = new string[rdr.FieldCount];
+                        for (var i = 0; i < rdr.FieldCount; i++)
+                            values[i] = Convert.ToString(rdr[i]);
+
+                        lstValues.Add(values);
+                    }
+                }
+            }
+            #endregion
+
+            #region Assign DataExcel
+            try
+            {
+                // FindAll Serie & Film
+                using (var uow = CompositionRoot.Instance.Resolve<IUnitOfWork>())
+                {
+                    var films = CompositionRoot.Instance.Resolve<IFilmManager>().FindAll(uow);
+                    var series = CompositionRoot.Instance.Resolve<ISerieManager>().FindAll(uow);
+
+                    foreach (var v in lstValues)
+                    {
+                        if (v[0] == "0")
+                        {
+                            var strType = v[2];
+                            var title = v[1];
+                            var genre01 = Convert.ToInt32(v[3]);
+                            var genre02 = Convert.ToInt32(v[4]);
+
+                            switch (strType)
+                            {
+                                case "F":
+                                    var film = films.SingleOrDefault(f => f.Title.Equals(title));
+                                    if (film != null)
+                                    {
+                                        film.GenreId01 = genre01;
+                                        film.GenreId02 = genre02;
+                                        film.Note = Convert.ToDecimal(v[6]);
+                                        film.Synopsis = v[7];
+                                        film.PremiereDate = Convert.ToDateTime(v[8]);
+                                        film.DurationMin = Convert.ToInt32(v[9]);
+                                        film.TrailerURL = v[10];
+
+                                        CompositionRoot.Instance.Resolve<IFilmManager>().Update(uow, film);
+                                    }
+
+                                    break;
+                                case "S":
+                                    var serie = series.SingleOrDefault(s => s.Title.Equals(title));
+                                     if(serie != null)
+                                     {
+                                         serie.GenreId01 = genre01;
+                                         serie.GenreId02 = genre02;
+                                         serie.Note = Convert.ToDecimal(v[6]);
+                                         serie.Synopsis = v[7];
+                                         serie.PremiereDate = Convert.ToDateTime(v[8]);
+                                         serie.DurationMin = Convert.ToInt32(v[9]);
+
+                                        CompositionRoot.Instance.Resolve<ISerieManager>().Update(uow, serie);
+                                    }
+                                    
+                                    break;
+                            }
+                        }
+                    }
+
+                    uow.Commit();
+                }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+            }
+            #endregion
+        }
+        #endregion
         #endregion
     }
 }

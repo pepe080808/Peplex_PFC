@@ -118,7 +118,7 @@ namespace Peplex_PFC.UI.Panels
                 Note = Convert.ToDecimal(TxtNote.Text),
                 GenreId01 = Genre[indexGenreId01].Id,
                 GenreId02 = Genre[indexGenreId02].Id,
-                DownloadDate = Series[CbTitle.SelectedIndex].PremiereDate,
+                DownloadDate = Series[CbTitle.SelectedIndex].DownloadDate,
                 PremiereDate = TxtPremierDate.SelectedDate ?? Series[CbTitle.SelectedIndex].PremiereDate,
                 DurationMin = Convert.ToInt32(TxtDuration.Text),
                 Cover = PeplexUtils.ConvertBitmapImageToByteArray(_currentBitmapImageCover),

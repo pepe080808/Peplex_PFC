@@ -40,6 +40,11 @@ INSERT INTO Genre (Name) VALUES ('Drama')
 INSERT INTO Genre (Name) VALUES ('Romántica')
 INSERT INTO Genre (Name) VALUES ('Animación')
 INSERT INTO Genre (Name) VALUES ('Histórica')
+INSERT INTO Genre (Name) VALUES ('Musical')
+INSERT INTO Genre (Name) VALUES ('Superheroe')
+INSERT INTO Genre (Name) VALUES ('Slasher')
+INSERT INTO Genre (Name) VALUES ('Anime')
+INSERT INTO Genre (Name) VALUES ('Sitcom')
 
 GO
 
